@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^mkdocs build$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
