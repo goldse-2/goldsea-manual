@@ -1,0 +1,12 @@
+site_name: Goldsea 产品说明书中心
+
+theme:
+  name: material
+  language: zh
+
+copyright: Copyright &copy; 2026 Goldsea. All rights reserved.
+
+nav:
+  - 首页: index.md
+  - 快速入门指南: quick-start.md
+  - 常见问题解答: faq.md
