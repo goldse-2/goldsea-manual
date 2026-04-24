@@ -1,12 +1,52 @@
-site_name: Goldsea 产品说明书中心
+site_name: Goldse
+site_description: Professional Product Manuals and Clear Guidance
+site_author: Goldse Brand Team
+site_url: https://www.goldseatool.com/
 
 theme:
   name: material
-  language: zh
+  language: en
+  # logo: assets/images/logo.png # 准备好logo后取消注释
+  # favicon: assets/images/favicon.ico
+  features:
+    - navigation.tabs           # 桌面端横向顶级导航
+    - navigation.tabs.sticky    # 导航栏吸顶
+    - navigation.top            # 返回顶部按钮
+    - search.suggest            # 搜索建议
+    - search.highlight          # 搜索高亮
+    - content.action.view       # 允许查看源码/详情
+  palette:
+    # 强制应用我们在自定义CSS中设定的深蓝金配色
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
 
-copyright: Copyright &copy; 2026 Goldsea. All rights reserved.
+# 引入自定义样式
+extra_css:
+  - stylesheets/custom.css
 
+# 开启强大的 Markdown 扩展
+markdown_extensions:
+  - meta
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.magiclink
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+# 顶部与侧边导航结构
 nav:
-  - 首页: index.md
-  - 快速入门指南: quick-start.md
-  - 常见问题解答: faq.md
+  - Home: index.md
+  - Products: products/index.md
+  - Manuals: manuals/index.md
+  - About Us: about.md
+  - Contact Us: contact.md
+
+copyright: Copyright &copy; 2026 Goldse. All rights reserved.
