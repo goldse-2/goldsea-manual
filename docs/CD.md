@@ -1,0 +1,926 @@
+---
+hide:
+  - header
+  - navigation
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="no-referrer">
+    <title>270道精选家常菜谱合集 & 随机抽选</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            color: #333;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* 隐藏滚动条但保留滚动功能 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 菜谱详情弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-content {
+            background-color: white; 
+            border-radius: 1.25rem;
+            width: 100%; 
+            max-width: 600px; 
+            max-height: 90vh;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.show .modal-content { transform: translateY(0) scale(1); }
+        
+        .modal-cover {
+            height: 220px; width: 100%; position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .modal-cover { height: 280px; }
+        }
+        .modal-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-cover::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+        }
+        .modal-title-overlay {
+            position: absolute; bottom: 1.25rem; left: 1.5rem; right: 1.5rem; color: white; z-index: 10;
+            font-size: 1.5rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+        @media (min-width: 768px) {
+            .modal-title-overlay { font-size: 1.875rem; }
+        }
+        .modal-close-float {
+            position: absolute; top: 1rem; right: 1rem; z-index: 20;
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);
+            color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
+            width: 2.25rem; height: 2.25rem; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.25rem; transition: all 0.2s;
+        }
+        .modal-close-float:hover { background: rgba(0,0,0,0.6); transform: scale(1.1); }
+        
+        /* 抽奖模态框专属样式 */
+        #lucky-draw-modal .modal-content {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            max-width: 450px;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+        .slot-machine-box {
+            background: white;
+            border: 4px solid #ff4757;
+            border-radius: 1rem;
+            height: 90px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .slot-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ff4757;
+            white-space: nowrap;
+            padding: 0 1rem;
+        }
+        @media (min-width: 768px) {
+            .slot-text { font-size: 1.875rem; }
+        }
+        .draw-btn-large {
+            background: linear-gradient(to bottom, #ff6b81, #ff4757);
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 0.875rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 6px 0 #c23616, 0 10px 15px rgba(0,0,0,0.2);
+            transition: all 0.1s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .draw-btn-large:active:not(:disabled) {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 #c23616, 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .draw-btn-large:disabled {
+            background: #cbd5e1;
+            box-shadow: 0 6px 0 #94a3b8;
+            cursor: not-allowed;
+            transform: translateY(0);
+        }
+        .winner-card {
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 时间轴 */
+        .timeline-container { position: relative; padding-left: 0.75rem; }
+        .timeline-container::before {
+            content: ''; position: absolute; top: 0; bottom: 0; left: 1.4rem;
+            width: 2px; background-color: #e5e7eb; z-index: 0;
+        }
+        .timeline-item { position: relative; z-index: 1; }
+        .step-circle {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 1.75rem; height: 1.75rem; color: white; border-radius: 9999px;
+            font-size: 0.875rem; font-weight: bold; flex-shrink: 0; margin-right: 0.75rem; margin-top: 0.125rem;
+        }
+
+        /* 卡片图片悬浮效果 */
+        .recipe-card:hover .recipe-img {
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+<body class="pb-10 relative">
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="mb-10 text-center">
+        <h1 class="text-3xl md:text-5xl font-black text-gray-800 mb-4 tracking-tight">270道精选家常菜谱</h1>
+        <p class="text-gray-500 max-w-2xl mx-auto mb-8 text-sm md:text-base">收录十二大风味菜系及特色专题，共270道绝味家常菜。解决您“每天吃什么”的终极难题！</p>
+        
+        <!-- 抽奖大按钮 -->
+        <button onclick="openLuckyDraw()" class="mb-10 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white font-bold py-3 px-6 md:px-10 rounded-full shadow-lg transform transition hover:-translate-y-1 hover:shadow-xl flex items-center justify-center mx-auto text-base md:text-xl w-full sm:w-auto">
+            <span class="mr-2 text-2xl">🎁</span> 纠结吃啥？点我随机抽个菜！
+        </button>
+
+        <!-- 分类切换与搜索导航 -->
+        <div class="flex flex-col md:flex-row justify-center items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="relative w-full md:w-1/2">
+                <select id="category-select" onchange="switchCategory(this.value)" class="block appearance-none w-full bg-gray-50 border border-gray-200 hover:border-blue-400 px-4 py-3.5 pr-8 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 text-base font-bold transition-colors">
+                    <option value="paojiao">🔥 泡椒系列 (10道)</option>
+                    <option value="fanqie">🍅 番茄系列 (20道)</option>
+                    <option value="shajiang">🧄 沙姜系列 (20道)</option>
+                    <option value="nangua">🎃 南瓜系列 (20道)</option>
+                    <option value="nongjia">🏡 农家小炒 (20道)</option>
+                    <option value="chaoshan">🍲 潮汕菜 (40道)</option>
+                    <option value="hunan">🌶️ 湖南菜 (20道)</option>
+                    <option value="kejia">🥘 客家菜 (40道)</option>
+                    <option value="hubei">🥣 湖北菜 (20道)</option>
+                    <option value="dongbei">❄️ 东北菜 (20道)</option>
+                    <option value="beef">🥩 特色专题：牛肉 (20道)</option>
+                    <option value="pork">🥓 特色专题：猪肉 (20道)</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                    <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+            
+            <!-- 搜索框 -->
+            <div class="relative w-full md:w-1/2">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="text-gray-400 text-lg">🔍</span>
+                </div>
+                <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜索菜名、食材..." class="block w-full bg-gray-50 border border-gray-200 hover:border-blue-400 pl-10 pr-4 py-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 text-base transition-colors">
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示信息区域 -->
+    <div id="search-info" class="hidden mb-6 text-gray-600 font-medium text-center md:text-left px-2"></div>
+
+    <!-- 卡片式瀑布流展示区域 -->
+    <div id="recipe-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+        <!-- JS动态注入卡片 -->
+    </div>
+</div>
+
+<!-- 菜谱详情弹窗 -->
+<div id="recipe-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'recipe-modal')">
+    <div class="modal-content relative p-0 flex flex-col" id="recipe-modal-content">
+        <div class="modal-cover shrink-0">
+            <img id="modal-cover-img" src="" alt="菜品展示图" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=图片加载失败';">
+            <h2 id="modal-title" class="modal-title-overlay">菜品名称</h2>
+            <button onclick="closeModal('recipe-modal')" class="modal-close-float">&times;</button>
+        </div>
+        <div class="p-5 md:p-8 flex-grow">
+            <div class="mb-8 bg-gray-50 p-4 rounded-2xl">
+                <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                    <span id="modal-icon-ing" class="w-1.5 h-5 inline-block mr-2 rounded-full"></span> 准备食材
+                </h3>
+                <div id="modal-ingredients" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center">
+                    <span id="modal-icon-step" class="w-1.5 h-5 inline-block mr-2 rounded-full"></span> 制作步骤
+                </h3>
+                <div id="modal-steps" class="timeline-container space-y-5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 老虎机抽奖弹窗 -->
+<div id="lucky-draw-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'lucky-draw-modal')">
+    <div class="modal-content relative" id="lucky-modal-content">
+        <button onclick="closeModal('lucky-draw-modal')" class="modal-close-float" style="top:0.5rem; right:0.5rem; background:rgba(0,0,0,0.2);">&times;</button>
+        
+        <h2 class="text-2xl md:text-3xl font-black text-red-600 drop-shadow-sm mb-2">今天吃什么？</h2>
+        <p class="text-red-400 font-bold mb-4 text-sm md:text-base">从全库精选好菜中随机抽取</p>
+        
+        <!-- 滚动显示区 -->
+        <div class="slot-machine-box">
+            <div id="slot-text" class="slot-text">点击下方按钮开始</div>
+        </div>
+        
+        <button id="start-draw-btn" onclick="startLuckyDraw()" class="draw-btn-large w-full mb-4">
+            开 始 抽 奖
+        </button>
+
+        <!-- 中奖结果展示区 -->
+        <div id="winner-result" class="winner-card bg-white p-4 md:p-5 rounded-2xl shadow-lg mt-4 border-2 border-red-100">
+            <p class="text-gray-500 font-bold mb-3">🎉 抽中啦！今天就做这道：</p>
+            <div class="relative w-full pt-[60%] mb-4 rounded-xl overflow-hidden shadow-sm">
+                <img id="winner-img" src="" class="absolute top-0 left-0 w-full h-full object-cover" alt="winner">
+            </div>
+            <h3 id="winner-name" class="text-xl md:text-2xl font-bold text-gray-800 mb-4"></h3>
+            <button id="view-winner-btn" class="w-full bg-red-50 text-red-600 hover:bg-red-100 font-bold py-3 rounded-xl border border-red-200 transition">
+                查看做法详情
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- 核心数据基础库 ---
+    const baseDatabase = {
+        paojiao: [
+            { name: "泡椒爆炒牛肉", desc: "鲜嫩的牛肉切薄片或小粒，配合酸辣的泡椒爆炒。去腥解腻，极其开胃。", image: "https://tse1-mm.cn.bing.net/th?q=泡椒炒牛肉+家常菜实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛里脊肉 300g", "泡椒 50g", "姜片/蒜末 适量", "生抽 1大勺", "料酒 1勺", "淀粉 1小勺", "白糖 少许提鲜"], steps: [{ time: "10分钟", desc: "牛肉切薄片，加入生抽、料酒、淀粉抓拌均匀，腌制备用。" }, { time: "1分钟", desc: "热锅入宽油，大火将牛肉迅速滑炒至刚刚变色，立刻盛出备用，保持鲜嫩。" }, { time: "30秒", desc: "锅中留底油，下入切碎的泡椒、姜蒜末爆出酸辣香味。" }, { time: "1分钟", desc: "倒入之前炒好的牛肉，加入少许白糖，大火快速翻炒均匀，出锅装盘。" }] },
+            { name: "泡椒炒肉沫", desc: "经典的下饭菜。五花肉剁成肉沫煸炒出油脂，搭配泡椒和酸豆角翻炒。拌饭绝佳。", image: "https://tse2-mm.cn.bing.net/th?q=泡椒炒肉沫+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["去皮五花肉沫 250g", "泡椒 40g", "酸豆角或外婆菜 100g", "大蒜 3瓣剁碎", "老抽 半勺上色", "生抽 1勺", "葱花 适量"], steps: [{ time: "3-4分钟", desc: "热锅放少许底油，下入肉沫用中小火慢慢煸炒，直至水分炒干，肉沫微微发焦并煸出油脂。" }, { time: "30秒", desc: "加入半勺老抽翻炒均匀，给肉沫上色。" }, { time: "1分钟", desc: "倒入剁碎的泡椒和蒜末，利用锅里的底油炒出浓郁的酸辣味。" }, { time: "2分钟", desc: "加入酸豆角（或外婆菜），转大火继续翻炒，烹入生抽调味，撒上葱花即可出锅。" }] },
+            { name: "泡椒炒鸡蛋", desc: "做法极简但风味独特。泡椒的酸辣与鸡蛋的醇厚完美融合，令人食欲大开。", image: "https://tse3-mm.cn.bing.net/th?q=泡椒炒鸡蛋+家常实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["鸡蛋 4个", "泡椒 30g", "大葱白 适量", "盐 少许", "食用油 适量"], steps: [{ time: "1分钟", desc: "鸡蛋打入碗中，加入少许盐，用筷子充分打散备用。泡椒切成小圈。" }, { time: "2分钟", desc: "热锅多放些油，烧热后倒入蛋液，大火快速将鸡蛋炒熟并划散成小块，盛出备用。" }, { time: "30秒", desc: "利用锅底剩余的油，放入泡椒圈和大葱白，小火炒出酸香气味。" }, { time: "30秒", desc: "将炒好的鸡蛋倒回锅中，与泡椒混合均匀，大火翻炒几下即可盛出。" }] },
+            { name: "泡椒爆炒鸡杂", desc: "鸡杂配合泡椒、姜蒜大火爆炒，能有效压制腥味。脆嫩爽口，酸辣过瘾。", image: "https://tse4-mm.cn.bing.net/th?q=泡椒炒鸡杂+实拍图&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["鸡杂 300g", "泡椒 60g", "泡姜 1小块", "大蒜 3瓣", "青蒜苗 2根", "料酒 2勺", "生抽 1勺"], steps: [{ time: "15分钟", desc: "鸡杂彻底洗净切片。加入料酒和白胡椒粉抓匀，腌制去腥。泡椒切段，泡姜切丝。" }, { time: "2分钟", desc: "热锅多倒一些油，烧至冒烟。倒入鸡杂大火猛炒，至鸡杂变色卷曲后迅速盛出滤油。" }, { time: "1分钟", desc: "锅底留少许油，下入泡椒段、泡姜丝和蒜片，中小火炒出复合酸辣味。" }, { time: "2分钟", desc: "倒入鸡杂和切段的青蒜苗，加生抽调味，大火快速翻炒至蒜苗断生即可。" }] },
+            { name: "泡椒炒五花肉", desc: "带皮五花肉煸炒至微焦出油后加入泡椒。酸辣中和了油腻感，肥而不腻。", image: "https://tse1-mm.cn.bing.net/th?q=泡椒炒五花肉+农家菜实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮五花肉 250g", "泡椒 50g", "青红尖椒 各1个", "姜蒜 适量", "生抽 1勺", "料酒 1勺", "盐 少许"], steps: [{ time: "3分钟", desc: "五花肉洗净切薄片。青红尖椒切块，泡椒切段备用。" }, { time: "4-5分钟", desc: "锅中不放油，下入五花肉片，中小火慢慢煸炒出大量猪油，肉片边缘卷曲。" }, { time: "1分钟", desc: "盛出多余油脂。放入姜蒜末和泡椒段，翻炒出酸辣香味。" }, { time: "2分钟", desc: "加入青红尖椒块，烹入料酒和生抽，大火翻炒至断生调味出锅。" }] }
+        ],
+        fanqie: [
+            { name: "番茄炒蛋", desc: "经典的国民家常菜，酸甜开胃，老少皆宜。番茄汁水包裹着嫩滑的鸡蛋。", image: "https://tse1-mm.cn.bing.net/th?q=番茄炒蛋+家常实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["番茄 2个", "鸡蛋 3个", "葱花 适量", "盐 1小勺", "白糖 1勺提鲜", "食用油 适量"], steps: [{ time: "2分钟", desc: "番茄洗净切小块。鸡蛋打入碗中，加一点点温水打散备用。" }, { time: "2分钟", desc: "热锅多倒些油，烧热后倒入蛋液，快速用筷子划散，炒熟定型后马上盛出。" }, { time: "3-4分钟", desc: "锅中留底油，倒入番茄块中火翻炒出红色的番茄沙和汁水。加一勺糖提鲜。" }, { time: "1分钟", desc: "将鸡蛋倒回锅中，与番茄汁混合均匀，加入适量盐调味。撒葱花出锅。" }] },
+            { name: "番茄炖牛腩", desc: "浓郁的番茄汤汁与软烂入味的牛腩完美结合，酸香解腻。暖胃又营养。", image: "https://tse2-mm.cn.bing.net/th?q=番茄牛腩+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛腩 500g", "番茄 3个", "姜片/葱段 适量", "八角 1个", "生抽 2勺", "老抽 1勺", "冰糖 几粒"], steps: [{ time: "10分钟", desc: "牛腩切块冷水下锅焯水洗净。番茄顶部划十字，开水烫后去皮切块。" }, { time: "5分钟", desc: "热锅凉油下冰糖炒出糖色，倒入牛腩煸炒上色。加入姜葱、八角炒香，加生抽老抽。" }, { time: "60分钟", desc: "放入一半番茄块炒出红汁。加开水没过食材，大火烧开转小火慢炖1个小时。" }, { time: "15分钟", desc: "将剩余番茄块放入锅中继续炖煮至牛腩软烂，加盐调味，收浓汤汁即可。" }] },
+            { name: "番茄金针菇肥牛", desc: "酸香开胃的快手菜，金针菇充分吸收了番茄的酸爽和肥牛的鲜味。", image: "https://tse3-mm.cn.bing.net/th?q=番茄金针菇肥牛+家常菜&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["肥牛卷 200g", "番茄 2大个", "金针菇 1把", "蒜末 适量", "番茄酱 1大勺", "生抽 1勺", "盐 适量"], steps: [{ time: "5分钟", desc: "番茄去皮切小块。金针菇洗净撕开。肥牛卷用开水快速焯烫变色捞出。" }, { time: "3分钟", desc: "热锅倒油爆香蒜末。倒入番茄块炒软出汁后，加入一勺番茄酱。" }, { time: "3分钟", desc: "加入大碗清水煮开，放入金针菇，中火煮2-3分钟至软熟。" }, { time: "1分钟", desc: "放入肥牛卷，加生抽和盐调味，稍微煮一下即可关火。" }] },
+            { name: "番茄滑鱼片", desc: "鱼片滑嫩无骨，番茄汤底酸甜浓郁，一道高蛋白低脂肪的健康菜。", image: "https://tse4-mm.cn.bing.net/th?q=番茄龙利鱼+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["龙利鱼或巴沙鱼 1片", "番茄 2个", "番茄酱 2勺", "姜丝/蒜末 适量", "料酒 1勺", "淀粉 1勺"], steps: [{ time: "10分钟", desc: "鱼肉斜刀切薄片。加料酒、白胡椒、盐和淀粉抓匀腌制。番茄去皮切块。" }, { time: "2分钟", desc: "锅中烧开水，下入鱼片，变白打卷后迅速捞出备用。" }, { time: "3分钟", desc: "另起锅烧油爆香姜蒜。倒入番茄块炒出红汤，加番茄酱翻炒。" }, { time: "2分钟", desc: "加适量开水煮沸，放入鱼片，加少许盐调味，煮半分钟出锅撒葱花。" }] },
+            { name: "番茄肉酱意面", desc: "自制番茄肉酱健康美味，味道浓郁纯正，非常适合家庭制作。", image: "https://tse1-mm.cn.bing.net/th?q=番茄肉酱意面+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["意大利面 1人份", "猪肉沫或牛肉沫 150g", "番茄 2个", "洋葱 半个", "番茄酱 2大勺", "黑胡椒 适量", "黄油 少许"], steps: [{ time: "10分钟", desc: "开水加盐煮意面8-10分钟，捞出过凉水拌油防粘。番茄和洋葱切细丁。" }, { time: "3分钟", desc: "热锅融化黄油，下洋葱丁慢慢炒至透明发软出香味。" }, { time: "2分钟", desc: "倒入肉沫，开大火快速翻炒，直到变色、水分煸干。" }, { time: "10分钟", desc: "倒入番茄丁和番茄酱炒出浓汁，加小半碗水小火熬煮10分钟，加盐和黑胡椒调味浇在意面上。" }] }
+        ],
+        shajiang: [
+            { name: "砂锅沙姜猪脚", desc: "沙姜独特的辛香与猪脚的胶质完美结合，在砂锅的高温下激发出浓郁的焦香，软糯弹牙。", image: "https://tse1-mm.cn.bing.net/th?q=沙姜猪脚煲+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪脚 500g", "新鲜沙姜 50g", "红葱头 5个", "大蒜 半头", "生抽 2勺", "老抽 半勺", "蚝油 1勺", "米酒 2勺", "冰糖 少许"], steps: [{ time: "15分钟", desc: "猪脚斩块冷水下锅焯水洗净。沙姜拍碎，红葱头切开。" }, { time: "40分钟", desc: "猪脚放入高压锅压20分钟至八分熟，捞出沥干。" }, { time: "5分钟", desc: "碗中加生抽、老抽、蚝油、冰糖、米酒调成酱汁，将猪脚抓拌腌制入味。" }, { time: "10分钟", desc: "砂锅烧热倒花生油，爆香沙姜和红葱头。倒入猪脚和酱汁，中火啫5-8分钟，大火收汁即可。" }] },
+            { name: "沙姜白切鸡", desc: "鸡肉皮爽肉滑，搭配用热油激发出香味的沙姜蘸料，最大程度保留了食材的本味与鲜香。", image: "https://tse2-mm.cn.bing.net/th?q=沙姜白切鸡+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["三黄鸡 半只", "新鲜沙姜 40g", "红葱头 3个", "花生油 适量", "生抽 2大勺", "盐 少许", "葱姜 适量"], steps: [{ time: "25分钟", desc: "烧水，提鸡头将鸡身放入水中烫3秒重复三次。放入微沸的水中加葱姜小火浸煮20分钟至熟透。" }, { time: "5分钟", desc: "捞出立刻放入冰水中浸泡5分钟让皮爽脆，捞出斩块。" }, { time: "5分钟", desc: "沙姜去皮剁极细末，红葱头切碎放入小碗，加盐。" }, { time: "2分钟", desc: "烧热花生油泼入碗中激出香味，倒入生抽搅匀作为蘸料。" }] },
+            { name: "沙姜生爆八爪鱼", desc: "八爪鱼脆嫩，沙姜去腥提鲜，猛火快炒，锅气十足。", image: "https://tse3-mm.cn.bing.net/th?q=沙姜炒八爪鱼+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["八爪鱼 300g", "新鲜沙姜 30g", "青红椒 各半个", "姜蒜末 适量", "生抽 1勺", "料酒 1勺", "蚝油 半勺"], steps: [{ time: "5分钟", desc: "八爪鱼切段。青红椒切块，沙姜剁碎。" }, { time: "2分钟", desc: "水烧开，下入八爪鱼焯水10秒钟卷曲迅速捞出。" }, { time: "2分钟", desc: "热锅下油，爆香沙姜、姜蒜末。" }, { time: "2分钟", desc: "倒入青红椒翻炒断生，倒入八爪鱼，烹料酒加生抽蚝油大火快炒出锅。" }] },
+            { name: "沙姜炒五花肉", desc: "五花肉油脂被煸出后，搭配沙姜的异香，肥而不腻，越嚼越香。", image: "https://tse4-mm.cn.bing.net/th?q=沙姜炒五花肉+家常菜实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮五花肉 300g", "新鲜沙姜 40g", "大蒜 3瓣", "青红尖椒 适量", "生抽 1大勺", "盐 少许"], steps: [{ time: "3分钟", desc: "五花肉切薄片。沙姜剁粗粒，青红椒切圈。" }, { time: "4分钟", desc: "热锅不放油，下五花肉片慢慢煸炒出猪油，肉片边缘微卷。" }, { time: "1分钟", desc: "倒出多余猪油，加入沙姜粒和蒜末爆出香气。" }, { time: "2分钟", desc: "倒入青红椒圈翻炒断生，淋入生抽上色，加少许盐即可。" }] },
+            { name: "沙姜焗生鱼煲", desc: "鱼肉鲜嫩不散，锅底铺满的沙姜和红葱头散发出迷人的焦香。", image: "https://tse1-mm.cn.bing.net/th?q=沙姜焗鱼块+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["黑鱼块 400g", "新鲜沙姜 50g", "红葱头 8个", "大蒜 半头", "蚝油 1勺", "生抽 1勺", "胡椒粉 少许", "淀粉 1勺"], steps: [{ time: "10分钟", desc: "鱼块加生抽、蚝油、胡椒粉、少许花生油和淀粉抓匀腌制10分钟。沙姜拍碎。" }, { time: "3分钟", desc: "平底锅放少许油，将鱼块两面略煎定型。" }, { time: "2分钟", desc: "砂锅烧热倒花生油，下沙姜、红葱头和大蒜中火炒至微焦香气四溢。" }, { time: "5分钟", desc: "将煎好的鱼块平铺在配料上，盖砂锅盖，沿锅盖边缘淋入米酒，中火焗5分钟。" }] }
+        ],
+        nangua: [
+            { name: "咸蛋黄焗南瓜", desc: "外酥里软，咸甜交织。咸蛋黄的咸香与南瓜的清甜完美结合。", image: "https://tse1-mm.cn.bing.net/th?q=咸蛋黄焗南瓜+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["老南瓜 300g", "咸蛋黄 4个", "淀粉 适量", "食用油 适量", "盐 少许"], steps: [{ time: "5分钟", desc: "南瓜去皮切长条。咸蛋黄蒸熟压成粉末。" }, { time: "3分钟", desc: "南瓜条焯水约1分钟至半熟捞出控干。" }, { time: "2分钟", desc: "趁微湿均匀裹上一层干淀粉。" }, { time: "5分钟", desc: "油烧六成热，下南瓜条炸至表面酥脆微黄捞出。" }, { time: "3分钟", desc: "锅底留油，下咸蛋黄末小火炒出泡沫，倒入南瓜条快速翻炒均匀出锅。" }] },
+            { name: "南瓜排骨汤", desc: "汤汁清甜，营养丰富。南瓜融化在汤里，让排骨汤多了一份自然的甘甜。", image: "https://tse2-mm.cn.bing.net/th?q=南瓜排骨汤+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["肋排 400g", "老南瓜 300g", "生姜 几片", "盐 适量", "料酒 1勺"], steps: [{ time: "5分钟", desc: "排骨冷水下锅加姜片料酒焯水洗净。南瓜切大块。" }, { time: "60分钟", desc: "排骨放入砂锅加清水和姜，大火烧开转小火慢炖1小时。" }, { time: "20分钟", desc: "加入南瓜块，继续小火炖煮15-20分钟至南瓜软绵。" }, { time: "1分钟", desc: "加入适量盐调味即可。" }] },
+            { name: "葱烧南瓜", desc: "做法极简但出奇下饭。浓郁的葱油香气激发出南瓜的鲜甜，软糯可口。", image: "https://tse3-mm.cn.bing.net/th?q=葱烧南瓜+家常菜&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["绿皮南瓜 400g", "大葱 1根", "大蒜 2瓣", "生抽 1勺", "盐 少许"], steps: [{ time: "3分钟", desc: "南瓜洗净切薄片。大葱切长葱段，大蒜切片。" }, { time: "2分钟", desc: "热锅凉油，下大蒜片和一半葱段，小火熬出葱油香味。" }, { time: "4分钟", desc: "倒入南瓜片，中大火翻炒至软边缘微焦。" }, { time: "3分钟", desc: "淋入生抽，加少许盐和剩下一半葱段，加水稍微焖煮收汁出锅。" }] },
+            { name: "百合蒸南瓜", desc: "一道健康的养生甜菜。南瓜甘甜加上百合清香，口感绵软。", image: "https://tse4-mm.cn.bing.net/th?q=百合蒸南瓜+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["老南瓜 300g", "新鲜百合 1个", "枸杞 十几粒", "冰糖 适量"], steps: [{ time: "5分钟", desc: "老南瓜去皮切厚片，在盘子中整齐摆好。" }, { time: "3分钟", desc: "新鲜百合洗净掰开。枸杞泡软。" }, { time: "1分钟", desc: "百合撒在南瓜片上，中间放几颗冰糖。" }, { time: "15分钟", desc: "上蒸锅大火蒸15分钟左右至南瓜软烂，撒上枸杞点缀。" }] },
+            { name: "南瓜绿豆汤", desc: "夏秋季节解暑降噪的佳品。南瓜煮化在绿豆汤中，呈现出金黄色自然清甜。", image: "https://tse1-mm.cn.bing.net/th?q=南瓜绿豆汤+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["老南瓜 200g", "绿豆 100g", "冰糖 适量", "清水 适量"], steps: [{ time: "60分钟", desc: "绿豆提前清水浸泡1小时以上。南瓜去皮切小块。" }, { time: "30分钟", desc: "绿豆加清水大火煮开转中小火煮30分钟至微微开花。" }, { time: "15分钟", desc: "加入南瓜块和适量冰糖，继续中火煮15分钟。" }, { time: "1分钟", desc: "南瓜软烂绿豆起沙，汤汁浓稠即可关火。" }] }
+        ],
+        nongjia: [
+            { name: "农家青椒茄子炒蛋", desc: "茄子软烂吸味，鸡蛋蓬松，青椒提香，是一道极其下饭的快手乱炖小炒。", image: "https://tse3-mm.cn.bing.net/th?q=茄子炒鸡蛋+青椒+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["长茄子 1根", "青椒 2个", "鸡蛋 3个", "大蒜 3瓣", "豆瓣酱 1勺", "生抽 1勺", "老抽 半勺"], steps: [{ time: "3分钟", desc: "茄子切粗条加盐腌制杀出水分。青椒切块。鸡蛋打散。" }, { time: "2分钟", desc: "热锅倒油，将鸡蛋快速划散炒熟成大块盛出。" }, { time: "4分钟", desc: "挤干茄子水分，下锅中火慢慢煎炒至变软微焦。" }, { time: "3分钟", desc: "放入蒜末和豆瓣酱炒香。倒入青椒块翻炒，烹入生抽老抽。" }, { time: "1分钟", desc: "将炒好的鸡蛋倒回锅中大火翻炒均匀裹上酱汁即可出锅。" }] },
+            { name: "青椒炒鸡蛋", desc: "青椒的清香微辣与鸡蛋的焦香完美互补，几分钟就能上桌端饭。", image: "https://tse1-mm.cn.bing.net/th?q=青椒炒鸡蛋+家常实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["薄皮青椒 3个", "鸡蛋 4个", "大蒜 2瓣", "生抽 1大勺", "盐 少许", "食用油 适量"], steps: [{ time: "2分钟", desc: "青椒切丝。大蒜切片。鸡蛋加少许水打散。" }, { time: "2分钟", desc: "热锅宽油，倒入蛋液炒熟透后立刻盛出。" }, { time: "2分钟", desc: "锅中不放油直接下青椒和大蒜中火干煸，至表面起虎皮。" }, { time: "1分钟", desc: "鸡蛋倒回锅中，淋入生抽加盐翻炒均匀出锅。" }] },
+            { name: "酱香青椒烧茄子", desc: "经典的米饭杀手。茄子软糯不油腻，搭配青椒的清爽，裹满浓郁的酱汁。", image: "https://tse2-mm.cn.bing.net/th?q=青椒烧茄子+家常菜实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["紫皮茄子 2根", "青椒 2个", "大蒜 半头", "生抽 2勺", "蚝油 1勺", "淀粉 1勺"], steps: [{ time: "3分钟", desc: "调酱汁：生抽、老抽、蚝油、白糖、淀粉和水搅匀。大蒜切碎，青椒切块。" }, { time: "5分钟", desc: "茄子切滚刀块裹薄淀粉，下锅煎至表面微黄发软盛出。" }, { time: "1分钟", desc: "锅底留油爆香蒜末，下青椒块翻炒断生。" }, { time: "2分钟", desc: "倒入茄子，淋入酱汁大火收汁，撒剩下的生蒜末翻匀。" }] },
+            { name: "肉沫酸豆角", desc: "酸爽脆嫩的豆角配上煸香的肉沫，用来拌面或下饭堪称一绝。", image: "https://tse3-mm.cn.bing.net/th?q=肉沫酸豆角+家常菜&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["酸豆角 250g", "猪肉沫 150g", "泡椒或干辣椒 适量", "姜蒜末 适量", "老抽 少许", "生抽 1勺", "白糖 少许"], steps: [{ time: "5分钟", desc: "酸豆角洗去盐分切颗粒，干锅煸炒出水汽后盛出。" }, { time: "3分钟", desc: "热锅少油下肉沫慢慢煸炒变白出油，加老抽上色。" }, { time: "1分钟", desc: "放入姜蒜末和辣椒爆香炒出红油。" }, { time: "2分钟", desc: "倒入酸豆角大火快速翻炒，加生抽白糖提鲜出锅。" }] },
+            { name: "虎皮青椒", desc: "极具地方特色的素菜。青椒表面煸出焦香的虎皮纹，酸辣开胃。", image: "https://tse4-mm.cn.bing.net/th?q=虎皮青椒+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["薄皮青椒 6个", "大蒜 3瓣", "生抽 2勺", "香醋 2勺", "白糖 1勺", "盐 少许", "食用油 适量"], steps: [{ time: "2分钟", desc: "青椒去蒂去籽，用刀背轻轻拍扁。大蒜切末。" }, { time: "2分钟", desc: "调料汁：生抽、香醋、白糖、盐和水搅匀。" }, { time: "4分钟", desc: "平底锅不放油放入青椒中小火干煸，一边煸一边按压至两面起虎皮盛出。" }, { time: "2分钟", desc: "倒少许油爆香蒜末，倒入青椒，淋入糖醋汁大火收汁出锅。" }] }
+        ],
+        chaoshan: [
+            { name: "潮汕牛肉炒芥蓝", desc: "沙茶酱的浓郁与牛肉的鲜嫩、芥蓝的脆爽完美融合，锅气十足。", image: "https://tse1-mm.cn.bing.net/th?q=潮汕牛肉炒芥蓝+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛里脊 250g", "新鲜芥蓝 300g", "潮汕沙茶酱 2大勺", "蒜末 适量", "生抽 1勺", "淀粉 1勺"], steps: [{ time: "10分钟", desc: "牛肉切薄片，加生抽、淀粉和一勺沙茶酱腌制。芥蓝洗净切段。" }, { time: "1分钟", desc: "开水滴油下芥蓝焯水30秒捞出沥干。" }, { time: "1分钟", desc: "热锅冷油下牛肉快速滑炒至七分熟变色盛出。" }, { time: "2分钟", desc: "锅留底油爆香蒜末加沙茶酱炒香。倒入芥蓝和牛肉大火翻炒包裹酱汁出锅。" }] },
+            { name: "潮汕砂锅海鲜粥", desc: "鲜透屏幕的潮汕砂锅粥。米粒熬至开花，海鲜鲜甜融入粥底。", image: "https://tse2-mm.cn.bing.net/th?q=潮汕海鲜砂锅粥+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["东北大米 150g", "鲜活鲜虾 200g", "花蟹 1只", "姜丝 适量", "潮汕冬菜 少许", "芹菜末 适量", "白胡椒粉 少许"], steps: [{ time: "30分钟", desc: "大米洗净加花生油腌制。鲜虾开背去虾线，花蟹处理干净切小块。" }, { time: "20分钟", desc: "砂锅加清水大火烧开倒入大米，中大火熬煮20分钟至米粒开花浓稠。" }, { time: "5分钟", desc: "放入姜丝和花蟹块熬煮5分钟释出鲜甜。" }, { time: "3分钟", desc: "加入鲜虾煮变红。加洗净的冬菜、盐和白胡椒粉调味。" }, { time: "1分钟", desc: "关火撒芹菜末利用余温激发出香气端锅上桌。" }] },
+            { name: "潮式卤水拼盘", desc: "醇厚的卤水赋予了食材深邃的香气，回味甘甜，配蒜泥醋解腻。", image: "https://tse3-mm.cn.bing.net/th?q=潮汕卤水拼盘+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["鸭翅/鸭掌 500g", "猪五花肉 300g", "鸡蛋 4个", "市售潮汕卤水汁 1瓶", "老姜 1块", "蒜头 半个", "蒜泥白醋汁"], steps: [{ time: "15分钟", desc: "鸭翅鸭掌五花肉焯水洗净。鸡蛋煮熟剥壳。" }, { time: "5分钟", desc: "深锅热少许油爆香姜蒜，倒入潮汕卤水汁和清水煮开。" }, { time: "40分钟", desc: "先放入五花肉和鸭翅鸭掌，盖盖子慢卤40分钟。" }, { time: "20分钟", desc: "加入剥好的白水蛋继续小火卤20分钟。" }, { time: "60分钟", desc: "关火让食材在卤水中浸泡1小时以上吸满味道，切片配蘸碟。" }] },
+            { name: "潮汕蚝烙", desc: "风靡潮汕的街头美食。新鲜生蚝裹红薯粉糊煎至外酥里嫩，蘸鱼露极鲜。", image: "https://tse1-mm.cn.bing.net/th?q=潮汕蚝烙+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["鲜生蚝肉 250g", "纯红薯粉 100g", "鸡蛋 2个", "小葱或芫荽 适量", "盐 少许", "鱼露（蘸料）"], steps: [{ time: "5分钟", desc: "生蚝肉洗净沥干。红薯粉加清水调成浓粉浆，加葱花和盐拌匀。" }, { time: "2分钟", desc: "将生蚝肉倒入调好的粉浆中轻轻拌匀。" }, { time: "4分钟", desc: "平底锅多倒油烧热，倒入粉浆摊平，中小火慢煎至底部定型焦脆。" }, { time: "2分钟", desc: "表面打入鸡蛋摊开，翻面煎至金黄焦脆，出锅切块配鱼露。" }] },
+            { name: "普宁炸豆干", desc: "豆干外皮炸得酥脆金黄，内里如同豆腐脑般滑嫩，搭配特色韭菜盐水。", image: "https://tse2-mm.cn.bing.net/th?q=普宁炸豆干+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["普宁豆干 4块", "韭菜 适量", "盐 1勺", "温水 小半碗", "食用油 适量"], steps: [{ time: "3分钟", desc: "调制蘸料：韭菜切极细末，加一勺盐倒入温水搅拌激出香气。" }, { time: "2分钟", desc: "豆干洗净吸干水分，对角切成三角形。" }, { time: "5分钟", desc: "锅中多倒油烧至七成热（冒青烟），下豆干大火炸制。" }, { time: "3分钟", desc: "炸至豆干浮起表面金黄酥脆，捞出控油。吃时浸入韭菜盐水。" }] }
+        ],
+        hunan: [
+            { name: "辣椒炒肉", desc: "湘菜当之无愧的灵魂。螺丝椒的清辣与前腿肉的脂香交织，汤汁拌饭堪称一绝。", image: "https://tse4-mm.cn.bing.net/th?q=湖南辣椒炒肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪前腿肉 300g", "螺丝椒 4个", "独蒜 2个", "浏阳豆豉 1勺", "老抽 少许", "生抽 2勺", "盐 适量"], steps: [{ time: "5分钟", desc: "肥瘦肉分开切薄片。瘦肉加生抽腌制。螺丝椒切滚刀块。" }, { time: "3分钟", desc: "锅烧热不放油，下螺丝椒干煸按压出虎皮后盛出。" }, { time: "3分钟", desc: "放少许油下肥肉片煸炒出猪油微卷成灯盏窝状。" }, { time: "1分钟", desc: "放蒜片豆豉爆香，倒入瘦肉大火快速翻炒至变色。" }, { time: "2分钟", desc: "倒入辣椒加调料大火爆炒，点少许清水滋润出红亮汤汁出锅。" }] },
+            { name: "剁椒鱼头", desc: "湘菜头牌。鲜红的剁椒覆盖在白嫩的鱼头上，热油一泼，鲜辣咸香扑面而来。", image: "https://tse1-mm.cn.bing.net/th?q=湖南剁椒鱼头+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["花鲢鱼头 1个", "湖南红剁椒 4大勺", "葱姜蒜 适量", "蒸鱼豉油 2勺", "猪油 1勺", "料酒 1勺"], steps: [{ time: "15分钟", desc: "鱼头劈开洗净内部黑膜，抹葱姜料酒腌制去腥。" }, { time: "3分钟", desc: "热锅下猪油爆香蒜姜末，倒入剁椒小火炒出红油盛出。" }, { time: "2分钟", desc: "盘底铺姜葱，放上鱼头，将剁椒酱均匀铺在鱼头上。" }, { time: "12分钟", desc: "上蒸锅大火蒸10-12分钟，关火虚蒸1分钟。" }, { time: "2分钟", desc: "倒去腥水淋蒸鱼豉油撒葱花，烧一勺热油泼在剁椒上激香。" }] },
+            { name: "农家小炒肉", desc: "极具地方风味的干香炒肉，多用带皮五花肉和青尖椒，口味重，锅气足。", image: "https://tse2-mm.cn.bing.net/th?q=农家小炒肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮五花肉 250g", "青尖椒 1把", "红尖椒 2个", "姜蒜 适量", "黑豆豉 1勺", "生抽 1勺", "料酒 1勺"], steps: [{ time: "5分钟", desc: "五花肉切薄片。青红尖椒切斜刀长段，姜蒜切薄片。" }, { time: "4分钟", desc: "锅烧热不放油下五花肉煸炒出油脂打卷微焦，盛出多余猪油。" }, { time: "1分钟", desc: "肉推到锅边，爆香姜蒜片和豆豉。" }, { time: "2分钟", desc: "倒入青红尖椒大火翻炒，吸收猪油香气。" }, { time: "2分钟", desc: "烹入料酒生抽，大火翻炒均匀至辣椒断生入味加盐出锅。" }] },
+            { name: "外婆菜炒蛋", desc: "湘菜馆必点神菜。外婆菜口感爽脆，加上鸡蛋的醇厚，超级费米饭。", image: "https://tse3-mm.cn.bing.net/th?q=外婆菜炒鸡蛋+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["市售外婆菜 1袋", "鸡蛋 3个", "青红尖椒 适量", "大蒜 2瓣", "生抽 少许"], steps: [{ time: "2分钟", desc: "外婆菜倒出备用。鸡蛋打散，青红尖椒切小圈大蒜切末。" }, { time: "2分钟", desc: "热锅倒油，倒入鸡蛋液大火划散炒熟成小碎块盛出。" }, { time: "2分钟", desc: "锅底留油下蒜末青红椒圈爆香，倒入外婆菜大火炒出干香。" }, { time: "1分钟", desc: "鸡蛋碎倒回锅中翻拌均匀，加少许生抽提鲜出锅。" }] },
+            { name: "毛氏红烧肉", desc: "湖南特色红烧肉。依靠炒糖色赋予猪肉红亮的光泽，甜中带咸肥而不腻。", image: "https://tse4-mm.cn.bing.net/th?q=毛氏红烧肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮五花肉 500g", "冰糖 1把", "干辣椒 3个", "八角/桂皮 适量", "葱姜蒜 适量", "料酒 2勺", "盐 适量"], steps: [{ time: "10分钟", desc: "五花肉切麻将块冷水下锅加料酒姜片焯水捞出洗净沥干。" }, { time: "5分钟", desc: "热锅少油下五花肉煸出多余猪油盛出洗锅。" }, { time: "3分钟", desc: "冷锅冷油放入冰糖小火慢慢熬化至冒出细密棕红色泡泡。" }, { time: "40分钟", desc: "倒入五花肉翻炒裹上糖色，加葱姜蒜香料炒香，倒入开水小火炖40分钟。" }, { time: "5分钟", desc: "挑出香料残渣加盐，大火翻炒收浓汤汁红亮粘稠出锅。" }] }
+        ],
+        kejia: [
+            { name: "客家酿豆腐", desc: "醇香的猪肉馅塞入滑嫩的豆腐中，煎至金黄后焖煮，汤汁浓郁，老少皆宜。", image: "https://tse1-mm.cn.bing.net/th?q=客家酿豆腐+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["客家板豆腐 1大块", "五花肉沫 150g", "干香菇 3朵", "小葱 适量", "生抽 2勺", "蚝油 1勺", "淀粉 适量"], steps: [{ time: "10分钟", desc: "干香菇泡发切末，与肉沫加调料顺方向搅拌上劲。豆腐切块。" }, { time: "5分钟", desc: "用小勺在每块豆腐中间挖小坑，将肉馅填入坑中抹平压实。" }, { time: "5分钟", desc: "平底锅倒油将酿好的豆腐肉面朝下中小火慢煎至金黄翻面。" }, { time: "10分钟", desc: "调料汁：生抽蚝油水淀粉搅匀。倒入锅中中小火焖煮5-8分钟。" }, { time: "1分钟", desc: "大火收汁撒上葱绿即可出锅。" }] },
+            { name: "梅菜扣肉", desc: "梅干菜吸收了五花肉的油脂，五花肉带着梅菜的清香，肥而不腻。", image: "https://tse2-mm.cn.bing.net/th?q=梅菜扣肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮五花肉 500g", "客家梅干菜 100g", "生姜/大葱 适量", "老抽 2勺", "生抽 1勺", "冰糖/八角 适量", "蜂蜜 少许"], steps: [{ time: "20分钟", desc: "梅干菜泡发洗净炒干水汽。五花肉煮20分钟捞出扎孔抹老抽蜂蜜。" }, { time: "5分钟", desc: "油锅炸五花肉皮朝下炸至焦黄，捞出浸泡冷水起虎皮。" }, { time: "5分钟", desc: "五花肉切厚片皮朝下码放碗底。" }, { time: "5分钟", desc: "热油爆香姜蒜八角，下梅干菜炒香加调料铺在肉上。" }, { time: "90分钟", desc: "大火烧开转中火蒸1.5小时以上，倒扣在盘中。" }] },
+            { name: "客家三杯鸭", desc: "以一杯酱油、一杯油、一杯酒烹饪而得名，鸭肉酱香浓郁，色泽诱人。", image: "https://tse3-mm.cn.bing.net/th?q=客家三杯鸭+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["半片鸭 1只", "生姜 1块", "红葱头 适量", "米酒 1小杯", "生抽 1小杯", "花生油 1小杯", "冰糖 适量"], steps: [{ time: "5分钟", desc: "鸭子洗净。生姜切厚片，红葱头拍扁。准备米酒生抽花生油各一杯。" }, { time: "5分钟", desc: "倒入花生油爆香姜片红葱头，鸭子皮朝下煎至表面微黄出油。" }, { time: "40分钟", desc: "倒入米酒生抽加冰糖，小火盖盖焖煮40分钟，期间多次翻面淋汁。" }, { time: "5分钟", desc: "大火收汁取出放凉斩块装盘淋上浓郁酱汁。" }] },
+            { name: "算盘子", desc: "大埔客家小吃。芋头和木薯粉做成算盘珠，与配菜同炒Q弹软糯寓意精打细算。", image: "https://tse4-mm.cn.bing.net/th?q=客家算盘子+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["芋头 300g", "木薯粉 150g", "猪肉沫 100g", "香菇/虾米 适量", "胡萝卜/小葱 适量", "生抽 1勺", "白胡椒粉 少许"], steps: [{ time: "20分钟", desc: "芋头蒸熟压泥加入木薯粉揉成光滑面团。" }, { time: "10分钟", desc: "揪小剂子搓圆中间捏凹陷做成算盘子形状。" }, { time: "5分钟", desc: "开水下算盘子煮浮起捞出过冷水沥干备用。" }, { time: "5分钟", desc: "热锅下油爆香香菇虾米肉沫加入胡萝卜丝翻炒。" }, { time: "3分钟", desc: "倒入算盘子加生抽白胡椒粉大火翻匀撒葱花出锅。" }] },
+            { name: "客家猪肚鸡", desc: "胡椒的辛辣去除了猪肚异味，增添暖胃功效，汤白味鲜。", image: "https://tse1-mm.cn.bing.net/th?q=客家猪肚鸡+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["新鲜猪肚 1个", "土鸡 半只", "白胡椒粒 1大勺", "生姜/红枣/枸杞 适量", "盐 适量"], steps: [{ time: "15分钟", desc: "面粉白醋盐反复揉洗猪肚。土鸡斩块焯水。" }, { time: "5分钟", desc: "白胡椒粒拍碎。猪肚焯水捞出切宽条。" }, { time: "90分钟", desc: "砂锅加清水放猪肚鸡块姜片胡椒，大火烧开转小火慢炖1.5小时。" }, { time: "10分钟", desc: "汤熬至奶白猪肚软烂，加红枣继续煮10分钟。" }, { time: "2分钟", desc: "加枸杞和盐调味即可喝汤吃肉。" }] }
+        ],
+        hubei: [
+            { name: "排骨藕汤", desc: "湖北人的灵魂之汤。选用粉藕和排骨慢炖，藕块粉糯拉丝汤汁浓郁鲜甜。", image: "https://tse1-mm.cn.bing.net/th?q=湖北排骨藕汤+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["排骨 500g", "粉藕 1大节", "生姜 1块", "盐 适量", "白胡椒粉 少许", "葱花 适量"], steps: [{ time: "10分钟", desc: "排骨冷水下锅加姜片料酒焯水洗净。" }, { time: "5分钟", desc: "莲藕去皮滚刀拍切成大块。" }, { time: "5分钟", desc: "热锅少油姜块爆香，排骨翻炒至表面微黄让汤更白。" }, { time: "120分钟", desc: "排骨入砂锅加开水小火煨1小时，加入藕块继续煨1小时以上至藕粉糯。" }, { time: "5分钟", desc: "加盐少许白胡椒粉调味撒葱花。" }] },
+            { name: "红烧武昌鱼", desc: "武昌鱼肉质极嫩，红烧做法咸鲜味美色泽红润诱人。", image: "https://tse2-mm.cn.bing.net/th?q=红烧武昌鱼+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["武昌鱼 1条", "葱姜蒜 适量", "干辣椒 2个", "生抽 2勺", "老抽 半勺", "料酒 1勺", "香醋 1小勺", "白糖 1勺"], steps: [{ time: "10分钟", desc: "武昌鱼洗净打花刀，抹盐料酒腌制10分钟。" }, { time: "5分钟", desc: "姜片擦锅底倒油烧热，鱼下锅中小火煎至两面金黄微焦盛出。" }, { time: "3分钟", desc: "底油爆香葱段姜蒜干辣椒，加调味料炒香。" }, { time: "10分钟", desc: "倒入清水烧开鱼放入锅中小火炖煮期间不断淋汁。" }, { time: "2分钟", desc: "大火收汁浓稠包裹鱼身出锅撒葱丝。" }] },
+            { name: "沔阳珍珠丸子", desc: "肉馅裹上晶莹剔透的糯米蒸熟，形似珍珠，糯香和肉香完美交融。", image: "https://tse3-mm.cn.bing.net/th?q=沔阳珍珠丸子+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪肉沫 300g", "糯米 100g", "马蹄或莲藕末 50g", "生姜/大葱碎 适量", "鸡蛋清 1个", "生抽 1勺", "淀粉 半勺"], steps: [{ time: "4小时", desc: "糯米提前用水浸泡4小时吸饱水分沥干。" }, { time: "10分钟", desc: "肉沫加马蹄碎葱姜水蛋清调料搅拌上劲起胶。" }, { time: "10分钟", desc: "肉馅揉成大小均匀的丸子。" }, { time: "5分钟", desc: "肉丸放在糯米上滚动均匀裹满糯米压实防掉。" }, { time: "25分钟", desc: "放蒸笼大火蒸20-25分钟至糯米晶莹透明。" }] },
+            { name: "洪山菜苔炒腊肉", desc: "红菜苔紫红脆嫩自带清甜，吸收腊肉油脂和烟熏味后风味绝佳。", image: "https://tse4-mm.cn.bing.net/th?q=红菜苔炒腊肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["红菜苔 400g", "湖北腊肉 100g", "大蒜 3瓣", "干辣椒 2个", "盐 少许"], steps: [{ time: "5分钟", desc: "菜苔洗净折成寸段粗茎劈开。腊肉温水洗净切片。蒜切片辣椒剪段。" }, { time: "3分钟", desc: "热锅少油下腊肉小火煸出透明油脂散发香味。" }, { time: "1分钟", desc: "放入蒜片干辣椒在腊油中爆香。" }, { time: "3分钟", desc: "大火倒入菜苔快速翻炒至变软发亮加极少许盐出锅。" }] },
+            { name: "干煸藕丝", desc: "莲藕切细丝挂糊炸酥后加辣椒花椒干煸，麻辣香脆像吃零食。", image: "https://tse1-mm.cn.bing.net/th?q=干煸藕丝+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["脆藕 1节", "干辣椒/花椒 适量", "葱姜蒜 适量", "白芝麻 适量", "淀粉 适量", "生抽 1勺", "白糖 少许"], steps: [{ time: "10分钟", desc: "莲藕切粗长丝泡去淀粉沥干，撒淀粉裹上薄粉糊。" }, { time: "8分钟", desc: "油烧七成热下藕丝炸至金黄捞出，油温升高复炸15秒更脆。" }, { time: "2分钟", desc: "锅留底油下花椒干辣椒丝葱姜蒜末小火炒出麻辣香气。" }, { time: "2分钟", desc: "倒入藕丝加生抽白糖大火快速翻匀。" }, { time: "1分钟", desc: "撒白芝麻葱花翻拌均匀出锅。" }] }
+        ],
+        dongbei: [
+            { name: "东北锅包肉", desc: "东北菜门面担当。外焦里嫩酸甜糖醋汁恰到好处，考验火候经典菜。", image: "https://tse1-mm.cn.bing.net/th?q=东北老式锅包肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪里脊肉 300g", "东北土豆淀粉 1碗", "葱姜丝/胡萝卜丝/香菜梗 适量", "白醋 3勺", "白糖 4勺", "盐 半小勺", "料酒 1勺"], steps: [{ time: "15分钟", desc: "里脊切大厚片加调料抓匀。土豆淀粉泡透留底层湿淀粉抓入肉片挂厚糊加一勺油防粘。" }, { time: "10分钟", desc: "油六成热肉片展开下锅炸定型微黄捞出。" }, { time: "3分钟", desc: "油八成热复炸20秒至金黄极其酥脆控油。" }, { time: "2分钟", desc: "白糖白醋盐调匀。锅留底油倒入糖醋汁熬至粘稠起大泡。" }, { time: "1分钟", desc: "倒入肉片葱姜胡萝卜香菜梗大火快速翻勺裹汁出锅。" }] },
+            { name: "猪肉炖粉条", desc: "五花肉油脂被粗粉条完全吸收，粉条劲道滑溜大白菜软烂极度下饭。", image: "https://tse2-mm.cn.bing.net/th?q=猪肉炖粉条+大白菜+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮五花肉 400g", "东北土豆宽粉 1把", "大白菜心 半个", "葱姜蒜/八角/桂皮 适量", "生抽 2勺", "老抽 1勺", "冰糖 适量"], steps: [{ time: "10分钟", desc: "土豆宽粉泡软。五花肉切块焯水。大白菜撕大块。" }, { time: "5分钟", desc: "热锅炒糖色倒入五花肉翻炒上色煸油加香料炒香。" }, { time: "40分钟", desc: "加生抽老抽倒入开水大火烧开转小火炖40分钟至肉烂。" }, { time: "15分钟", desc: "粉条白菜铺肉上中火炖10-15分钟。" }, { time: "2分钟", desc: "粉条透明软糯白菜变软加盐大火收汁端锅。" }] },
+            { name: "小鸡炖蘑菇", desc: "东北四大炖之首。野生榛蘑极鲜，与土鸡同炖香气四溢。", image: "https://tse3-mm.cn.bing.net/th?q=小鸡炖榛蘑+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["散养土鸡 半只", "东北干榛蘑 50g", "土豆粉条 1把", "葱姜/八角/干辣椒 适量", "生抽 2勺", "老抽 1勺", "盐 适量"], steps: [{ time: "30分钟", desc: "榛蘑泡发洗净留清汤。粉条泡软。土鸡斩块焯水。" }, { time: "5分钟", desc: "热锅爆香葱姜香料。鸡块大火炒干水汽至皮微黄出油。" }, { time: "5分钟", desc: "加生抽老抽翻炒，倒入榛蘑炒出香味。" }, { time: "50分钟", desc: "倒入泡蘑菇水和开水小火炖40-50分钟。" }, { time: "15分钟", desc: "加粉条盐继续炖10-15分钟至粉条透明汤汁浓郁。" }] },
+            { name: "溜肉段", desc: "咸鲜口味经典。猪肉切段炸至外酥里嫩，挂上一层晶莹剔透欠汁。", image: "https://tse4-mm.cn.bing.net/th?q=东北溜肉段+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪瘦肉 300g", "青椒 1个", "木耳 少许", "土豆淀粉 1碗", "生抽 2勺", "耗油 1勺", "料酒 1勺", "葱姜蒜末 适量"], steps: [{ time: "15分钟", desc: "猪肉切粗段加底味。土豆湿淀粉挂厚糊。青椒切块木耳泡发撕朵。" }, { time: "10分钟", desc: "油温六成热下肉段炸定型捞出，八成热复炸至酥脆微焦。" }, { time: "2分钟", desc: "调碗芡：生抽蚝油盐白糖水淀粉清水搅匀。" }, { time: "3分钟", desc: "锅底油爆香葱姜蒜下青椒木耳快炒断生。" }, { time: "1分钟", desc: "倒入碗芡熬浓稠下肉段大火翻炒裹汁淋明油出锅。" }] },
+            { name: "酱骨架", desc: "豪放的东北大块肉吃法。猪骨慢火炖煮骨边肉软烂脱骨酱香扑鼻。", image: "https://tse1-mm.cn.bing.net/th?q=东北酱骨头+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪脊骨 1000g", "东北大酱 2大勺", "生抽 3勺", "老抽 1勺", "冰糖 适量", "葱姜蒜/香料 适量", "干辣椒 少许"], steps: [{ time: "60分钟", desc: "脊骨砍大块泡去血水，冷水下锅焯透洗净。" }, { time: "5分钟", desc: "冰糖炒糖色加葱姜蒜干香料爆香，下东北大酱炒浓郁。" }, { time: "5分钟", desc: "骨头入锅翻炒上色加生抽老抽料酒。" }, { time: "90分钟", desc: "倒入开水小火慢炖1.5小时至肉质软烂。" }, { time: "10分钟", desc: "大火收汁汤汁浓稠包裹骨头出锅直接啃食。" }] }
+        ],
+        beef: [
+            { name: "水煮牛肉", desc: "川菜经典。牛肉滑嫩，麻辣鲜香，红油油的汤汁配上底部的配菜，极度下饭。", image: "https://tse1-mm.cn.bing.net/th?q=水煮牛肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛里脊 300g", "豆芽/莴笋/千张 适量", "郫县豆瓣酱 2大勺", "干辣椒/花椒 大量", "葱姜蒜 适量", "蛋清 1个", "淀粉 适量"], steps: [{ time: "10分钟", desc: "牛肉切薄片，加生抽、料酒、蛋清、盐和淀粉抓匀腌制。" }, { time: "5分钟", desc: "热锅倒油，下入配菜炒至断生，铺在大碗底部。" }, { time: "5分钟", desc: "锅中热油爆香葱姜蒜，加入豆瓣酱炒出红油，加入适量高汤或清水烧开。" }, { time: "2分钟", desc: "将腌好的牛肉片逐片滑入锅中，变色后连汤倒入装有配菜的碗中。" }, { time: "3分钟", desc: "在表面撒上干辣椒段、花椒、蒜末。另烧一勺热油，泼在表面激发出麻辣香气即可。" }] },
+            { name: "葱爆牛肉", desc: "大葱的辛香完美衬托了牛肉的鲜美，猛火快炒，肉质滑嫩，非常适合北方口味。", image: "https://tse2-mm.cn.bing.net/th?q=葱爆牛肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛里脊 250g", "大葱 2大根", "姜蒜 适量", "生抽 2勺", "老抽 少许", "料酒 1勺", "孜然粉 1勺"], steps: [{ time: "10分钟", desc: "牛肉切薄片，加生抽、料酒、少许老抽、水淀粉和食用油抓匀腌制10分钟。" }, { time: "2分钟", desc: "大葱切成滚刀块或长段。姜蒜切片。" }, { time: "2分钟", desc: "热锅宽油，将牛肉下锅大火迅速滑炒至变色，立刻盛出。" }, { time: "3分钟", desc: "锅留底油爆香姜蒜，下大葱大火翻炒至微微变软出香。" }, { time: "1分钟", desc: "将牛肉倒回锅中，加入少许盐和孜然粉，大火翻炒均匀出锅。" }] },
+            { name: "番茄牛腩", desc: "浓郁的番茄红汤与软烂入味的牛腩是绝配，酸甜解腻，无论是配米饭还是下汤面都是极品。", image: "https://tse3-mm.cn.bing.net/th?q=番茄炖牛腩+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛腩 500g", "番茄 4个", "洋葱 半个", "姜葱 适量", "八角 1个", "番茄酱 2勺", "生抽 2勺"], steps: [{ time: "10分钟", desc: "牛腩切块，冷水下锅加料酒姜片焯水洗净。番茄去皮切块，洋葱切丁。" }, { time: "5分钟", desc: "热锅倒油，下洋葱丁炒香，加入一半的番茄块炒出红沙，加入番茄酱炒匀。" }, { time: "5分钟", desc: "倒入牛腩翻炒上色，加入生抽、老抽、八角和姜葱。" }, { time: "60分钟", desc: "倒入足量开水，大火烧开转小火慢炖1至1.5小时至牛腩软烂。" }, { time: "15分钟", desc: "加入剩下的一半番茄块，加盐调味，继续炖煮15分钟至浓稠即可。" }] },
+            { name: "黑椒牛柳", desc: "西式风味与中式炒菜的结合。浓郁的黑胡椒香气包裹着嫩滑的牛柳，配上洋葱青椒，口感丰富。", image: "https://tse4-mm.cn.bing.net/th?q=黑椒牛柳+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["牛里脊 300g", "洋葱 半个", "青红椒 各半个", "现磨黑胡椒 大量", "蚝油 1勺", "生抽 1勺", "淀粉 1勺"], steps: [{ time: "15分钟", desc: "牛肉切粗条，加生抽、蚝油、大量黑胡椒、料酒、小苏打或水淀粉抓匀，封油腌制15分钟。" }, { time: "2分钟", desc: "洋葱和青红椒切条。热锅多油，下牛柳滑炒至七分熟变色盛出。" }, { time: "2分钟", desc: "调黑椒汁：黑胡椒碎、生抽、老抽、白糖、淀粉和少许清水搅匀。" }, { time: "2分钟", desc: "锅留底油下洋葱和青红椒翻炒断生出香味。" }, { time: "1分钟", desc: "倒入牛柳和调好的黑椒汁，大火翻炒裹匀浓汁即可出锅。" }] },
+            { name: "凉拌牛肉", desc: "清爽解腻的下酒好菜。卤好的牛肉切薄片，配上香菜、辣椒油和蒜泥，酸辣爽口。", image: "https://tse1-mm.cn.bing.net/th?q=凉拌牛肉片+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["熟牛腱子肉或卤牛肉 300g", "香菜 1大把", "大蒜 4瓣", "生抽 2勺", "陈醋 1勺", "辣椒油 2勺", "香油 少许"], steps: [{ time: "5分钟", desc: "将熟牛肉逆着纹理切成薄片。香菜洗净切段，大蒜捣成蒜泥。" }, { time: "2分钟", desc: "调配灵魂红油汁：碗中加入蒜泥、生抽、陈醋、辣椒油、香油、少许白糖和熟白芝麻拌匀。" }, { time: "2分钟", desc: "将切好的牛肉片放入大碗中，倒入调好的红油汁抓拌均匀。" }, { time: "2分钟", desc: "加入香菜段，轻轻翻拌（不要把香菜揉烂），装盘即可享用。" }] }
+        ],
+        pork: [
+            { name: "蒜泥白肉", desc: "川菜经典凉菜。五花肉煮熟切薄片，裹着浓郁的红油蒜泥酱汁，肥而不腻，蒜香扑鼻。", image: "https://tse2-mm.cn.bing.net/th?q=蒜泥白肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮二刀肉或五花肉 300g", "黄瓜 1根", "大蒜 1整头", "红油辣子 3勺", "生抽 2勺", "香醋 1勺", "白糖 1勺"], steps: [{ time: "30分钟", desc: "五花肉冷水下锅，加姜葱料酒和几粒花椒，中小火煮30分钟至筷子能轻松扎透无血水，捞出放凉。" }, { time: "10分钟", desc: "黄瓜刮成长薄片卷起来摆盘底。放凉的五花肉切成尽量薄的大片，摆在黄瓜上。" }, { time: "5分钟", desc: "制作灵魂酱汁：大蒜捣成极细的蒜泥，加入生抽、香醋、白糖、红油辣子、少许香油和一勺煮肉的肉汤拌匀。" }, { time: "1分钟", desc: "将调好的红油蒜泥汁均匀地淋在肉片上，撒上葱花即可。" }] },
+            { name: "鱼香肉丝", desc: "名满天下的川菜，以泡椒、葱姜蒜调出“鱼香”味，酸甜微辣，非常下饭。", image: "https://tse3-mm.cn.bing.net/th?q=鱼香肉丝+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪里脊 250g", "水发木耳/胡萝卜丝/冬笋丝 适量", "泡椒末 2大勺", "姜蒜末 适量", "糖 2勺", "醋 2勺", "生抽 1勺"], steps: [{ time: "10分钟", desc: "里脊肉切细丝，加生抽、料酒、水淀粉抓匀上浆腌制。配菜全部切细丝。" }, { time: "3分钟", desc: "调鱼香汁：碗中加入2勺糖、2勺香醋、1勺生抽、半勺老抽、少许盐、淀粉和水搅匀。" }, { time: "2分钟", desc: "热锅凉油，下入肉丝大火滑炒至发白，盛出备用。" }, { time: "2分钟", desc: "锅留底油，下入泡椒末和姜蒜末，小火炒出红油和浓郁香气。" }, { time: "3分钟", desc: "倒入所有配菜丝翻炒断生，再倒入肉丝。最后淋入鱼香汁，大火翻炒收汁明亮出锅。" }] },
+            { name: "回锅肉", desc: "川菜之首。带皮五花肉煮至半熟后再切片爆炒，煸出油脂后搭配蒜苗，酱香浓郁，肥而不腻。", image: "https://tse4-mm.cn.bing.net/th?q=回锅肉+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["带皮二刀肉或五花肉 300g", "青蒜苗 1小把", "郫县豆瓣酱 1勺", "甜面酱 半勺", "姜片/大葱 适量", "老抽 少许"], steps: [{ time: "20分钟", desc: "五花肉冷水下锅加姜葱煮20分钟，煮至七八分熟（筷子能扎入但有阻力），捞出放凉切薄片。" }, { time: "3分钟", desc: "青蒜苗拍扁，蒜梗和蒜叶分开切段。" }, { time: "4分钟", desc: "热锅少油，下入肉片中小火煸炒。煸出大量猪油，直到肉片打卷形成“灯盏窝”。" }, { time: "2分钟", desc: "将肉推到一边，下入郫县豆瓣酱和甜面酱炒出红油酱香，然后与肉片翻炒均匀上色。" }, { time: "2分钟", desc: "下入蒜苗梗翻炒几下，再下入蒜苗叶，大火翻炒断生，加少许糖提鲜即可出锅。" }] },
+            { name: "糖醋排骨", desc: "江浙菜的代表。排骨炸至酥脆后裹上酸甜浓郁的糖醋汁，色泽红亮，深受老人小孩喜爱。", image: "https://tse1-mm.cn.bing.net/th?q=糖醋排骨+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪小排 500g", "白芝麻 少许", "葱姜 适量", "料酒 1勺", "生抽 2勺", "冰糖 3勺", "香醋 4勺"], steps: [{ time: "10分钟", desc: "排骨冷水下锅加姜片料酒焯水，洗净沥干。调一碗糖醋汁：1勺料酒、2勺生抽、3勺冰糖、4勺香醋搅匀。" }, { time: "5分钟", desc: "热锅倒多点油，下排骨中火慢煎（或炸），煎至表面金黄酥脆焦香，盛出多余的油。" }, { time: "2分钟", desc: "锅底留少许油，下葱段姜片爆香，倒入煎好的排骨。" }, { time: "20分钟", desc: "倒入调好的糖醋汁，加少许开水刚好没过排骨。大火烧开转小火加盖焖煮20分钟。" }, { time: "3分钟", desc: "打开锅盖，转大火不断翻炒收汁。待汤汁浓稠红亮完全包裹在排骨上，撒上白芝麻出锅。" }] },
+            { name: "酱爆肉丁", desc: "京菜风味。黄酱的咸香完美融入猪肉丁和黄瓜丁中，酱汁浓郁，非常适合用来拌面或下饭。", image: "https://tse2-mm.cn.bing.net/th?q=酱爆肉丁+实拍&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN", ingredients: ["猪里脊或梅花肉 250g", "黄瓜 1大根", "甜面酱 2勺", "黄豆酱 1勺", "葱姜末 适量", "白糖 1小勺", "淀粉 1勺"], steps: [{ time: "10分钟", desc: "猪肉切成1厘米见方的小丁，加生抽、料酒、蛋清和水淀粉抓匀上浆腌制。黄瓜切同等大小的丁。" }, { time: "2分钟", desc: "将甜面酱、黄豆酱、白糖和少许清水调成酱汁备用。" }, { time: "3分钟", desc: "热锅多油，下入肉丁大火滑炒，炒至变色散开后立即盛出。" }, { time: "3分钟", desc: "锅底留油，下葱姜末爆香，倒入调好的酱汁小火慢慢熬煮至冒密集小泡并散发浓郁酱香。" }, { time: "2分钟", desc: "将肉丁和黄瓜丁倒入锅中，大火快速翻炒，让酱汁均匀包裹住每一个肉丁和黄瓜丁即可出锅。" }] }
+        ]
+    };
+
+    // --- 数据智能扩充生成器 ---
+    const extraNamesMap = {
+        paojiao: [
+            "泡椒凤爪|鸡爪 500g,野山椒 1瓶,白醋 3勺,生姜 1块,盐 2小勺|酸辣爽脆，经典的开胃休闲小菜。",
+            "泡椒牛蛙|牛蛙 2只,泡椒 100g,紫苏 1把,大蒜 半头,料酒 2勺|肉质细嫩，泡椒的酸辣完美去除了土腥味。",
+            "泡椒肥肠|猪大肠 400g,泡椒 50g,大葱 1根,生抽 2勺,老抽 1小勺|肥肠处理干净后爆炒，酸辣解腻，极度下饭。",
+            "泡椒藕带|新鲜藕带 300g,泡椒 30g,白醋 1勺,盐 1小勺,蒜末 10g|藕带清脆爽口，泡椒酸辣，夏日必备凉菜。",
+            "泡椒笋尖|嫩笋尖 300g,野山椒 50g,白糖 1小勺,白醋 1勺,盐 适量|笋尖脆嫩，吸收了泡椒的酸辣，清爽解腻。"
+        ],
+        fanqie: [
+            "番茄巴沙鱼|巴沙鱼 1片,番茄 2个,番茄酱 2勺,料酒 1勺,淀粉 1勺|鱼肉无刺滑嫩，番茄汤底酸甜浓郁，老人小孩都爱。",
+            "番茄鸡蛋面|鲜面条 200g,番茄 2个,鸡蛋 2个,生抽 1勺,葱花 少许|经典的家常面食，酸甜开胃，汤汁浓郁。",
+            "番茄排骨|猪小排 400g,番茄 3个,冰糖 1小把,生抽 2勺,姜片 3片|排骨炖至软烂，番茄红汤酸甜解腻，拌饭一绝。",
+            "番茄肉丸|猪肉末 250g,番茄 2个,鸡蛋清 1个,淀粉 1勺,生抽 1勺|手工肉丸Q弹，番茄汤汁酸甜，营养丰富。",
+            "番茄冬瓜|冬瓜 300g,番茄 2个,大蒜 2瓣,盐 1小勺,鸡精 少许|清淡解暑的素菜，冬瓜吸收了番茄的酸甜，清爽可口。",
+            "番茄菜花|有机花菜 300g,番茄 2个,番茄酱 1勺,大蒜 2瓣,生抽 1勺|花菜脆嫩，裹满浓郁的番茄汁，酸甜开胃。",
+            "番茄虾仁|虾仁 200g,番茄 2个,料酒 1勺,白胡椒粉 少许,淀粉 1小勺|虾仁鲜嫩Q弹，配上酸甜番茄，低脂健康。",
+            "番茄土豆丝|土豆 1大个,番茄 1个,大蒜 2瓣,盐 1小勺,白醋 半勺|土豆丝爽脆，番茄带出自然的酸甜，快手下饭菜。",
+            "番茄肥肠|处理好的肥肠 300g,番茄 2个,青椒 1个,生抽 2勺,姜蒜 适量|肥肠的脂香与番茄的酸甜碰撞，别具风味。",
+            "番茄鸡肉煲|鸡腿肉 300g,番茄 3个,洋葱 半个,番茄酱 2勺,生抽 1勺|鸡肉滑嫩，番茄汤汁浓稠，砂锅慢煲更入味。",
+            "番茄牛肉面|牛肉 150g,番茄 2个,手擀面 1碗,生抽 2勺,葱花 适量|牛肉软烂，番茄汤底浓郁，热乎乎的一碗超满足。",
+            "番茄煎蛋汤|番茄 2个,鸡蛋 2个,小葱 1根,盐 1小勺,香油 几滴|先煎蛋后煮汤，汤汁奶白泛红，鲜美无比。",
+            "番茄烩鱼腐|炸鱼腐 200g,番茄 2个,葱蒜 适量,生抽 1勺,糖 半勺|鱼腐吸满番茄汤汁，一口咬下会爆汁，鲜甜可口。",
+            "番茄金针肉片|瘦肉 150g,番茄 2个,金针菇 1把,淀粉 1勺,生抽 1勺|肉片滑嫩，金针菇爽脆，番茄汤底酸甜开胃。",
+            "番茄烧豆腐|老豆腐 1块,番茄 2个,生抽 1勺,蚝油 1勺,蒜末 适量|豆腐煎至金黄，再用番茄汁烧透，外焦里嫩。"
+        ],
+        shajiang: [
+            "沙姜猪心|猪心 1个,新鲜沙姜 30g,生抽 2勺,料酒 1勺,花生油 适量|猪心脆嫩，沙姜去腥增香，爆炒出锅气。",
+            "沙姜炒花甲|花甲 500g,新鲜沙姜 30g,大蒜 3瓣,生抽 1勺,葱花 适量|花甲鲜甜，沙姜风味独特，宵夜大排档必点。",
+            "沙姜牛肉|牛里脊 250g,沙姜 30g,生抽 1勺,淀粉 1小勺,花生油 2勺|牛肉滑嫩，沙姜的异香完美衬托了牛肉的鲜美。",
+            "沙姜焗大虾|鲜虾 300g,沙姜 40g,红葱头 5个,生抽 1勺,米酒 1勺|鲜虾开背，用沙姜葱头砂锅焗熟，原汁原味。",
+            "沙姜焖鸡|三黄鸡 半只,沙姜 50g,红葱头 适量,生抽 2勺,老抽 半勺|鸡肉焖至软烂入味，沙姜酱汁拌饭一流。",
+            "沙姜猪手|猪手 500g,沙姜 50g,冰糖 1小把,生抽 2勺,米酒 2勺|猪手胶质满满，沙姜去腻增香，软糯弹牙。",
+            "沙姜炒蟹|肉蟹 2只,沙姜 40g,姜葱 适量,生抽 1勺,淀粉 少许|肉蟹鲜甜，沙姜独特的辛香提升了海鲜的层次。",
+            "沙姜爆鸭|鸭肉 400g,沙姜 50g,大蒜 半头,生抽 2勺,米酒 1勺|鸭肉紧实，沙姜爆炒去除了鸭腥味，酱香浓郁。",
+            "沙姜鱿鱼|鲜鱿鱼 300g,沙姜 30g,青红椒 适量,生抽 1勺,蚝油 1勺|鱿鱼脆嫩弹牙，沙姜爆炒锅气十足。",
+            "沙姜掌中宝|鸡脆骨 250g,沙姜 30g,大蒜 3瓣,生抽 1勺,白胡椒粉 少许|掌中宝爽脆，沙姜的香气深入其中，下酒绝佳。",
+            "沙姜炒田鸡|田鸡 2只,沙姜 30g,红葱头 3个,生抽 1勺,料酒 1勺|田鸡肉质极嫩，沙姜的香气完美去腥提鲜。",
+            "沙姜炒排骨|猪小排 300g,沙姜 40g,生抽 2勺,老抽 半勺,淀粉 1勺|排骨煎香后与沙姜同炒，酱汁浓郁，骨里透香。",
+            "沙姜粉肠|猪粉肠 300g,沙姜 30g,生抽 2勺,料酒 1勺,葱结 适量|粉肠爽脆有嚼劲，沙姜爆炒极大地提升了风味。",
+            "沙姜焗生蚝|生蚝肉 300g,沙姜 40g,红葱头 5个,生抽 1勺,胡椒粉 少许|生蚝肥美，砂锅干焗锁住水分，沙姜去腥增鲜。",
+            "沙姜花肉煲|五花肉 300g,沙姜 50g,大蒜 半头,生抽 2勺,冰糖 少许|五花肉煸出油脂，与沙姜同煲，肥而不腻，焦香扑鼻。"
+        ],
+        nangua: [
+            "南瓜蒸百合|老南瓜 300g,鲜百合 1个,冰糖 适量,枸杞 几粒|南瓜甘甜，百合清香，健康的养生甜菜。",
+            "南瓜饼|南瓜泥 200g,糯米粉 150g,白糖 2勺,白芝麻 适量|外酥里糯，香甜可口，做法简单的家常点心。",
+            "南瓜浓汤|老南瓜 300g,牛奶 200ml,黄油 10g,盐 少许,黑胡椒 少许|西式浓汤家常做，奶香浓郁，南瓜丝滑绵密。",
+            "南瓜蒸排骨|猪小排 300g,老南瓜 200g,生抽 1勺,蚝油 1勺,淀粉 1勺|排骨鲜嫩，南瓜吸满肉汁，入口即化。",
+            "南瓜粥|黄小米 50g,老南瓜 150g,清水 适量,冰糖 少许|养胃佳品，南瓜融化在小米中，温润顺滑。",
+            "南瓜炒肉片|嫩南瓜 300g,瘦肉 100g,大蒜 2瓣,生抽 1勺,淀粉 少许|嫩南瓜清脆，肉片滑嫩，简单快手的家常炒菜。",
+            "南瓜炖牛肉|牛腩 300g,老南瓜 200g,生抽 2勺,八角 1个,葱姜 适量|牛肉软烂，南瓜炖化成浓汤，拌饭极其美味。",
+            "南瓜馒头|南瓜泥 150g,面粉 300g,酵母 3g,白糖 1勺|天然金黄色的馒头，带有淡淡的南瓜香甜，松软可口。",
+            "南瓜发糕|南瓜泥 200g,面粉 200g,酵母 3g,红枣 适量,白糖 2勺|无需揉面，筷子搅一搅就能蒸，蓬松宣软香甜。",
+            "南瓜鸡蛋饼|南瓜丝 150g,鸡蛋 2个,面粉 50g,盐 半小勺,葱花 适量|十分钟搞定快手早餐，营养丰富，饼软香甜。",
+            "咸蛋黄炒南瓜|老南瓜 300g,咸蛋黄 3个,淀粉 适量,食用油 适量|外皮起沙咸香，内里南瓜软甜，大饭店的招牌菜。",
+            "南瓜虾皮粥|大米 100g,老南瓜 150g,虾皮 1小把,盐 少许,葱花 适量|虾皮提鲜，南瓜增加天然甜味，清淡养胃的咸粥。",
+            "清炒南瓜丝|嫩南瓜 300g,大蒜 3瓣,干辣椒 2个,盐 1小勺,白醋 少许|嫩南瓜切丝快炒，保持爽脆口感，酸辣开胃。",
+            "蒜香南瓜|绿皮南瓜 300g,大蒜 半头,生抽 1勺,盐 少许|大蒜爆香，南瓜煎至微焦边缘，蒜香与南瓜甜完美融合。",
+            "南瓜红薯汤|老南瓜 200g,红薯 200g,红糖 1块,生姜 2片|秋冬季节的暖身甜汤，南瓜红薯绵软香甜，驱寒暖胃。"
+        ],
+        nongjia: [
+            "农家一碗香|五花肉 150g,鸡蛋 3个,青红椒 适量,老干妈 1勺,生抽 1勺|荷包蛋、肉片与辣椒猛火爆炒，镬气十足，极致下饭。",
+            "干锅花菜|有机花菜 300g,五花肉 50g,干辣椒 3个,豆瓣酱 半勺,生抽 1勺|花菜脆嫩干香，五花肉的油脂让其更加入味。",
+            "蒜苔炒肉|蒜苔 300g,瘦肉 150g,生抽 1勺,老抽 少许,淀粉 1小勺|蒜苔清脆微甜，肉丝滑嫩，百吃不厌的家常经典。",
+            "地三鲜|土豆 1个,茄子 1根,青椒 1个,生抽 2勺,淀粉 1勺|北方农家名菜，三种素菜过油后红烧，绵软浓郁酱香。",
+            "酸豆角肉沫|酸豆角 250g,猪肉沫 150g,干辣椒 3个,蒜末 适量,生抽 1勺|酸爽脆嫩，肉沫煸香，拌面拌饭的神器。",
+            "农家炒香干|薄香干 5块,猪肉沫 50g,青红椒 适量,生抽 1勺,豆瓣酱 1勺|香干煎出豆香，搭配辣椒肉沫，风味极其浓郁。",
+            "农家小炒鸡|三黄鸡 半只,青红椒 大量,大蒜 半头,生抽 2勺,老抽 1勺|鸡肉斩小块爆炒，香辣入味，连骨头都透着香。",
+            "干煸四季豆|四季豆 300g,猪肉沫 50g,干辣椒 适量,花椒 1小把,生抽 1勺|四季豆煸至起皱，肉沫花椒增香，麻辣干香。",
+            "爆炒猪肝|猪肝 250g,青红椒 适量,大葱 1根,料酒 1勺,生抽 1勺|猪肝滑嫩无腥味，猛火快炒出锅，鲜香脆嫩。",
+            "青椒土豆片|土豆 2个,青椒 2个,大蒜 3瓣,生抽 1勺,老抽 少许|土豆片切厚一点煎至微焦，搭配青椒酱香浓郁。",
+            "韭菜炒鸭血|鸭血 1盒,韭菜 1把,生姜 3片,干辣椒 2个,盐 1小勺|鸭血嫩滑，韭菜提鲜，非常家常的快手营养菜。",
+            "酸辣白菜|大白菜 半棵,干辣椒 4个,陈醋 2勺,生抽 1勺,盐 1小勺|白菜帮脆爽，酸辣开胃，最朴素的下饭素菜。",
+            "大葱炒鸡蛋|大葱 1根,鸡蛋 3个,盐 1小勺,食用油 适量|大葱的辛香过油后变甜，与金黄的鸡蛋是绝配。",
+            "红烧豆腐|老豆腐 1块,青椒 半个,木耳 少许,生抽 2勺,蚝油 1勺|豆腐煎至两面金黄再红烧，吸满浓郁酱汁，外焦里嫩。",
+            "醋溜土豆丝|土豆 1大个,干辣椒 3个,白醋 2勺,盐 1小勺,葱段 适量|土豆丝淘洗去淀粉后猛火快炒，酸辣爽脆不粘锅。"
+        ],
+        chaoshan: [
+            "潮汕生腌虾|基围虾 250g,蒜末 大量,香菜 适量,生抽 3勺,白酒 1勺|潮汕毒药，冰爽酸辣，虾肉呈果冻状鲜甜无比。",
+            "潮汕春菜煲|潮汕春菜 400g,排骨 150g,虾米 少许,普宁豆酱 1勺|春菜微苦回甘，排骨慢炖，降火去燥的经典砂锅菜。",
+            "潮汕鱼丸汤|手工鱼丸 200g,紫菜 1小把,冬菜 少许,白胡椒粉 少许,盐 适量|鱼丸Q弹爽滑，汤清味鲜，紫菜冬菜提味绝佳。",
+            "炒薄壳|薄壳 500g,金不换(九层塔) 1把,蒜末 适量,沙茶酱 半勺,鱼露 少许|猛火爆炒海瓜子，金不换散发独特香气，宵夜灵魂。",
+            "清汤牛腩|牛坑腩 500g,白萝卜 1大根,姜片 适量,白胡椒粉 少许,芹菜粒 适量|牛腩汤清亮醇厚，萝卜清甜无渣，原汁原味的鲜美。",
+            "潮汕肠粉|肠粉专用粉 100g,猪肉沫 50g,鸡蛋 1个,生蚝 几个,秘制卤汁 适量|皮薄如纸，内馅丰富，淋上特制卤汁，早餐霸主。",
+            "潮汕菜脯炒蛋|老菜脯 50g,鸡蛋 3个,葱花 适量,白糖 少许|菜脯切碎洗淡咸味，与鸡蛋同炒，咸香酥脆极其下饭。",
+            "潮汕牛肉丸|手打牛肉丸 250g,生菜 1把,蒜头酥 少许,沙茶酱 适量(蘸料)|肉丸弹牙多汁，简单的水煮最能吃出牛肉的鲜香。",
+            "潮汕戈饭|大米 200g,猪肉 50g,干贝/虾米 适量,包菜丝 1把,生抽 1勺|各种海味与蔬菜肉类同炒入米饭，饭粒分明鲜香无比。",
+            "潮汕炒粿条|粿条 250g,牛肉 100g,芥蓝 1把,沙茶酱 1勺,老抽 少许|粿条软糯，牛肉鲜嫩，芥蓝脆爽，沙茶酱赋予灵魂。",
+            "金不换炒蟹|肉蟹 2只,金不换 1大把,姜蒜 适量,生抽 1勺,蚝油 1勺|金不换的特殊香气渗透进蟹肉中，海鲜大排档名菜。",
+            "潮汕咸菜猪肚|猪肚 1个,潮汕包心咸菜 150g,白胡椒粒 适量,排骨 少许|咸菜的酸爽中和猪肚的油腻，胡椒暖胃，汤水澄澈。",
+            "潮汕砂锅粥|大米 150g,鲜虾 200g,花蟹 1只,冬菜 少许,芹菜末 适量|米粒开花浓稠，海鲜的鲜甜完全释放，暖胃鲜美。",
+            "红桃粿|糯米粉 200g,红曲粉 少许,香菇/虾米/猪肉/花生 适量|潮汕传统节庆美食，外皮软糯，内馅咸香丰富。",
+            "潮汕牛筋丸汤|牛筋丸 200g,西洋菜 1把,蒜头酥 少许,盐 适量,沙茶酱 蘸料|带牛筋的丸子更有嚼劲，汤头清淡解腻。",
+            "潮汕卤鹅|澄海狮头鹅 1/4只,潮汕卤水 1锅,南姜 适量,蒜泥白醋 蘸料|卤汁醇厚香浓，鹅肉紧实甘香，潮汕宴席必有。",
+            "猪肠胀糯米|猪大肠 1段,糯米 150g,花生/香菇/虾米 适量,生抽 1勺|洗净的猪肠灌入调味的糯米煮熟，切片香糯可口。",
+            "潮汕草粿|草粿草熬制冻 1碗,黑糖或白糖粉 适量|潮汕街头的传统消暑甜品，类似烧仙草，清凉解毒。",
+            "粿汁|粿汁皮 1碗,卤大肠/卤肉/卤蛋 适量,卤汁 1勺|米浆熬煮的粿片爽滑，铺满丰富的卤味，咸香浓郁。",
+            "潮汕虾卷|腐皮 1张,鲜虾仁 150g,马蹄碎 50g,肥肉沫 少许,盐 适量|腐皮包裹虾泥炸至金黄酥脆，内里鲜甜弹牙。",
+            "腌血蚶|新鲜血蚶 300g,蒜末/香菜 适量,生抽 3勺,白醋 2勺,辣椒 适量|沸水微烫即捞保持血液，用酸辣汁腌制，鲜嫩腥甜。",
+            "潮汕鸭母捻|糯米粉 150g,黑芝麻/绿豆馅 适量,糖水 1碗,鹌鹑蛋 几个|潮汕特色汤圆，形状椭圆如鸭蛋，皮薄馅大糖水清甜。",
+            "南澳鱼丸|马鲛鱼丸 200g,紫菜 适量,葱花 少许,盐 1小勺,白胡椒粉 少许|选用南澳新鲜海鱼手打，极其弹牙，鱼味浓郁。",
+            "潮汕冻肉|猪蹄或猪皮 500g,八角/桂皮 适量,生抽 2勺,冰糖 少许|猪蹄慢炖至胶质融化入汤，冷却后凝固成果冻状，入口即化。",
+            "潮汕护国菜|番薯叶 300g,高汤 1碗,草菇 少许,火腿丝 少许|将番薯叶剁成极细的泥熬成羹，颜色翠绿，清香润滑。",
+            "糕烧番薯|红薯 300g,白糖 100g,葱油 少许,清水 适量|潮汕经典甜点，红薯块在浓糖浆中熬煮挂霜，外甜内软。",
+            "潮汕猪脚圈|面糊 适量,芋头丁/赤豆/五花肉丁 适量,五香粉 少许|街头油炸小吃，外形如猪脚，外酥里粉，五香味浓。",
+            "潮汕落汤钱|糯米粉 200g,花生碎 适量,黑芝麻 适量,白糖 适量|将糯米团煮熟后在花生芝麻糖粉中滚满，软糯香甜类似麻糍。",
+            "潮汕麦粿|小麦粉 200g,白糖 30g,清水 适量,食用油 少许|平底锅煎至两面焦黄的小麦饼，边缘薄脆，中间软糯带着麦香。",
+            "潮汕炒红肉|红肉(海贝) 300g,九层塔 1把,蒜蓉 适量,沙茶酱 半勺|红肉细小但极鲜，与九层塔猛火爆炒，下酒极品。",
+            "潮汕生蚝|鲜生蚝 500g,蒜蓉酱 大量,小米辣 适量,葱花 少许|肥美的生蚝铺满蒜蓉烤制或蒸熟，蒜香与海味交融。",
+            "潮汕白切鸭|散养鸭 半只,姜葱 适量,蒜蓉白醋(蘸料)|鸭肉清水煮熟，肉质紧实原汁原味，配蒜泥醋解腻开胃。",
+            "潮汕五花肉|带皮五花肉 300g,蒜末 适量,生抽 1勺,鱼露 少许|五花肉切薄片煸出油脂，加蒜蓉和鱼露干炒，咸香酥脆。",
+            "澄海酸菜|澄海大芥菜 1棵,粗盐 适量,淘米水 适量|潮汕特有酸菜，口感爽脆酸度适中，常用于炒肉或煮汤。",
+            "潮汕虾枣|鲜虾 200g,肥猪肉 50g,马蹄碎 50g,面粉 适量,五香粉 少许|虾肉混合马蹄捏成枣状炸至金黄，外脆内鲜爽口。"
+        ],
+        hunan: [
+            "农家小炒肉|带皮五花肉 250g,青尖椒 1把,红尖椒 2个,黑豆豉 1勺,生抽 1勺|干香炒肉，口味重，锅气足，香辣过瘾。",
+            "湘西外婆菜|市售外婆菜 1袋,鸡蛋 3个,青红尖椒 适量,大蒜 2瓣,生抽 少许|外婆菜口感爽脆，加上鸡蛋的醇厚，超级费米饭。",
+            "擂钵皮蛋|皮蛋 3个,二荆条青椒 4根,大蒜 4瓣,生抽 2勺,香醋 1勺|青椒烧出虎皮与皮蛋捣碎融合，辣度惊人极度开胃。",
+            "干锅肥肠|熟肥肠 300g,青红椒 2个,洋葱 半个,干辣椒/花椒 适量,豆瓣酱 1勺|肥肠煸出油脂，外皮微酥里层软糯，干香麻辣。",
+            "攸县香干|攸县香干 4块,前腿肉 100g,青红椒 适量,大蒜 3瓣,高汤 半碗|特有的攸县香干豆香浓郁，吸满高汤和肉汁，极其下饭。",
+            "血鸭|仔鸭 半只,新鲜鸭血 1小碗,青红尖椒 适量,米酒 2勺,姜蒜 适量|鸭血糊化包裹每一块鸭肉，酱香浓郁，色泽红润诱人。",
+            "卜豆角炒肉|卜豆角(干豆角) 150g,五花肉 100g,干辣椒 3个,大蒜 2瓣,生抽 1勺|干豆角爽脆有嚼劲，吸满猪油的香气，越嚼越香。",
+            "萝卜干炒腊肉|湖南腊肉 150g,农家萝卜干 100g,干辣椒 适量,青蒜苗 2根,生抽 1勺|腊肉烟熏味与脆爽萝卜干是天作之合，干香四溢。",
+            "手撕包菜|圆白菜 半个,五花肉片 50g,干辣椒 4个,陈醋 2勺,生抽 1勺|包菜手撕更入味，猛火快炒保持脆嫩，酸辣鲜香。",
+            "酸辣鸡杂|鸡杂(肝/胗/肠) 300g,泡椒 50g,酸豆角 50g,泡姜 1块,生抽 1勺|鸡杂滑嫩脆爽，泡椒酸豆角完美去腥提味，酸辣爽口。",
+            "孜然牛肉|牛里脊 250g,洋葱 半个,香菜 1把,孜然粉 大量,辣椒粉 1勺|牛肉滑炒变色，裹满孜然和辣椒面，烧烤风味十足。",
+            "干煸刁子鱼|刁子鱼(白条鱼) 300g,干辣椒 大量,姜蒜 适量,料酒 1勺,生抽 1勺|刁子鱼煎至骨酥肉干，再加干辣椒干煸，香辣下酒。",
+            "湘味煎豆腐|老豆腐 1块,青红椒 适量,猪肉沫 50g,豆瓣酱 1勺,蒜末 适量|豆腐两面煎黄，加入肉沫和红油豆瓣焖煮入味，外焦里嫩。",
+            "平江香干|平江麻辣香干 200g,蒜苗 2根,干辣椒 适量,生抽 1勺|平江特产香干本身带有麻辣味，简单翻炒即是绝佳下饭菜。",
+            "剁椒炒鸡蛋|鸡蛋 4个,红剁椒 2大勺,大葱 1根,生抽 少许|鸡蛋炒散，加入酸辣的湖南剁椒翻匀，做法极简但极具风味。"
+        ],
+        kejia: [
+            "客家盐焗鸡|三黄鸡 1只,粗海盐 大量,沙姜粉 1勺,姜葱 适量|传统古法在热盐中焗熟，皮脆肉嫩，连骨头都透着咸香。",
+            "客家炒大肠|猪大肠 300g,酸菜 150g,姜蒜 适量,生抽 2勺,白糖 1勺|大肠处理干净爆炒，加入客家酸菜中和油腻，酸脆爽口。",
+            "客家焖猪肉|带皮五花肉 500g,八角/桂皮 适量,生抽 2勺,老抽 1勺,冰糖 适量|客家传统红烧肉，色泽红亮不加一滴水，慢火熬出浓郁猪油香。",
+            "客家酿苦瓜|苦瓜 1根,猪肉沫 150g,香菇碎 适量,生抽 1勺,淀粉 1小勺|苦瓜切圈去瓤塞入肉馅，煎黄后焖煮，苦尽甘来，清热解毒。",
+            "客家酿辣椒|青尖椒 6个,猪肉沫 150g,生抽 2勺,糖 半勺,水淀粉 适量|辣椒去籽塞肉，表面煎出虎皮后淋酱汁焖熟，微辣咸香。",
+            "客家酿茄子|长茄子 1根,猪肉沫 150g,蒜蓉 适量,生抽 2勺,老抽 少许|茄子切夹刀片夹入肉馅，软烂的茄子与肉汁完美交融。",
+            "客家萝卜丸|白萝卜 1大根,木薯粉/粘米粉 150g,猪肉沫 100g,虾米/香菇 适量|萝卜擦丝杀水，混合粉和肉沫捏成丸子蒸熟，清甜软糯。",
+            "客家蒸猪红|新鲜猪血 1大碗,韭菜 1小把,白胡椒粉 少许,油渣 少许,生抽 1勺|猪血极嫩如同豆腐脑，撒上油渣和胡椒粉清蒸，鲜美无比。",
+            "客家清炖鸡|土鸡 半只,红枣 5颗,党参 2根,枸杞 少许,盐 适量|最朴素的做法，只用少许药材隔水清炖，汤清如水鲜甜无比。",
+            "客家艾粄|糯米粉 200g,新鲜艾草泥 100g,花生碎/黑芝麻/糖 适量|清明时节特产，艾草清香解腻，外皮软糯内馅香甜。",
+            "客家红烧肉|五花肉 500g,客家娘酒 1小碗,生抽 2勺,老抽 1勺,冰糖 适量|用客家特有的甜米酒代替料酒炖肉，带有独特的酒香微甜。",
+            "客家炒米粉|客家排米粉 200g,瘦肉丝 50g,包菜丝 1把,生抽 2勺,老抽 少许|米粉提前泡软，猛火干炒不粘锅，根根分明干香扑鼻。",
+            "客家鱼生|草鱼或鲩鱼 1条,蒜片/姜丝/薄荷叶/花生/芝麻 极多,花生油 大量|鱼肉切极薄透明片，拌入大量香料和花生油，鲜甜脆嫩爽口。",
+            "客家肉丸|猪后腿肉 500g,木薯粉 50g,盐 适量,白胡椒粉 少许|纯手工千百次捶打成胶，煮熟后极其爽脆弹牙，可煮汤可炒。",
+            "客家酿春|鸭蛋 4个,猪肉末 50g,生抽 1勺,高汤 1碗|极其考验刀工的手作，将生蛋黄挑破塞入肉馅，煮熟后蛋中藏肉。",
+            "客家酿豆腐煲|客家酿豆腐 1盘,砂锅 1个,高汤 1碗,小葱 适量|煎好的酿豆腐放入砂锅，加入高汤慢煲，咕噜咕噜热气腾腾。",
+            "客家笋干炒肉|客家干笋 100g,五花肉 150g,蒜片 适量,生抽 1勺,干辣椒 2个|笋干提前一天泡发，吸满五花肉的油脂，脆嫩有嚼劲。",
+            "客家米酒鸡|三黄鸡 半只,客家娘酒 1大碗,生姜 1大块,盐 适量|鸡肉炒香后直接倒入客家甜米酒炖煮，酒香浓郁非常滋补。",
+            "客家仙人粄|凉粉草(仙人草)冻 1碗,蜂蜜或糖浆 适量|客家传统的消暑甜品，类似烧仙草，入口清凉滑润带草本香。",
+            "客家炒黄粄|黄粄(草木灰碱水米糕) 200g,瘦肉 50g,香菇/虾米 适量,生抽 1勺|黄粄切片具有独特碱香和韧性，与配菜干炒咸香软糯。",
+            "客家梅菜蒸肉饼|猪肉沫 250g,客家梅干菜 50g,生抽 1勺,淀粉 半勺,糖 少许|梅干菜洗净切碎拌入肉沫中压成饼清蒸，汤汁拌饭一绝。",
+            "客家炸肉丸|猪肉沫 200g,豆腐 50g,葱花 适量,淀粉 2勺,盐/五香粉 适量|肉沫加揉碎的豆腐和面粉捏成丸子油炸，外酥里嫩。",
+            "客家葱油鸡|散养土鸡 半只,红葱头 1大把,生抽 2勺,花生油 大量|鸡肉白切煮熟，淋上用大量红葱头熬制的葱油，葱香四溢。",
+            "客家红焖肉|带皮五花肉 400g,干香菇 5朵,八角 1个,生抽 2勺,老抽 1勺|香菇的鲜味融入五花肉中，红焖至软烂，经典的客家宴客菜。",
+            "客家炒薯粉|手工红薯粉条 200g,肉丝 50g,葱段/蒜苗 适量,生抽 2勺|红薯粉条韧性十足，加肉丝和蒜苗干炒，极具农家风味。",
+            "客家焖全鱼|草鱼或鲤鱼 1整条,姜葱蒜 适量,豆瓣酱 1勺,生抽 2勺,香醋 1勺|整鱼煎至两面金黄，加酱汁加盖慢焖，鱼肉入味鲜嫩。",
+            "客家腌面|生面条 1份,猪油 大量,炸蒜蓉 大量,生抽 1勺,葱花 适量|梅州特色早餐，开水烫面拌入灵魂猪油和炸蒜蓉，香气扑鼻。",
+            "客家白切猪肉|土猪五花肉或前腿肉 300g,蒜泥 适量,生抽 2勺|优质猪肉清水白煮去腥切薄片，蘸蒜泥酱油，吃出肉的原香。",
+            "客家猪血汤|新鲜猪血 1碗,枸杞叶或瘦肉 少许,白胡椒粉 适量,盐 少许|猪血滑嫩不散，汤底清淡，撒上胡椒粉驱寒暖胃，客家快手汤。",
+            "客家清炖肉|猪展肉(老鼠肉) 200g,清水 1碗,盐 少许|选用最嫩的一块猪肉切薄片，加清水隔水清炖，肉软汤清极度鲜甜。",
+            "客家萝卜粄|萝卜丝 150g,糯米粉 200g,腊肉/虾米 适量,胡椒粉 少许|萝卜丝炒熟包入糯米皮中蒸熟或煎香，冬至传统的客家米果。",
+            "客家算盘子（炒）|煮熟的算盘子 200g,肉沫 50g,香菇/胡萝卜丝 适量,生抽 1勺|煮好的算盘子捞出，与丰富的配料大火快炒，口感Q弹咸香。",
+            "客家猪肚包鸡|猪肚 1个,土鸡 1只,白胡椒粒 1大把,红枣/党参 适量|将整鸡塞入猪肚中缝合炖煮，切开后肉烂肚爽，胡椒浓汤极度滋补。",
+            "客家酿春卷|豆腐皮 1张,猪肉沫 150g,香菇碎 适量,生抽 1勺|腐皮卷入调味的肉馅蒸熟，切成段再淋上勾芡的薄汁，鲜美软糯。",
+            "客家腐竹焖肉|干腐竹 1把,五花肉 200g,生抽 2勺,老抽 少许,葱蒜 适量|腐竹提前泡发，五花肉煸油后加水同焖，腐竹吸满肉汁软烂香浓。"
+        ],
+        hubei: [
+            "干煸藕丝|脆藕 1节,干辣椒/花椒 适量,葱姜蒜 适量,白芝麻 适量,淀粉 适量|藕丝挂糊炸酥再加入辣椒花椒干煸，麻辣香脆像零食。",
+            "洪山菜苔炒肉|红菜苔 400g,湖北腊肉 100g,大蒜 3瓣,干辣椒 2个,盐 少许|菜苔脆嫩清甜，吸收腊肉油脂和烟熏味后风味绝佳。",
+            "珍珠肉丸|猪肉沫 300g,糯米 100g,马蹄末 50g,生抽 1勺,淀粉 半勺|肉馅裹上晶莹剔透的糯米蒸熟，形似珍珠，糯香交融。",
+            "粉蒸肉|五花肉 300g,粗米粉 100g,土豆或南瓜 1个垫底,生抽 2勺,豆瓣酱 半勺|湖北沔阳三蒸代表，米粉吸满猪油软糯，肉片入口即化。",
+            "公安三鲜|肉糕 100g,鱼丸 100g,猪肚或肉皮 100g,高汤 1大碗,胡椒粉 少许|湖北公安传统名菜，三种鲜物在锅中烩煮，汤白味极鲜。",
+            "荆州鱼糕|草鱼肉 300g,猪肥膘 50g,蛋清 2个,淀粉 2勺,姜葱水 适量|鱼肉打成泥蒸熟，吃鱼不见鱼，口感弹牙鲜嫩，湖北宴席必有。",
+            "黄陂鱼丸|新鲜鱼肉泥 300g,蛋清 1个,葱姜水 适量,猪油 少许,盐 适量|手工挤出白白胖胖的鱼丸，汤清如水，丸子松软滑嫩入口即化。",
+            "清蒸武昌鱼|武昌鱼 1条,葱姜丝 适量,蒸鱼豉油 2勺,食用油 1勺,料酒 1勺|武昌鱼肉质细嫩，清蒸最能体现其原汁原味的鲜甜，淋热油激香。",
+            "腊肉炒黎蒿|黎蒿杆 300g,湖北腊肉 100g,干辣椒 2个,大蒜 2瓣,生抽 1勺|黎蒿具有独特的清香，与腊肉的烟熏味碰撞，清脆爽口极其解腻。",
+            "刁子鱼|干刁子鱼 200g,干辣椒 1把,生姜大蒜 适量,料酒 1勺,生抽 1勺|湖北特产刁子鱼煎至两面金黄干脆，加辣椒干煸，是一道绝佳下酒菜。",
+            "腊味合蒸|腊肉/腊鱼/腊鸡 组合300g,干辣椒粉 少许,豆豉 1勺,茶油 少许|多种湖北风干腊味切块拼盘，淋上茶油清蒸，腊香浓郁原汁原味。",
+            "莲藕排骨汤|洪湖粉藕 1大节,猪排骨 500g,生姜 1块,白胡椒粉 少许,盐 适量|湖北第一汤，粉藕慢煨至拉丝软糯，汤汁浓郁呈现淡淡的粉红色。",
+            "干锅千页豆腐|千页豆腐 200g,五花肉片 50g,洋葱 半个,青红椒 适量,豆瓣酱 1勺|千页豆腐Q弹吸味，五花肉煸出油脂干锅慢烤，酱香麻辣极其下饭。",
+            "瓦罐鸡汤|土散养母鸡 1只,生姜 1大块,清水 适量,盐 适量|湖北人最爱的原味鸡汤，用瓦罐文火慢煨数小时，汤色金黄表面浮油极鲜。",
+            "排骨烧土豆|猪排骨 300g,大土豆 2个,生抽 2勺,老抽 1勺,八角 1个,冰糖 少许|家常红烧做法，土豆炖至边缘融化入汤，排骨软烂脱骨，汤汁拌饭一流。"
+        ],
+        dongbei: [
+            "地三鲜|土豆 1个,茄子 1根,青椒 1个,生抽 2勺,淀粉 1勺|北方农家名菜，三种素菜过油后红烧，绵软浓郁酱香。",
+            "猪肉炖粉条|带皮五花肉 400g,土豆宽粉 1把,大白菜 半个,生抽 2勺,老抽 1勺|五花肉油脂被宽粉吸收，粉条劲道滑溜白菜软烂下饭。",
+            "小鸡炖蘑菇|土鸡 半只,干榛蘑 50g,土豆粉条 1把,生抽 2勺,八角 1个|野生榛蘑极鲜，与土鸡同炖香气四溢，东北四大炖之首。",
+            "溜肉段|猪瘦肉 300g,青椒 1个,木耳 少许,土豆淀粉 1碗,生抽 2勺|肉段炸至外酥里嫩，挂上一层晶莹剔透咸鲜欠汁。",
+            "酱骨头|猪脊骨 1000g,东北大酱 2大勺,生抽 3勺,老抽 1勺,冰糖 适量|猪骨慢火炖煮骨边肉软烂脱骨，酱香扑鼻豪放啃食。",
+            "尖椒干豆腐|东北干豆腐 3张,青尖椒 2个,猪肉片 50g,水淀粉 半碗,生抽 1勺|干豆腐切丝与尖椒爆炒，最后勾上浓芡，滑嫩鲜香下饭一绝。",
+            "酸菜炖白肉|东北酸菜丝 300g,五花肉片 150g,粉条 1小把,葱姜 适量,大料 1个|酸菜独特的发酵酸味化解了白肉的油腻，热气腾腾极其暖胃开胃。",
+            "东北乱炖|五花肉 100g,豆角/土豆/茄子/西红柿 适量,东北大酱 2勺,葱蒜 适量|东北家常乱炖，各种蔬菜一锅端，大酱是灵魂，炖得软烂糊状最好吃。",
+            "拔丝地瓜|黄心红薯 2个,白糖 1小碗,食用油 1小勺|熬制糖浆至琥珀色拔丝状态，裹满炸酥的地瓜，外脆内甜趁热拉丝。",
+            "京酱肉丝|猪里脊 250g,甜面酱 2大勺,大葱白 2根,干豆腐皮 适量,白糖 1勺|肉丝滑嫩酱香浓郁，用干豆腐皮卷着大葱白和肉丝同吃，北方风味极浓。",
+            "家常凉菜|干豆腐丝/黄瓜丝/白菜丝/粉丝 适量,陈醋 2勺,生抽 1勺,辣椒油/香油/蒜泥 适量|东北必点凉菜，蔬菜切细丝拌入酸辣料汁，清爽解腻分量超大。",
+            "大丰收|生菜/黄瓜/水萝卜/小葱/青椒 拼盘1大盘,东北鸡蛋酱 1小碗|东北最具特色的蘸酱菜，各种生鲜蔬菜直接蘸浓郁的鸡蛋酱吃，原汁原味。",
+            "渍菜粉|东北酸菜丝 200g,土豆粉条 1把,猪肉丝 50g,葱姜丝 适量,生抽 1勺|酸菜炒粉条，粉条吸满猪油和酸菜汁，酸爽滑溜，是东北人的心头好。",
+            "白肉血肠|煮熟的五花肉片 200g,新鲜猪血肠 1根,蒜泥 适量,酱油 1勺|杀猪菜的核心，白肉肥而不腻，血肠嫩滑不散，蘸蒜泥酱油吃极其鲜美。",
+            "东北杀猪菜|酸菜 500g,五花肉 200g,血肠 1根,猪大肠/猪肝 适量,大料葱姜 适量|东北冬季的终极硬菜，猪身各部位与酸菜同炖一大锅，汤鲜肉烂酸爽解腻。"
+        ],
+        beef: [
+            "青椒炒牛肉|牛里脊 250g,青椒 2个,生抽 1勺,老抽 少许,淀粉 1小勺|牛肉滑嫩配上青椒的清香，最经典的家常小炒。",
+            "孜然牛肉|牛肉片 250g,洋葱 半个,香菜 1把,孜然粉 大量,辣椒面 1勺|烧烤风味的干香炒牛肉，孜然香气扑鼻，极其下酒。",
+            "滑肉片|牛里脊 200g,青菜 1把,水淀粉 大量,高汤 1碗,白胡椒粉 少许|牛肉裹满水淀粉汆烫，肉质如果冻般嫩滑，汤清味鲜。",
+            "干煸牛肉丝|牛腿肉 300g,芹菜段 1小把,干辣椒/花椒 适量,郫县豆瓣酱 1勺|牛肉切细丝干煸至无水分发干，麻辣焦香越嚼越有味。",
+            "土豆炖牛腩|牛腩 400g,大土豆 2个,生抽 2勺,八角 1个,冰糖 少许|土豆软糯吸满牛肉汤汁，牛腩炖至软烂，老少皆宜的红烧菜。",
+            "咖喱牛肉|牛腩 300g,土豆 1个,胡萝卜 半根,咖喱块 2块,椰奶或牛奶 半碗|浓郁的咖喱酱汁包裹着软烂的牛肉和蔬菜，拌饭绝对是神仙吃法。",
+            "蚝油牛肉|牛里脊 250g,大葱白 1根,蚝油 2大勺,生抽 1勺,水淀粉 1勺|不用复杂的调料，突出蚝油的鲜甜与牛肉的嫩滑，色泽明亮芡汁浓稠。",
+            "牛肉炒饭|剩米饭 1大碗,牛肉粒 50g,鸡蛋 1个,葱花 适量,黑胡椒 少许|牛肉粒提前腌制滑熟，与米饭鸡蛋大火翻炒，粒粒分明肉香十足。",
+            "牛肉面|牛腱子肉 200g,手擀面 1人份,红烧牛肉原汤 1大碗,青菜 几根,香菜 适量|在家复刻大牌牛肉面，牛肉大块软烂，汤底浓郁醇厚，面条筋道吸汁。",
+            "爆炒牛肚|熟牛肚 250g,青红椒 适量,洋葱 半个,生抽 1勺,料酒 1勺|牛肚脆爽有嚼劲，配上洋葱青红椒猛火快炒，锅气十足下酒佳品。",
+            "芹菜炒牛肉|黄牛肉 200g,香芹 1把,泡椒 几个,生抽 1勺,姜蒜 适量|芹菜的独特脆香与滑嫩的牛肉绝配，加入几个泡椒提味更加酸辣下饭。",
+            "香菜牛肉|牛里脊 250g,香菜 2大把,干辣椒 适量,生抽 2勺,孜然粉 少许|香菜控的最爱，大量香菜不切碎直接与滑熟的牛肉同炒，香气极其浓烈。",
+            "铁板牛肉|牛肉片 300g,洋葱 1大个,黑椒汁 2勺,黄油 1小块,生抽 1勺|洋葱铺底，牛肉用黄油煎香，淋入黑椒汁在铁板上滋滋作响，仪式感满满。",
+            "金针菇肥牛|肥牛卷 200g,金针菇 1大把,黄灯笼辣椒酱 1勺,白醋 1勺,大蒜碎 适量|酸汤肥牛的家常版，金针菇爽脆，肥牛鲜嫩，酸辣金黄的汤汁极其开胃。",
+            "沙茶牛肉|牛里脊 250g,芥蓝或生菜 1把,潮汕沙茶酱 2大勺,蒜泥 适量,淀粉 1小勺|潮汕风味小炒，沙茶酱赋予了牛肉浓郁的甜辣复合香气，酱汁拌饭一绝。"
+        ],
+        pork: [
+            "青椒肉丝|瘦猪肉 200g,青椒 3个,生抽 1勺,老抽 少许,水淀粉 1勺|家常菜的绝对王者，肉丝滑嫩青椒清脆，简单的酱油调味就足够下饭。",
+            "木须肉|猪瘦肉 150g,干木耳 1小把,黄瓜 半根,鸡蛋 2个,生抽 1勺|经典的北方家常菜，鸡蛋木耳黄瓜肉片大杂烩，色彩丰富营养均衡。",
+            "粉蒸肉|带皮五花肉 300g,蒸肉米粉 1包,土豆 1个垫底,生抽 2勺,老抽 半勺|五花肉裹满调味的米粉蒸至软烂，底部的土豆吸满油脂入口即化。",
+            "水煮肉片|猪里脊 300g,豆芽/千张/青菜 适量,郫县豆瓣酱 2勺,干辣椒/花椒 大量|川菜代表，肉片裹淀粉汆熟极其滑嫩，红油汤底麻辣鲜香极其过瘾。",
+            "东坡肉|带皮五花肉方 400g,冰糖 适量,绍兴黄酒 1大碗,生抽 2勺,小葱铺底 大量|不用一滴水，全靠黄酒慢火煨炖数小时，色泽红亮肥而不腻入口即化。",
+            "蒜苔肉丝|蒜苔 300g,里脊肉 150g,生姜 适量,生抽 1勺,淀粉 半勺|蒜苔清脆微甜不吸油，与滑熟的肉丝同炒，是不败的经典快手菜。",
+            "香菇肉片|鲜香菇 200g,瘦肉 150g,蒜片 适量,生抽 1勺,蚝油 1勺|鲜香菇滑溜多汁，自带浓郁菌菇香，搭配肉片炒制，芡汁鲜美拌饭佳。",
+            "酱爆肉丁|猪梅花肉 250g,黄瓜 1根,甜面酱 2勺,黄豆酱 1勺,白糖 1小勺|肉丁过油滑熟，裹满浓郁香甜的京味酱汁，配上清爽黄瓜丁极其解腻。",
+            "肉沫茄子|长茄子 2根,猪肉沫 100g,大蒜 半头,豆瓣酱 1勺,生抽 1勺|茄子煎软后与肉沫红油同烧，软烂的茄肉吸满肉汁和酱香，超级费饭。",
+            "蚂蚁上树|红薯粉丝 1把,猪肉沫 50g,葱姜蒜末 适量,豆瓣酱 1勺,高汤 半碗|肉沫附着在吸满微辣红油高汤的粉丝上，形似蚂蚁上树，干香软溜爽口。",
+            "白菜猪肉炖粉条|五花肉片 200g,大白菜 半棵,红薯宽粉 1把,八角 1个,生抽 2勺|东北抗寒神菜，五花肉的油脂完美融合在白菜和粉条中，热乎乎一大锅。",
+            "排骨炖豆角|猪肋排 400g,宽油豆角 300g,土豆 1个,葱姜八角 适量,东北大酱 1勺|豆角必须炖至极其软烂入味，排骨脱骨，酱香浓郁，东北经典的家常炖。",
+            "冬瓜汆丸子|猪肉末 200g,冬瓜 300g,葱姜水 适量,盐 1小勺,白胡椒粉 少许|肉末顺时针打上劲挤成小丸子下锅煮熟，汤清淡鲜美，冬瓜软烂极其解暑去腻。",
+            "红烧狮子头|三分肥七分瘦肉馅 400g,马蹄碎 50g,鸡蛋清 1个,生抽 2勺,冰糖 少许|巨大的手工肉丸炸至定型后用红烧汁慢炖，内里松软鲜嫩，寓意团圆喜庆。",
+            "香干炒肉|烟熏香干 4块,前腿肉 150g,青红辣椒 适量,大蒜 3瓣,生抽 1勺|香干自带烟熏豆香，与肉片辣椒快炒，非常接地气的湘风味农家小炒。"
+        ]
+    };
+
+    const expandedDatabase = {};
+    const ALL_RECIPES_FLAT = [];
+
+    // 重建扁平化数组（用于搜索和抽奖索引同步）
+    function rebuildFlatDatabase() {
+        ALL_RECIPES_FLAT.length = 0;
+        for (const cat in expandedDatabase) {
+            expandedDatabase[cat].forEach((recipe, idx) => {
+                ALL_RECIPES_FLAT.push({ ...recipe, category: cat, originalIndex: idx });
+            });
+        }
+    }
+
+    // 智能解析与扩展函数
+    for (const cat in baseDatabase) {
+        expandedDatabase[cat] = [...baseDatabase[cat]]; // 复制基础配置
+        
+        // 如果存在补充名单，解析压缩字符串并生成对象
+        if (extraNamesMap[cat]) {
+            extraNamesMap[cat].forEach(extraDataStr => {
+                const parts = extraDataStr.split('|');
+                const name = parts[0];
+                const ingredientsRaw = parts[1].split(',');
+                const desc = parts[2];
+                const mainIngredient = ingredientsRaw[0].split(' ')[0]; // 提取主料名用于步骤描述
+                
+                expandedDatabase[cat].push({
+                    name: name,
+                    desc: desc,
+                    image: `https://tse1-mm.cn.bing.net/th?q=${encodeURIComponent(name)}+美食实拍图&w=600&h=400&c=7&rs=1&p=0&mkt=zh-CN`,
+                    ingredients: ingredientsRaw,
+                    steps: [
+                        { time: "5分钟", desc: `将主要食材如 ${mainIngredient} 等清洗干净，改刀切成合适的形状备用。准备好葱姜蒜等基础辅料。` },
+                        { time: "3分钟", desc: "热锅起油，下入葱姜蒜等香料爆出香味，激发底层风味。" },
+                        { time: "10-15分钟", desc: `下入 ${mainIngredient} 及其他配菜大火翻炒或中小火慢炖，加入菜系特色的调味料翻拌均匀，焖煮入味。` },
+                        { time: "2分钟", desc: "待食材熟透，大火收浓汤汁，撒上葱花或香菜装盘即可享用。" }
+                    ]
+                });
+            });
+        }
+    }
+    
+    // 初始化时构建扁平化数组
+    rebuildFlatDatabase();
+
+    // --- 删除菜谱功能 ---
+    function deleteRecipe(category, index, event) {
+        event.stopPropagation();
+        const recipeName = expandedDatabase[category][index].name;
+        if (confirm(`确定要将“${recipeName}”从菜谱库中永久删除吗？`)) {
+            expandedDatabase[category].splice(index, 1);
+            rebuildFlatDatabase();
+            
+            const searchInput = document.getElementById('search-input');
+            if (searchInput && searchInput.value.trim() !== '') {
+                handleSearch();
+            } else {
+                renderTable(currentCategory);
+            }
+        }
+    }
+
+    // UI 主题配置
+    const themes = {
+        paojiao: { tagBg: 'bg-blue-100', tagText: 'text-blue-800', tagBorder: 'border-blue-200', btnClass: 'bg-blue-500 hover:bg-blue-600 text-white', modalIconBg: 'bg-blue-500', timeBg: 'bg-blue-50', timeText: 'text-blue-600' },
+        fanqie: { tagBg: 'bg-red-100', tagText: 'text-red-800', tagBorder: 'border-red-200', btnClass: 'bg-red-500 hover:bg-red-600 text-white', modalIconBg: 'bg-red-500', timeBg: 'bg-red-50', timeText: 'text-red-600' },
+        shajiang: { tagBg: 'bg-amber-100', tagText: 'text-amber-800', tagBorder: 'border-amber-200', btnClass: 'bg-amber-500 hover:bg-amber-600 text-white', modalIconBg: 'bg-amber-500', timeBg: 'bg-amber-50', timeText: 'text-amber-600' },
+        nangua: { tagBg: 'bg-orange-100', tagText: 'text-orange-800', tagBorder: 'border-orange-200', btnClass: 'bg-orange-500 hover:bg-orange-600 text-white', modalIconBg: 'bg-orange-500', timeBg: 'bg-orange-50', timeText: 'text-orange-600' },
+        nongjia: { tagBg: 'bg-emerald-100', tagText: 'text-emerald-800', tagBorder: 'border-emerald-200', btnClass: 'bg-emerald-500 hover:bg-emerald-600 text-white', modalIconBg: 'bg-emerald-500', timeBg: 'bg-emerald-50', timeText: 'text-emerald-600' },
+        chaoshan: { tagBg: 'bg-teal-100', tagText: 'text-teal-800', tagBorder: 'border-teal-200', btnClass: 'bg-teal-500 hover:bg-teal-600 text-white', modalIconBg: 'bg-teal-500', timeBg: 'bg-teal-50', timeText: 'text-teal-600' },
+        hunan: { tagBg: 'bg-rose-100', tagText: 'text-rose-800', tagBorder: 'border-rose-200', btnClass: 'bg-rose-500 hover:bg-rose-600 text-white', modalIconBg: 'bg-rose-500', timeBg: 'bg-rose-50', timeText: 'text-rose-600' },
+        kejia: { tagBg: 'bg-indigo-100', tagText: 'text-indigo-800', tagBorder: 'border-indigo-200', btnClass: 'bg-indigo-500 hover:bg-indigo-600 text-white', modalIconBg: 'bg-indigo-500', timeBg: 'bg-indigo-50', timeText: 'text-indigo-600' },
+        hubei: { tagBg: 'bg-cyan-100', tagText: 'text-cyan-800', tagBorder: 'border-cyan-200', btnClass: 'bg-cyan-500 hover:bg-cyan-600 text-white', modalIconBg: 'bg-cyan-500', timeBg: 'bg-cyan-50', timeText: 'text-cyan-600' },
+        dongbei: { tagBg: 'bg-purple-100', tagText: 'text-purple-800', tagBorder: 'border-purple-200', btnClass: 'bg-purple-500 hover:bg-purple-600 text-white', modalIconBg: 'bg-purple-500', timeBg: 'bg-purple-50', timeText: 'text-purple-600' },
+        beef: { tagBg: 'bg-fuchsia-100', tagText: 'text-fuchsia-800', tagBorder: 'border-fuchsia-200', btnClass: 'bg-fuchsia-500 hover:bg-fuchsia-600 text-white', modalIconBg: 'bg-fuchsia-500', timeBg: 'bg-fuchsia-50', timeText: 'text-fuchsia-600' },
+        pork: { tagBg: 'bg-pink-100', tagText: 'text-pink-800', tagBorder: 'border-pink-200', btnClass: 'bg-pink-500 hover:bg-pink-600 text-white', modalIconBg: 'bg-pink-500', timeBg: 'bg-pink-50', timeText: 'text-pink-600' }
+    };
+
+    let currentCategory = 'paojiao';
+
+    // 切换分类
+    function switchCategory(category) {
+        currentCategory = category;
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.value = '';
+        document.getElementById('search-info').classList.add('hidden');
+        document.getElementById('category-select').value = category;
+        renderTable(category);
+    }
+
+    // 搜索功能
+    function handleSearch() {
+        const query = document.getElementById('search-input').value.trim().toLowerCase();
+        const searchInfo = document.getElementById('search-info');
+        
+        if (query === '') { 
+            searchInfo.classList.add('hidden');
+            renderTable(currentCategory); 
+            return; 
+        }
+        
+        const results = ALL_RECIPES_FLAT.filter(item => 
+            item.name.toLowerCase().includes(query) || 
+            item.desc.toLowerCase().includes(query) || 
+            item.ingredients.some(ing => ing.toLowerCase().includes(query))
+        );
+        
+        searchInfo.innerHTML = `为您找到 <span class="font-bold text-blue-600">${results.length}</span> 道包含 "<span class="text-red-500">${query}</span>" 的菜谱：`;
+        searchInfo.classList.remove('hidden');
+        renderSearchResults(results);
+    }
+
+    // 生成通用卡片HTML
+    function generateCardHTML(item, originalIndex, category, theme, showCategoryTag = false) {
+        let categoryTag = '';
+        if (showCategoryTag) {
+            const categoryName = document.querySelector(`option[value="${category}"]`).textContent.split(' ')[1] || category;
+            categoryTag = `<div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-xs font-bold text-gray-700 px-2 py-1 rounded-md shadow-sm z-10 border border-gray-100">${categoryName}</div>`;
+        }
+
+        return `
+            <div class="recipe-card bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col cursor-pointer border border-gray-100 group relative" onclick="openRecipeModal('${category}', ${originalIndex})">
+                ${categoryTag}
+                <div class="relative h-48 md:h-56 overflow-hidden bg-gray-100 shrink-0">
+                    <img src="${item.image}" alt="${item.name}" class="recipe-img w-full h-full object-cover transition-transform duration-500" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=美味家常菜';">
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 line-clamp-1">${item.name}</h3>
+                    <p class="text-sm text-gray-500 line-clamp-2 mb-5 flex-grow leading-relaxed">${item.desc}</p>
+                    <div class="flex justify-between items-center mt-auto border-t border-gray-50 pt-4">
+                        <span class="px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors ${theme.btnClass}">查看做法</span>
+                        <button onclick="deleteRecipe('${category}', ${originalIndex}, event)" class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors" title="删除这道菜">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // 渲染搜索结果 (卡片版)
+    function renderSearchResults(results) {
+        const recipeGrid = document.getElementById('recipe-grid');
+        recipeGrid.innerHTML = '';
+        
+        if (results.length === 0) {
+            recipeGrid.innerHTML = `
+                <div class="col-span-full py-16 text-center">
+                    <div class="text-4xl mb-4">🍽️</div>
+                    <p class="text-gray-500 text-lg">全库未找到相关菜谱，请尝试更换关键词。</p>
+                </div>`;
+            return;
+        }
+        
+        results.forEach((item) => {
+            const { category, originalIndex } = item;
+            const theme = themes[category];
+            recipeGrid.innerHTML += generateCardHTML(item, originalIndex, category, theme, true);
+        });
+    }
+
+    // 渲染常规分类 (卡片版)
+    function renderTable(category) {
+        const data = expandedDatabase[category];
+        const theme = themes[category];
+        const recipeGrid = document.getElementById('recipe-grid');
+        recipeGrid.innerHTML = '';
+        
+        data.forEach((recipe, index) => {
+            recipeGrid.innerHTML += generateCardHTML(recipe, index, category, theme, false);
+        });
+    }
+
+    // 菜谱详情弹窗逻辑
+    function openRecipeModal(category, index) {
+        const recipe = expandedDatabase[category][index];
+        const theme = themes[category];
+        
+        document.getElementById('modal-title').textContent = recipe.name;
+        document.getElementById('modal-cover-img').src = recipe.image;
+        document.getElementById('modal-icon-ing').className = `w-1.5 h-5 inline-block mr-2 rounded-full ${theme.modalIconBg}`;
+        document.getElementById('modal-icon-step').className = `w-1.5 h-5 inline-block mr-2 rounded-full ${theme.modalIconBg}`;
+
+        const modalIngredients = document.getElementById('modal-ingredients');
+        modalIngredients.innerHTML = '';
+        recipe.ingredients.forEach(item => {
+            const span = document.createElement('span');
+            span.className = `${theme.tagBg} ${theme.tagText} border ${theme.tagBorder} px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap`;
+            span.textContent = item;
+            modalIngredients.appendChild(span);
+        });
+
+        const modalSteps = document.getElementById('modal-steps');
+        modalSteps.innerHTML = '';
+        recipe.steps.forEach((step, i) => {
+            const div = document.createElement('div');
+            div.className = "timeline-item flex items-start";
+            div.innerHTML = `
+                <span class="step-circle z-10 shadow-md ${theme.modalIconBg}">${i + 1}</span>
+                <div class="flex-1 bg-white border border-gray-100 p-4 md:p-5 rounded-xl shadow-sm ml-1 md:ml-3">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-bold text-gray-800">第 ${i + 1} 步</span>
+                        <span class="text-xs font-bold ${theme.timeText} ${theme.timeBg} px-2.5 py-1 rounded-full">耗时约 ${step.time}</span>
+                    </div>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">${step.desc}</p>
+                </div>
+            `;
+            modalSteps.appendChild(div);
+        });
+
+        const modal = document.getElementById('recipe-modal');
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+    }
+
+    // --- 老虎机抽奖逻辑 ---
+    let drawInterval = null;
+    let isDrawing = false;
+
+    function openLuckyDraw() {
+        const modal = document.getElementById('lucky-draw-modal');
+        document.getElementById('winner-result').style.display = 'none';
+        document.getElementById('slot-text').textContent = "准备就绪";
+        document.getElementById('start-draw-btn').disabled = false;
+        document.getElementById('start-draw-btn').textContent = "开 始 抽 奖";
+        
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function startLuckyDraw() {
+        if (isDrawing) return;
+        if (ALL_RECIPES_FLAT.length === 0) {
+            alert("菜谱库已经被您清空啦，无法抽奖！");
+            return;
+        }
+
+        isDrawing = true;
+        const btn = document.getElementById('start-draw-btn');
+        const slotText = document.getElementById('slot-text');
+        const winnerResult = document.getElementById('winner-result');
+        
+        btn.disabled = true;
+        btn.textContent = "匹配中...";
+        winnerResult.style.display = 'none';
+        
+        let speed = 40;
+        let counter = 0;
+        let selectedItem = null;
+
+        drawInterval = setInterval(() => {
+            const randomIdx = Math.floor(Math.random() * ALL_RECIPES_FLAT.length);
+            slotText.textContent = ALL_RECIPES_FLAT[randomIdx].name;
+            counter++;
+            
+            if (counter > 60) {
+                clearInterval(drawInterval);
+                selectedItem = ALL_RECIPES_FLAT[randomIdx];
+                showLuckyWinner(selectedItem);
+            }
+        }, speed);
+    }
+
+    function showLuckyWinner(winnerData) {
+        document.getElementById('slot-text').textContent = winnerData.name;
+        
+        const winnerResult = document.getElementById('winner-result');
+        document.getElementById('winner-img').src = winnerData.image;
+        document.getElementById('winner-name').textContent = winnerData.name;
+        
+        const viewBtn = document.getElementById('view-winner-btn');
+        viewBtn.onclick = () => {
+            closeModal('lucky-draw-modal');
+            setTimeout(() => {
+                openRecipeModal(winnerData.category, winnerData.originalIndex);
+            }, 300);
+        };
+        
+        winnerResult.style.display = 'block';
+        document.getElementById('start-draw-btn').textContent = "再 抽 一 次";
+        document.getElementById('start-draw-btn').disabled = false;
+        isDrawing = false;
+    }
+
+    // 通用关闭弹窗
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            if(!document.querySelector('.modal-overlay.show')) {
+                document.body.style.overflow = 'auto'; // 恢复滚动
+            }
+        }, 300);
+    }
+
+    function closeModalOnOutsideClick(event, modalId) {
+        const contentId = modalId === 'recipe-modal' ? 'recipe-modal-content' : 'lucky-modal-content';
+        const modalContent = document.getElementById(contentId);
+        if (!modalContent.contains(event.target)) {
+            if(!isDrawing) closeModal(modalId);
+        }
+    }
+
+    // 初始化
+    window.onload = () => {
+        renderTable('paojiao');
+    };
+</script>
+</body>
+</html>
