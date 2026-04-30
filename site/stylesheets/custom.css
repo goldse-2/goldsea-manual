@@ -114,6 +114,121 @@ body {
 }
 
 /* =========================================
+   品牌展示模块 (Brand Showcase)
+   ========================================= */
+.brands-showcase {
+  background-color: #F5F7FA;
+  padding: 40px;
+  border-radius: 8px;
+  margin: 40px 0;
+  border-left: 4px solid #C9A961;
+}
+
+.brands-showcase table {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.brands-showcase td {
+  text-align: center;
+  padding: 20px;
+  vertical-align: middle;
+}
+
+.brands-showcase td img {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  transition: var(--goldse-transition);
+  box-shadow: 0 4px 12px rgba(10, 37, 64, 0.1);
+}
+
+.brands-showcase td img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(201, 169, 97, 0.2);
+}
+
+.brands-showcase td strong {
+  color: #0A2540;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.brands-showcase td a {
+  color: #C9A961 !important;
+  font-weight: 600;
+  transition: var(--goldse-transition);
+}
+
+.brands-showcase td a:hover {
+  color: #DABF81 !important;
+  text-decoration: underline;
+}
+
+/* =========================================
+   品牌网格布局 (Brand Grid)
+   ========================================= */
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 40px 0;
+}
+
+.brands-grid h3 {
+  color: #0A2540;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.brands-grid img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  transition: var(--goldse-transition);
+  box-shadow: 0 4px 12px rgba(10, 37, 64, 0.1);
+}
+
+.brands-grid img:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(201, 169, 97, 0.3);
+}
+
+.brands-grid ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 12px;
+}
+
+.brands-grid li {
+  padding: 4px 0;
+  padding-left: 20px;
+}
+
+.brands-grid li:before {
+  content: "→ ";
+  color: #C9A961;
+  margin-right: 8px;
+}
+
+.brands-grid a {
+  color: #C9A961;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--goldse-transition);
+}
+
+.brands-grid a:hover {
+  color: #DABF81;
+  text-decoration: underline;
+}
+
+/* =========================================
    响应式断点控制
    ========================================= */
 @media screen and (max-width: 768px) {
@@ -125,5 +240,21 @@ body {
   }
   .hero-section p {
     font-size: 16px;
+  }
+  
+  .brands-showcase {
+    padding: 24px;
+  }
+  
+  .brands-showcase td {
+    padding: 12px;
+  }
+  
+  .brands-showcase td img {
+    max-width: 100px;
+  }
+  
+  .brands-grid {
+    grid-template-columns: 1fr;
   }
 }

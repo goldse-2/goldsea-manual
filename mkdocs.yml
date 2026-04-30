@@ -44,7 +44,7 @@ markdown_extensions:
 # 顶部与侧边导航结构
 nav:
   - Home: index.md
-  - Products: products/index.md
+  - Products: Products/index.md
   - Manuals: manuals/index.md
   - About Us: about.md
   - Contact Us: contact.md

@@ -9,10 +9,26 @@ hide:
   <h2>Professional Products, Clear Guidance</h2>
   <p>Quickly find your product manuals and make usage simpler. We provide clear, comprehensive, and accessible technical support.</p>
   <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-    <a href="products/" class="md-button md-button--primary">View Products</a>
+    <a href="Products/" class="md-button md-button--primary">View Products</a>
     <a href="manuals/" class="md-button md-button--outline">Search Manuals</a>
   </div>
 </div>
+
+## 🏢 Our Brand Collections
+
+Explore our diverse product lines, each designed to meet specific needs and requirements.
+
+<div class="brands-showcase" markdown>
+
+| ![Premium Brand](assets/images/brand-premium.png) | ![Standard Brand](assets/images/brand-standard.png) | ![Value Brand](assets/images/brand-value.png) |
+|---|---|---|
+| **Premium Series** | **Standard Series** | **Value Series** |
+| Professional-grade equipment with advanced features | Reliable solutions for everyday use | Affordable quality for budget-conscious buyers |
+| [Learn More →](Products/index.md) | [Learn More →](Products/index.md) | [Learn More →](Products/index.md) |
+
+</div>
+
+<br>
 
 ## 🔍 Product Categories
 
@@ -25,7 +41,7 @@ Find manuals and support tailored to your specific Goldse equipment.
     ### Electronic Devices
     High-performance tools and smart electronic configurations.
     
-    [Explore Category &rarr;](products/#electronics)
+    [Explore Category &rarr;](Products/)
     </div>
 
 -   <div class="goldse-card" markdown>
@@ -33,7 +49,7 @@ Find manuals and support tailored to your specific Goldse equipment.
     ### Hardware & Appliances
     Durable appliances and heavy-duty technical equipment.
     
-    [Explore Category &rarr;](products/#hardware)
+    [Explore Category &rarr;](Products/)
     </div>
 
 -   <div class="goldse-card" markdown>
@@ -41,7 +57,7 @@ Find manuals and support tailored to your specific Goldse equipment.
     ### Accessories & Parts
     Replacement parts, cables, and supplementary guides.
     
-    [Explore Category &rarr;](products/#accessories)
+    [Explore Category &rarr;](Products/)
     </div>
 
 </div>
