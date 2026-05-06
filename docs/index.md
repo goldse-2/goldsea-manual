@@ -7,47 +7,90 @@ hide:
 <div class="hero-section">
   <h1>Goldse</h1>
   <h2>Professional Products, Clear Guidance</h2>
-  <p>Quickly find your product manuals and make usage simpler. We provide clear, comprehensive, and accessible technical support.</p>
-  <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-    <a href="Products/" class="md-button md-button--primary">View Products</a>
+  <p>Discover comprehensive manuals, technical documentation, and expert support for all your Goldse products. Everything you need to get the most out of your equipment.</p>
+  <div class="hero-buttons">
+    <a href="Products/" class="md-button md-button--primary">Browse Products</a>
     <a href="manuals/" class="md-button md-button--outline">Search Manuals</a>
   </div>
 </div>
 
-## 🏢 Our Brand Collections
+## Product Categories
 
-Explore our diverse product lines, each designed to meet specific needs and requirements.
-
-<div class="brands-showcase" markdown>
-
-| ![Premium Brand](assets/images/brand-premium.png) | ![Standard Brand](assets/images/brand-standard.png) | ![Value Brand](assets/images/brand-value.png) |
-|---|---|---|
-| **Premium Series** | **Standard Series** | **Value Series** |
-| Professional-grade equipment with advanced features | Reliable solutions for everyday use | Affordable quality for budget-conscious buyers |
-| [Learn More →](Products/index.md) | [Learn More →](Products/index.md) | [Learn More →](Products/index.md) |
-
-</div>
-
-<br>
-
-## 🔍 Product Categories
-
-Find manuals and support tailored to your specific Goldse equipment.
+Find everything you need for your Goldse equipment.
 
 <div class="grid cards" markdown>
 
--   <div class="goldse-card" markdown>
-    <div class="goldse-card-icon">⚡</div>
+-   <div class="card" markdown>
+    <div class="card-icon">⚡</div>
     ### Electronic Devices
-    High-performance tools and smart electronic configurations.
+    High-performance tools and smart configurations
     
-    [Explore Category &rarr;](Products/)
+    [Explore →](Products/)
     </div>
 
--   <div class="goldse-card" markdown>
-    <div class="goldse-card-icon">⚙️</div>
+-   <div class="card" markdown>
+    <div class="card-icon">⚙️</div>
     ### Hardware & Appliances
-    Durable appliances and heavy-duty technical equipment.
+    Durable equipment and industrial solutions
+    
+    [Explore →](Products/)
+    </div>
+
+-   <div class="card" markdown>
+    <div class="card-icon">🔧</div>
+    ### Tools & Accessories
+    Complete solutions and compatible parts
+    
+    [Explore →](Products/)
+    </div>
+
+</div>
+
+## Our Product Lines
+
+Explore our comprehensive range designed for every need.
+
+<div class="brands-showcase" markdown>
+
+| ![Premium Series](assets/images/brand-premium.png) | ![Standard Series](assets/images/brand-standard.png) | ![Value Series](assets/images/brand-value.png) |
+|---|---|---|
+| **Premium Series** | **Standard Series** | **Value Series** |
+| Professional-grade equipment with advanced features | Reliable solutions for everyday use | Affordable quality for budget-conscious buyers |
+| [Learn More →](Products/) | [Learn More →](Products/) | [Learn More →](Products/) |
+
+</div>
+
+## Quick Resources
+
+Access documentation and support materials instantly.
+
+<div class="grid cards" markdown>
+
+-   <div class="card" markdown>
+    <div class="card-icon">📖</div>
+    ### User Manuals
+    Detailed guides for product setup and operation
+    
+    [Browse Library →](manuals/)
+    </div>
+
+-   <div class="card" markdown>
+    <div class="card-icon">🆘</div>
+    ### Support & Help
+    Troubleshooting and frequently asked questions
+    
+    [Get Help →](contact.md)
+    </div>
+
+-   <div class="card" markdown>
+    <div class="card-icon">ℹ️</div>
+    ### About Goldse
+    Learn about our brand and company values
+    
+    [About Us →](about.md)
+    </div>
+
+</div>
     
     [Explore Category &rarr;](Products/)
     </div>
