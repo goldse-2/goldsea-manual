@@ -26,7 +26,46 @@ theme:
 extra_css:
   - stylesheets/custom.css
 
-# 开启强大的 Markdown 扩展
+# 页脚与额外配置
+extra:
+  social:
+    - icon: fontawesome/brands/facebook
+      link: https://facebook.com/goldseatool
+      name: Facebook
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/goldseatool
+      name: Twitter
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/company/goldseatool
+      name: LinkedIn
+    - icon: fontawesome/brands/youtube
+      link: https://youtube.com/@goldseatool
+      name: YouTube
+  footerlinks:
+    - title: Product Categories
+      links:
+        - Electronic Devices
+        - Hardware & Appliances
+        - Accessories & Parts
+        - Tools & Equipment
+    - title: Documentation
+      links:
+        - Installation Guides
+        - User Manuals
+        - Technical Specs
+        - Troubleshooting
+    - title: Support
+      links:
+        - Contact Us
+        - FAQ
+        - Warranty Info
+        - Returns & Exchanges
+    - title: Company
+      links:
+        - About Us
+        - Blog
+        - Careers
+        - Privacy Policy
 markdown_extensions:
   - meta
   - attr_list

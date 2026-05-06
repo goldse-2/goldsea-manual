@@ -5,11 +5,42 @@ hide:
 
 # Product Manuals & Documentation
 
+<div class="hero-section">
+  <h1>Complete Product Documentation</h1>
+  <p>Your one-stop resource for all Goldse product guides, specifications, and support information</p>
+</div>
+
 Browse and search through comprehensive manuals for all Goldse products.
 
-## 🔍 Search & Filter
+## 🔍 Quick Access
 
-Use the search function in the top navigation to find specific product manuals quickly.
+<div class="grid cards" markdown>
+
+-   **Search Manuals**
+    
+    Use the search function at the top to find specific product documentation instantly.
+    
+    [:simple-magnifyingglass: Search Now](#){ .md-button .md-button--primary }
+
+-   **Browse by Category**
+    
+    Explore our complete library organized by product type and function.
+    
+    [:material-folder-open: View Categories](#){ .md-button .md-button--primary }
+
+-   **Latest Updates**
+    
+    Check out newly added guides and recent documentation updates.
+    
+    [:material-newspaper: What's New](#){ .md-button .md-button--primary }
+
+-   **Technical Support**
+    
+    Can't find what you're looking for? Contact our support team.
+    
+    [:material-headset: Get Help](#){ .md-button .md-button--primary }
+
+</div>
 
 ## 📚 Product Manuals by Category
 
@@ -48,6 +79,44 @@ Use the search function in the top navigation to find specific product manuals q
     
     - First-time setup
     - Common questions
+
+</div>
+
+## 💡 Featured Resources
+
+<div class="grid cards" markdown>
+
+-   **Installation Guides**
+    
+    Step-by-step instructions for setting up your Goldse products correctly and safely.
+
+-   **Troubleshooting**
+    
+    Solutions to common issues and problems with detailed diagnostic steps.
+
+-   **Safety Information**
+    
+    Important safety guidelines and warnings for all product categories.
+
+-   **Video Tutorials**
+    
+    Visual guides to help you get the most out of your Goldse devices.
+
+-   **Warranty & Support**
+    
+    Information about warranty coverage and how to contact our support team.
+
+-   **Downloads & Updates**
+    
+    Firmware updates, drivers, and additional resources for your products.
+
+</div>
+
+---
+
+## 📞 Need More Help?
+
+Can't find the manual you're looking for? [Contact us](../contact.md) or visit our [support page](../about.md) for additional assistance.
     - Tips & tricks
     - Video tutorials (coming soon)
 
