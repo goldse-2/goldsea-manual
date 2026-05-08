@@ -26,6 +26,10 @@ theme:
 extra_css:
   - stylesheets/custom.css
 
+# 引入自定义JavaScript
+extra_javascript:
+  - assets/js/layout-fix.js
+
 # 页脚与额外配置
 extra:
   social:
