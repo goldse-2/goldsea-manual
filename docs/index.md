@@ -4,157 +4,106 @@ hide:
   - toc
 ---
 
-<div class="hero-section">
-  <h1>Goldse</h1>
-  <h2>Professional Products, Clear Guidance</h2>
-  <p>Discover comprehensive manuals, technical documentation, and expert support for all your Goldse products. Everything you need to get the most out of your equipment.</p>
-  <div class="hero-buttons">
-    <a href="Products/" class="md-button md-button--primary">Browse Products</a>
-    <a href="manuals/" class="md-button md-button--outline">Search Manuals</a>
-  </div>
-</div>
+<div class="storefront-page">
+  <header class="storefront-topbar">
+    <a class="storefront-logo" href="/">
+      <span class="storefront-logo-mark">G</span>
+      <span>Goldse</span>
+    </a>
+    <nav class="storefront-nav">
+      <a href="Products/">产品</a>
+      <a href="manuals/">说明书</a>
+      <a href="3D/">利润计算器</a>
+      <a href="about/">关于</a>
+      <a href="contact/">支持</a>
+    </nav>
+    <a class="storefront-top-action" href="3D/">立即使用</a>
+  </header>
 
-## Product Categories
-
-Find everything you need for your Goldse equipment.
-
-<div class="grid cards" markdown>
-
--   <div class="card" markdown>
-    <div class="card-icon">⚡</div>
-    ### Electronic Devices
-    High-performance tools and smart configurations
-    
-    [Explore →](Products/)
+  <section class="storefront-hero">
+    <div class="storefront-hero-content">
+      <span class="storefront-kicker">Goldse Tools</span>
+      <h1>面向创作者和卖家的工具中心</h1>
+      <p>整理产品资料、说明书、计算工具与运营模块，让每一个产品从设计、生产到销售都更清晰。</p>
+      <div class="storefront-actions">
+        <a href="3D/" class="storefront-btn storefront-btn-light">打开利润计算器</a>
+        <a href="Products/" class="storefront-btn storefront-btn-outline">查看产品模块</a>
+      </div>
     </div>
-
--   <div class="card" markdown>
-    <div class="card-icon">⚙️</div>
-    ### Hardware & Appliances
-    Durable equipment and industrial solutions
-    
-    [Explore →](Products/)
+    <div class="storefront-hero-visual" aria-label="Goldse product display">
+      <div class="product-machine">
+        <div class="machine-top"></div>
+        <div class="machine-body">
+          <div class="machine-screen"></div>
+          <div class="machine-window"></div>
+          <div class="machine-base"></div>
+        </div>
+      </div>
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
     </div>
-
--   <div class="card" markdown>
-    <div class="card-icon">🔧</div>
-    ### Tools & Accessories
-    Complete solutions and compatible parts
-    
-    [Explore →](Products/)
+    <div class="storefront-dots">
+      <span></span><span></span><span class="active"></span><span></span><span></span>
     </div>
+  </section>
 
-</div>
+  <section class="storefront-grid">
+    <a class="storefront-tile tile-printer" href="Products/">
+      <div class="tile-copy">
+        <span>产品中心</span>
+        <h2>搭建你的产品展示模块</h2>
+        <p>集中展示产品系列、核心卖点、参数信息和购买入口。</p>
+        <strong>立即查看 &gt;</strong>
+      </div>
+      <div class="tile-visual tile-visual-machine"></div>
+    </a>
 
-## Our Product Lines
+    <a class="storefront-tile tile-material" href="manuals/">
+      <div class="tile-copy">
+        <span>资料文档</span>
+        <h2>说明书与使用资料</h2>
+        <p>把安装教程、使用指南、维护资料统一收纳。</p>
+        <strong>了解更多 &gt;</strong>
+      </div>
+      <div class="tile-visual tile-visual-rolls"></div>
+    </a>
 
-Explore our comprehensive range designed for every need.
+    <a class="storefront-tile tile-model" href="3D/">
+      <div class="tile-copy">
+        <span>运营工具</span>
+        <h2>3D 打印利润计算器</h2>
+        <p>计算材料、电费、运费、广告和库存带来的真实利润。</p>
+        <strong>立即使用 &gt;</strong>
+      </div>
+      <div class="tile-visual tile-visual-calc"></div>
+    </a>
 
-<div class="brands-showcase" markdown>
+    <a class="storefront-tile tile-parts" href="contact/">
+      <div class="tile-copy">
+        <span>支持服务</span>
+        <h2>需求反馈与支持</h2>
+        <p>提交问题、整理需求，后续可扩展为工单和客户服务入口。</p>
+        <strong>联系支持 &gt;</strong>
+      </div>
+      <div class="tile-visual tile-visual-parts"></div>
+    </a>
+  </section>
 
-| ![Premium Series](assets/images/brand-premium.png) | ![Standard Series](assets/images/brand-standard.png) | ![Value Series](assets/images/brand-value.png) |
-|---|---|---|
-| **Premium Series** | **Standard Series** | **Value Series** |
-| Professional-grade equipment with advanced features | Reliable solutions for everyday use | Affordable quality for budget-conscious buyers |
-| [Learn More →](Products/) | [Learn More →](Products/) | [Learn More →](Products/) |
-
-</div>
-
-## Quick Resources
-
-Access documentation and support materials instantly.
-
-<div class="grid cards" markdown>
-
--   <div class="card" markdown>
-    <div class="card-icon">📖</div>
-    ### User Manuals
-    Detailed guides for product setup and operation
-    
-    [Browse Library →](manuals/)
+  <section class="storefront-feature-strip">
+    <div>
+      <span>01</span>
+      <h3>产品模块</h3>
+      <p>适合放置产品线、产品图、价格和卖点。</p>
     </div>
-
--   <div class="card" markdown>
-    <div class="card-icon">🆘</div>
-    ### Support & Help
-    Troubleshooting and frequently asked questions
-    
-    [Get Help →](contact.md)
+    <div>
+      <span>02</span>
+      <h3>工具模块</h3>
+      <p>把计算器、表格和运营工具做成可复用入口。</p>
     </div>
-
--   <div class="card" markdown>
-    <div class="card-icon">ℹ️</div>
-    ### About Goldse
-    Learn about our brand and company values
-    
-    [About Us →](about.md)
+    <div>
+      <span>03</span>
+      <h3>文档模块</h3>
+      <p>让客户和团队都能快速找到说明资料。</p>
     </div>
-
-</div>
-    
-    [Explore Category &rarr;](Products/)
-    </div>
-
--   <div class="goldse-card" markdown>
-    <div class="goldse-card-icon">🔌</div>
-    ### Accessories & Parts
-    Replacement parts, cables, and supplementary guides.
-    
-    [Explore Category &rarr;](Products/)
-    </div>
-
-</div>
-
-<br>
-
-## ⭐ Popular Manuals
-
-<div class="grid cards" markdown>
-
--   **Goldse Pro Model-X**
-    <br> *Version 2.1 | Updated: Oct 2025*
-    <br><br>
-    [Download PDF (2.4MB)](#){: .md-button }
-
--   **Goldse Smart Hub**
-    <br> *Version 1.0 | Updated: Nov 2025*
-    <br><br>
-    [Download PDF (1.8MB)](#){: .md-button }
-
--   **Goldse Power Supply 800W**
-    <br> *Version 3.0 | Updated: Jan 2026*
-    <br><br>
-    [Download PDF (3.1MB)](#){: .md-button }
-
--   **Goldse Connect Cable Kit**
-    <br> *Version 1.2 | Updated: Feb 2026*
-    <br><br>
-    [Download PDF (0.9MB)](#){: .md-button }
-
-</div>
-
-<br>
-
-## 🛡️ Why Choose Goldse
-
-<div class="grid cards" markdown>
-
--   <div class="goldse-card text-center" markdown>
-    ### Official Quality
-    **Goldse Official Production**
-    <br>Guaranteed authentic products with strict quality control and reliable performance.
-    </div>
-
--   <div class="goldse-card text-center" markdown>
-    ### Clear & Intuitive
-    **Step-by-Step Guidance**
-    <br>Richly illustrated manuals ensuring every operation step is logical and easy to follow.
-    </div>
-
--   <div class="goldse-card text-center" markdown>
-    ### Always Accessible
-    **Multi-Device Adaptation**
-    <br>Access your documentation anytime, anywhere across mobile, tablet, and desktop.
-    </div>
-
+  </section>
 </div>
