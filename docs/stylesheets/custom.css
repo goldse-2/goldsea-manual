@@ -1890,3 +1890,294 @@ ul li::marker {
 .brand-trust-section.is-switching .trust-media-card {
   transform: scale(0.94) !important;
 }
+
+/* Anker-style vertical-to-horizontal trust section */
+.brand-trust-section {
+  position: relative;
+  height: 360vh !important;
+  min-height: 360vh !important;
+  padding: 0 !important;
+  background: #020304;
+  color: #fff;
+  overflow: visible;
+}
+
+.brand-trust-bg {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background:
+    radial-gradient(circle at 16% 4%, rgba(79,70,229,0.38), transparent 30%),
+    radial-gradient(circle at 86% 7%, rgba(16,185,129,0.34), transparent 28%),
+    linear-gradient(180deg, #07121b 0%, #020304 72%);
+}
+
+.trust-hero-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.trust-hero-device {
+  width: min(640px, 72vw);
+  height: min(360px, 44vw);
+  border-radius: 42px;
+  background: linear-gradient(145deg, #22272f 0%, #06080d 54%, #52525b 100%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.16), 0 70px 130px rgba(0,0,0,0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.trust-hero-device::before {
+  content: '';
+  position: absolute;
+  inset: 34px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(124,58,237,0.64), transparent 18%),
+    linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.trust-hero-device span {
+  position: absolute;
+  top: 76px;
+  color: rgba(255,255,255,0.74);
+  font-size: 15px;
+  z-index: 2;
+}
+
+.trust-hero-device strong {
+  color: #fff;
+  z-index: 2;
+  font-size: clamp(32px, 5vw, 58px);
+  letter-spacing: -0.04em;
+}
+
+.brand-trust-stage {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 3;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  overflow: hidden;
+  display: block !important;
+  padding: 0 !important;
+  pointer-events: none;
+}
+
+.trust-horizontal-track {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+  padding-left: 14vw;
+  padding-right: 14vw;
+  will-change: transform;
+  transition: transform 0.08s linear;
+  pointer-events: auto;
+}
+
+.trust-slide {
+  flex: 0 0 auto;
+  border-bottom: 0 !important;
+  color: #fff !important;
+}
+
+.trust-slide-media {
+  width: min(58vw, 720px);
+  height: min(42vw, 420px);
+  min-width: 420px;
+  background: #020304;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 42px 110px rgba(0,0,0,0.62);
+  overflow: hidden;
+}
+
+.trust-device-visual {
+  width: 76%;
+  height: 66%;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 48% 52%, rgba(124,58,237,0.7), transparent 18%),
+    linear-gradient(145deg, #242832, #05070b 58%, #4b5563);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 36px 90px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 42px;
+  color: rgba(255,255,255,0.72);
+  font-weight: 800;
+}
+
+.trust-device-two {
+  background:
+    radial-gradient(circle at 58% 52%, rgba(16,185,129,0.62), transparent 20%),
+    linear-gradient(145deg, #172554, #030712 56%, #0f766e);
+}
+
+.trust-slide-copy {
+  width: min(38vw, 520px);
+  min-width: 360px;
+}
+
+.trust-slide-copy span {
+  display: block;
+  color: #10b981;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.trust-slide-copy h2 {
+  color: #fff;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  font-weight: 900;
+  padding: 0;
+  margin: 0 0 14px;
+}
+
+.trust-slide-copy h2::after {
+  display: none;
+}
+
+.trust-slide-copy p {
+  color: rgba(255,255,255,0.74);
+  font-size: 15px;
+  line-height: 1.72;
+  margin: 0 0 18px;
+}
+
+.trust-slide-copy strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  height: 34px;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+  font-size: 13px;
+  padding: 0 14px;
+}
+
+.trust-slide-person {
+  background: linear-gradient(135deg, #1f2937, #050505);
+}
+
+.trust-person-scene {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(135deg, #374151, #111827 52%, #0f766e);
+}
+
+.trust-person-head {
+  position: absolute;
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  right: 26%;
+  top: 22%;
+  background: linear-gradient(135deg, #fde68a, #f8fafc);
+}
+
+.trust-person-shirt {
+  position: absolute;
+  width: 190px;
+  height: 150px;
+  right: 16%;
+  bottom: 20%;
+  border-radius: 46px 46px 12px 12px;
+  background: #0f172a;
+}
+
+.trust-table {
+  position: absolute;
+  left: 10%;
+  right: 8%;
+  bottom: 12%;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.82);
+}
+
+.trust-progress-dots {
+  position: fixed;
+  left: 50%;
+  bottom: 11vh;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  pointer-events: none;
+}
+
+.trust-progress-dots span {
+  color: rgba(255,255,255,0.62);
+  font-size: 12px;
+  font-weight: 800;
+  position: relative;
+}
+
+.trust-progress-dots span::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transform: translateX(-50%);
+  transition: width 0.2s ease;
+}
+
+.trust-progress-dots span.is-active {
+  color: #fff;
+}
+
+.trust-progress-dots span.is-active::after {
+  width: 34px;
+}
+
+@media (max-width: 900px) {
+  .brand-trust-section {
+    height: 300vh !important;
+    min-height: 300vh !important;
+  }
+
+  .trust-horizontal-track {
+    padding-left: 8vw;
+    padding-right: 8vw;
+  }
+
+  .trust-slide-media,
+  .trust-slide-copy {
+    min-width: 78vw;
+    width: 78vw;
+  }
+}
+
+.brand-trust-stage .trust-progress-dots {
+  position: absolute !important;
+  left: 50%;
+  bottom: 11vh;
+  transform: translateX(-50%);
+}

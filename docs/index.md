@@ -47,41 +47,67 @@ hide:
 
   <section class="brand-trust-section" id="brand-trust">
     <div class="brand-trust-bg"></div>
+
+    <div class="trust-hero-panel">
+      <div class="trust-hero-device">
+        <span>Goldse</span>
+        <strong>Brand Trust</strong>
+      </div>
+    </div>
+
     <div class="brand-trust-stage">
-      <a class="trust-story trust-story-left" href="about/" data-trust-link>
-        <span>Brand Report</span>
-        <h2>Goldse quality program improves product consistency by 41%</h2>
-        <p>Our internal inspection workflow combines material checks, assembly review, and documentation validation for every product line.</p>
-        <strong>Learn more</strong>
-      </a>
-
-      <a class="trust-media-card" href="about/" data-trust-media>
-        <div class="trust-media-visual">
-          <div class="trust-person-card">
-            <div class="trust-person-face"></div>
-            <div class="trust-person-body"></div>
+      <div class="trust-horizontal-track" data-trust-track>
+        <a class="trust-slide trust-slide-media" href="about/">
+          <div class="trust-device-visual trust-device-one">
+            <span>Goldse</span>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a class="trust-story trust-story-right" href="Products/" data-trust-link-right>
-        <span>Creator Story</span>
-        <h2>How makers use Goldse documentation to launch faster</h2>
-        <p>Clear manuals and modular product resources help teams reduce setup time and improve customer confidence.</p>
-        <strong>View story</strong>
-      </a>
+        <a class="trust-slide trust-slide-copy" href="about/">
+          <span>Brand Report</span>
+          <h2>Goldse quality program improves product consistency by 41%</h2>
+          <p>Inspection workflows, material checks, and documentation reviews help every product line feel more reliable.</p>
+          <strong>Learn more</strong>
+        </a>
+
+        <a class="trust-slide trust-slide-media" href="Products/">
+          <div class="trust-device-visual trust-device-two">
+            <span>Products</span>
+          </div>
+        </a>
+
+        <a class="trust-slide trust-slide-copy" href="manuals/">
+          <span>Documentation Trust</span>
+          <h2>Clear manuals help customers set up faster and buy with confidence</h2>
+          <p>Structured resources reduce confusion, support global visitors, and make product information easier to verify.</p>
+          <strong>Open manuals</strong>
+        </a>
+
+        <a class="trust-slide trust-slide-media trust-slide-person" href="contact/">
+          <div class="trust-person-scene">
+            <div class="trust-person-head"></div>
+            <div class="trust-person-shirt"></div>
+            <div class="trust-table"></div>
+          </div>
+        </a>
+
+        <a class="trust-slide trust-slide-copy" href="contact/">
+          <span>Support Promise</span>
+          <h2>Human support and organized content make the brand easier to trust</h2>
+          <p>Visitors can move from product stories to manuals and support without losing context.</p>
+          <strong>Contact support</strong>
+        </a>
+      </div>
+
+      <div class="trust-progress-dots" aria-label="Brand trust progress">
+        <span class="is-active">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+      </div>
     </div>
-
-    <div class="trust-tabs" aria-label="Brand trust stories">
-      <button class="is-active" data-trust-tab="0">1</button>
-      <button data-trust-tab="1">2</button>
-      <button data-trust-tab="2">3</button>
-      <button data-trust-tab="3">4</button>
-      <button data-trust-tab="4">5</button>
-    </div>
-  </section>
-
-  <section class="storefront-grid">
+  </section><section class="storefront-grid">
     <a class="storefront-tile tile-printer" href="Products/">
       <div class="tile-copy">
         <span>Product Center</span>
@@ -131,4 +157,5 @@ hide:
     </div>
   </section>
 </div>
+
 
