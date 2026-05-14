@@ -45,6 +45,38 @@ hide:
     </div>
   </section>
 
+  <section class="storefront-scroll-showcase" id="scroll-showcase">
+    <div class="scroll-stage">
+      <div class="scroll-copy-stack">
+        <article class="scroll-copy is-active" data-step="0">
+          <span>Scroll Experience</span>
+          <h2>Move through product stories</h2>
+          <p>As visitors scroll, the visual module follows the page and changes focus, creating a premium product presentation.</p>
+        </article>
+        <article class="scroll-copy" data-step="1">
+          <span>Product Focus</span>
+          <h2>Highlight key modules one by one</h2>
+          <p>Use each scroll section to introduce a product line, a feature group, or a customer benefit.</p>
+        </article>
+        <article class="scroll-copy" data-step="2">
+          <span>Guided Navigation</span>
+          <h2>Guide users without extra clicks</h2>
+          <p>The page movement itself becomes a path, helping users understand your products naturally.</p>
+        </article>
+      </div>
+      <div class="scroll-visual-pin">
+        <div class="scroll-orbit-card scroll-card-one">Products</div>
+        <div class="scroll-orbit-card scroll-card-two">Manuals</div>
+        <div class="scroll-orbit-card scroll-card-three">Support</div>
+        <div class="scroll-device" aria-hidden="true">
+          <div class="scroll-device-light"></div>
+          <div class="scroll-device-screen"></div>
+          <div class="scroll-device-base"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="storefront-grid">
     <a class="storefront-tile tile-printer" href="Products/">
       <div class="tile-copy">
