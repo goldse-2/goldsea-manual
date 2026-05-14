@@ -179,45 +179,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 180);
   }
 
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
+  let wheelLocked = false;
 
-  function updateTrustByScroll() {
+  function handleTrustWheel(event) {
     const rect = trustSection.getBoundingClientRect();
-    const scrollable = Math.max(1, rect.height - window.innerHeight);
-    const progress = clamp(-rect.top / scrollable, 0, 1);
-    const index = Math.min(stories.length - 1, Math.floor(progress * stories.length));
+    const inView = rect.top < window.innerHeight * 0.72 && rect.bottom > window.innerHeight * 0.28;
+    if (!inView || Math.abs(event.deltaY) < 8) return;
 
-    if (index !== activeTrustIndex) {
-      setTrustStory(index);
-    }
+    const direction = event.deltaY > 0 ? 1 : -1;
+    const nextIndex = activeTrustIndex + direction;
+    const canSwitch = nextIndex >= 0 && nextIndex < stories.length;
 
-    if (media) {
-      media.style.setProperty('--trust-progress', progress.toFixed(4));
-    }
-  }
+    if (!canSwitch) return;
 
-  let trustTicking = false;
-  function requestTrustUpdate() {
-    if (trustTicking) return;
-    trustTicking = true;
-    requestAnimationFrame(() => {
-      updateTrustByScroll();
-      trustTicking = false;
-    });
+    event.preventDefault();
+    if (wheelLocked) return;
+
+    wheelLocked = true;
+    setTrustStory(nextIndex);
+    window.setTimeout(() => {
+      wheelLocked = false;
+    }, 620);
   }
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       setTrustStory(Number(tab.dataset.trustTab));
-      const targetTop = trustSection.offsetTop + (trustSection.offsetHeight - window.innerHeight) * (Number(tab.dataset.trustTab) / stories.length);
-      window.scrollTo({ top: targetTop, behavior: 'smooth' });
+      trustSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
 
   setTrustStory(0);
-  updateTrustByScroll();
-  window.addEventListener('scroll', requestTrustUpdate, { passive: true });
-  window.addEventListener('resize', requestTrustUpdate);
+  window.addEventListener('wheel', handleTrustWheel, { passive: false });
 });
