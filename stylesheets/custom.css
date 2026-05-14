@@ -1849,3 +1849,44 @@ ul li::marker {
     min-height: 100vh;
   }
 }
+
+/* Wheel-step trust carousel compact override */
+.brand-trust-section {
+  min-height: 680px !important;
+  padding: 92px 0 96px !important;
+}
+
+.brand-trust-stage {
+  position: relative !important;
+  top: auto !important;
+  min-height: 430px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.trust-tabs {
+  position: relative !important;
+  bottom: auto !important;
+  margin-top: 28px !important;
+  padding-bottom: 0 !important;
+}
+
+.trust-media-card {
+  transform: translateY(0) scale(1) !important;
+}
+
+.trust-person-card {
+  transform: translateX(0) !important;
+}
+
+.brand-trust-section.is-switching .trust-story-left {
+  transform: translateX(-30px);
+}
+
+.brand-trust-section.is-switching .trust-story-right {
+  transform: translateX(30px);
+}
+
+.brand-trust-section.is-switching .trust-media-card {
+  transform: scale(0.94) !important;
+}
