@@ -1,0 +1,6 @@
+docs/assets/images/**/*.zip
+docs/assets/images/**/*.ts
+docs/assets/images/**/*.mp4
+docs/assets/images/**/*.mov
+site/.vercel/
+site/.gitignore
