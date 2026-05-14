@@ -70,6 +70,61 @@ document.addEventListener('DOMContentLoaded', function() {
   `;
   document.head.appendChild(style);
 
+  const translations = {
+    en: {
+      byCategory: 'By Category',
+      catalogTitle: 'Amazon ASIN collection',
+      priceAmazon: 'Price shown on Amazon',
+      viewAmazon: 'View on Amazon',
+      backCatalog: 'Back to catalog'
+    },
+    ja: {
+      byCategory: 'カテゴリー',
+      catalogTitle: 'Amazon ASIN コレクション',
+      priceAmazon: '価格はAmazonでご確認ください',
+      viewAmazon: 'Amazonで見る',
+      backCatalog: 'カタログに戻る'
+    },
+    de: {
+      byCategory: 'Kategorie',
+      catalogTitle: 'Amazon-ASIN-Kollektion',
+      priceAmazon: 'Preis auf Amazon anzeigen',
+      viewAmazon: 'Auf Amazon ansehen',
+      backCatalog: 'Zurück zum Katalog'
+    },
+    it: {
+      byCategory: 'Categoria',
+      catalogTitle: 'Collezione ASIN Amazon',
+      priceAmazon: 'Prezzo disponibile su Amazon',
+      viewAmazon: 'Vedi su Amazon',
+      backCatalog: 'Torna al catalogo'
+    }
+  };
+
+  const languageSelect = document.querySelector('[data-language-select]');
+  const browserLanguage = (navigator.language || 'en').toLowerCase();
+  const storedLanguage = localStorage.getItem('goldse-language');
+  const detectedLanguage = browserLanguage.startsWith('ja') ? 'ja' : browserLanguage.startsWith('de') ? 'de' : browserLanguage.startsWith('it') ? 'it' : 'en';
+  const currentLanguage = storedLanguage || detectedLanguage;
+
+  function applyLanguage(language) {
+    const dictionary = translations[language] || translations.en;
+    document.documentElement.lang = language;
+    document.querySelectorAll('[data-i18n]').forEach((element) => {
+      const key = element.getAttribute('data-i18n');
+      if (dictionary[key]) element.textContent = dictionary[key];
+    });
+    if (languageSelect) languageSelect.value = language;
+  }
+
+  if (languageSelect) {
+    languageSelect.addEventListener('change', () => {
+      localStorage.setItem('goldse-language', languageSelect.value);
+      applyLanguage(languageSelect.value);
+    });
+  }
+  applyLanguage(currentLanguage);
+
   const hero = document.getElementById('hero-carousel');
   if (!hero) return;
 

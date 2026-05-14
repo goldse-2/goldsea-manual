@@ -21,7 +21,7 @@ hide:
               <a href="Products/b0bblmbyp8/" class="mega-card"><span class="mega-printer mega-printer-tall"></span><strong>CutMate Compact Saw</strong><em>ASIN B0BBLMBYP8</em></a>
               <a href="Products/b0bbvg9zln/" class="mega-card"><span class="mega-printer mega-printer-compact"></span><strong>BeamLine Laser Level</strong><em>ASIN B0BBVG9ZLN</em></a>
               <a href="Products/b0c48z1hbr/" class="mega-card"><span class="mega-printer mega-printer-open"></span><strong>MeasurePro Digital Meter</strong><em>ASIN B0C48Z1HBR</em></a>
-              <a href="Products/b0c5sxw138/" class="mega-card"><span class="mega-printer mega-printer-mini"></span><strong>ImpactPro Driver Kit</strong><em>ASIN B0C5SXW138</em></a>
+              <a href="Products/b09yrdy3ys/" class="mega-card"><span class="mega-printer mega-printer-mini"></span><strong>FlexCut Multi-Tool</strong><em>ASIN B09YRDY3YS</em></a>
               <a href="Products/b0gwzcbmb7/" class="mega-card"><span class="mega-printer mega-printer-core"></span><strong>GrindPro Angle Grinder</strong><em>ASIN B0GWZCBMB7</em></a>
             </div>
             <div class="mega-footer-links"><a href="Products/">Shop all</a><a href="Products/">Product comparison</a></div>
