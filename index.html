@@ -519,29 +519,57 @@
     <a class="storefront-top-action" href="Products/">View Products</a>
   </header>
 
-  <section class="storefront-hero">
-    <div class="storefront-hero-content">
-      <span class="storefront-kicker">Goldse Tools</span>
-      <h1>Tools and guidance for modern product teams</h1>
-      <p>Organize product information, manuals, support resources, and operating modules in one clear destination.</p>
-      <div class="storefront-actions">
-        <a href="Products/" class="storefront-btn storefront-btn-outline">Explore Products</a>
-      </div>
-    </div>
-    <div class="storefront-hero-visual" aria-label="Goldse product display">
-      <div class="product-machine">
-        <div class="machine-top"></div>
-        <div class="machine-body">
-          <div class="machine-screen"></div>
-          <div class="machine-window"></div>
-          <div class="machine-base"></div>
+  <section class="storefront-hero hero-carousel" id="hero-carousel">
+    <div class="hero-carousel-track" data-hero-track>
+      <article class="hero-slide">
+        <div class="storefront-hero-content">
+          <span class="storefront-kicker">Goldse Tools</span>
+          <h1>Tools and guidance for modern product teams</h1>
+          <p>Organize product information, manuals, support resources, and operating modules in one clear destination.</p>
+          <div class="storefront-actions">
+            <a href="Products/" class="storefront-btn storefront-btn-outline">Explore Products</a>
+          </div>
         </div>
-      </div>
-      <div class="hero-glow hero-glow-one"></div>
-      <div class="hero-glow hero-glow-two"></div>
+        <div class="storefront-hero-visual" aria-label="Goldse product display">
+          <div class="product-machine"><div class="machine-top"></div><div class="machine-body"><div class="machine-screen"></div><div class="machine-window"></div><div class="machine-base"></div></div></div>
+          <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+        </div>
+      </article>
+
+      <article class="hero-slide hero-slide-alt">
+        <div class="storefront-hero-content">
+          <span class="storefront-kicker">Product Center</span>
+          <h1>Build a stronger product showcase</h1>
+          <p>Present product lines, highlights, specifications, and support links with a clear storefront experience.</p>
+          <div class="storefront-actions">
+            <a href="Products/" class="storefront-btn storefront-btn-outline">View Products</a>
+          </div>
+        </div>
+        <div class="storefront-hero-visual" aria-label="Product showcase display">
+          <div class="hero-product-stack"><span></span><span></span><span></span></div>
+          <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+        </div>
+      </article>
+
+      <article class="hero-slide hero-slide-support">
+        <div class="storefront-hero-content">
+          <span class="storefront-kicker">Documentation</span>
+          <h1>Manuals, support, and resources in one place</h1>
+          <p>Help customers find setup guides, product notes, service channels, and useful documentation faster.</p>
+          <div class="storefront-actions">
+            <a href="manuals/" class="storefront-btn storefront-btn-outline">Open Manuals</a>
+          </div>
+        </div>
+        <div class="storefront-hero-visual" aria-label="Documentation display">
+          <div class="hero-doc-card"><span></span><span></span><span></span><span></span></div>
+          <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+        </div>
+      </article>
     </div>
-    <div class="storefront-dots">
-      <span></span><span></span><span class="active"></span><span></span><span></span>
+    <div class="storefront-dots hero-carousel-dots" data-hero-dots>
+      <button class="active" type="button" aria-label="Slide 1"></button>
+      <button type="button" aria-label="Slide 2"></button>
+      <button type="button" aria-label="Slide 3"></button>
     </div>
   </section>
 
