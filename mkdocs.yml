@@ -88,13 +88,21 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Products:
-      - Product Center: Products/index.md
-      - VX-18 Smart Drill Driver: Products/vx-18-smart-drill.md
-      - CX-45 Compact Circular Saw: Products/cx-45-circular-saw.md
-      - LX-360 Laser Level: Products/lx-360-laser-level.md
-      - PX-120 Portable Power Station: Products/px-120-power-station.md
-      - MT-9 Multi-Tool Kit: Products/mt-9-multi-tool-kit.md
-      - WS-40 Workshop Storage System: Products/ws-40-storage-system.md
+      - Amazon Tool Catalog: Products/index.md
+      - B09WVCWLQR: Products/b09wvcwlqr.md
+      - B0BBLMBYP8: Products/b0bblmbyp8.md
+      - B0BBVG9ZLN: Products/b0bbvg9zln.md
+      - B0C48Z1HBR: Products/b0c48z1hbr.md
+      - B0C5SXW138: Products/b0c5sxw138.md
+      - B0GWZCBMB7: Products/b0gwzcbmb7.md
+      - B09YRDY3YS: Products/b09yrdy3ys.md
+      - B0BCWDF3KB: Products/b0bcwdf3kb.md
+      - B0CFFK4V9K: Products/b0cffk4v9k.md
+      - B0BQW4MBN4: Products/b0bqw4mbn4.md
+      - B0D6W8MKGB: Products/b0d6w8mkgb.md
+      - B0GC6CHLQT: Products/b0gc6chlqt.md
+      - B0GWD61FWD: Products/b0gwd61fwd.md
+      - B0GYWL9WKX: Products/b0gywl9wkx.md
   - Manuals: manuals/index.md
   - About Us: about.md
   - Contact Us: contact.md

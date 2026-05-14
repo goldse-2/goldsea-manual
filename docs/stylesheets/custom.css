@@ -2896,3 +2896,208 @@ ul li::marker {
   position: relative;
   z-index: 2;
 }
+
+/* Amazon-style catalog and detail pages */
+.amazon-catalog-layout {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 26px;
+  margin-top: 20px;
+}
+
+.amazon-filter {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+  padding: 22px 18px;
+  background: #fafafa;
+  border-right: 1px solid #e5e7eb;
+}
+
+.amazon-filter h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.amazon-filter a {
+  display: block;
+  color: #374151 !important;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.amazon-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0 24px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.amazon-toolbar span {
+  display: block;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.amazon-toolbar strong {
+  font-size: 24px;
+}
+
+.amazon-toolbar button {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 18px;
+}
+
+.amazon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 34px 22px;
+}
+
+.amazon-card {
+  color: #111827 !important;
+  border-bottom: 0 !important;
+}
+
+.amazon-card-visual,
+.amazon-detail-image {
+  height: 235px;
+  background: #f3f4f6;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.amazon-card-visual::before,
+.amazon-detail-image::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 42%;
+  height: 48%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #111827, #374151 62%, #9ca3af);
+  box-shadow: 0 20px 34px rgba(0,0,0,0.16);
+}
+
+.tool-visual-drill::before,.tool-visual-driver::before { clip-path: polygon(0 36%, 72% 20%, 100% 42%, 84% 72%, 34% 64%, 24% 100%, 8% 100%); }
+.tool-visual-saw::before { clip-path: polygon(0 46%, 66% 10%, 100% 32%, 64% 86%, 14% 100%); }
+.tool-visual-laser::before,.tool-visual-meter::before { clip-path: polygon(36% 0, 72% 10%, 100% 100%, 0 100%, 28% 10%); background: linear-gradient(135deg, #047857, #111827); }
+.tool-visual-grinder::before,.tool-visual-multitool::before { clip-path: polygon(0 42%, 70% 0, 100% 22%, 74% 100%, 16% 80%); }
+.tool-visual-sander::before { clip-path: polygon(14% 20%, 88% 14%, 100% 70%, 72% 100%, 0 82%); }
+.tool-visual-light::before { border-radius: 999px 999px 20px 20px; background: linear-gradient(135deg, #facc15, #111827); }
+.tool-visual-power::before,.tool-visual-storage::before,.tool-visual-battery::before,.tool-visual-kit::before,.tool-visual-vacuum::before { border-radius: 16px; clip-path: none; }
+
+.amazon-card h3 {
+  font-size: 15px;
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+
+.amazon-card p {
+  color: #6b7280;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+
+.amazon-card strong {
+  color: #0f8f61;
+  font-size: 13px;
+}
+
+.amazon-detail-page {
+  display: grid;
+  grid-template-columns: minmax(340px, 0.95fr) minmax(340px, 1.05fr);
+  gap: 46px;
+  margin: 24px 0 60px;
+}
+
+.amazon-detail-image {
+  height: 560px;
+  background: #f7f7f7;
+}
+
+.amazon-thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.amazon-thumbs span {
+  width: 70px;
+  height: 70px;
+  border: 1px solid #d1d5db;
+  background: #f3f4f6;
+}
+
+.amazon-breadcrumb,
+.amazon-asin {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.amazon-detail-info h2 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.08;
+  margin: 10px 0 14px;
+}
+
+.amazon-price {
+  font-size: 24px;
+  font-weight: 850;
+  margin: 12px 0 8px;
+}
+
+.amazon-detail-info li {
+  margin: 8px 0;
+}
+
+.amazon-buy,
+.amazon-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 24px;
+  margin: 18px 10px 0 0;
+  border-radius: 4px;
+  font-weight: 850;
+}
+
+.amazon-buy {
+  background: #16a34a;
+  color: #fff !important;
+}
+
+.amazon-secondary {
+  background: #111827;
+  color: #fff !important;
+}
+
+@media (max-width: 980px) {
+  .amazon-catalog-layout,
+  .amazon-detail-page {
+    grid-template-columns: 1fr;
+  }
+
+  .amazon-filter {
+    position: relative;
+    top: auto;
+    border-right: 0;
+  }
+
+  .amazon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .amazon-grid {
+    grid-template-columns: 1fr;
+  }
+}

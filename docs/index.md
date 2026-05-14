@@ -15,14 +15,14 @@ hide:
         <a href="Products/">Products</a>
         <div class="mega-panel">
           <div class="mega-panel-inner">
-            <div class="mega-section-title">Featured Goldse Tools</div>
+            <div class="mega-section-title">Amazon Tool Collection</div>
             <div class="mega-grid">
-              <a href="Products/vx-18-smart-drill/" class="mega-card"><span class="mega-printer mega-printer-dark"></span><strong>Goldse VX-18 Drill</strong><em>Smart brushless drill driver</em></a>
-              <a href="Products/cx-45-circular-saw/" class="mega-card"><span class="mega-printer mega-printer-tall"></span><strong>Goldse CX-45 Saw</strong><em>Compact cordless circular saw</em></a>
-              <a href="Products/lx-360-laser-level/" class="mega-card"><span class="mega-printer mega-printer-compact"></span><strong>Goldse LX-360 Laser</strong><em>360° green beam laser level</em></a>
-              <a href="Products/px-120-power-station/" class="mega-card"><span class="mega-printer mega-printer-open"></span><strong>Goldse PX-120 Power</strong><em>Portable jobsite power station</em></a>
-              <a href="Products/mt-9-multi-tool-kit/" class="mega-card"><span class="mega-printer mega-printer-mini"></span><strong>Goldse MT-9 Multi-Tool</strong><em>Oscillating repair toolkit</em></a>
-              <a href="Products/ws-40-storage-system/" class="mega-card"><span class="mega-printer mega-printer-core"></span><strong>Goldse WS-40 Storage</strong><em>Rolling workshop storage system</em></a>
+              <a href="Products/b09wvcwlqr/" class="mega-card"><span class="mega-printer mega-printer-dark"></span><strong>TorqueMax Drill</strong><em>ASIN B09WVCWLQR</em></a>
+              <a href="Products/b0bblmbyp8/" class="mega-card"><span class="mega-printer mega-printer-tall"></span><strong>CutMate Compact Saw</strong><em>ASIN B0BBLMBYP8</em></a>
+              <a href="Products/b0bbvg9zln/" class="mega-card"><span class="mega-printer mega-printer-compact"></span><strong>BeamLine Laser Level</strong><em>ASIN B0BBVG9ZLN</em></a>
+              <a href="Products/b0c48z1hbr/" class="mega-card"><span class="mega-printer mega-printer-open"></span><strong>MeasurePro Digital Meter</strong><em>ASIN B0C48Z1HBR</em></a>
+              <a href="Products/b0c5sxw138/" class="mega-card"><span class="mega-printer mega-printer-mini"></span><strong>ImpactPro Driver Kit</strong><em>ASIN B0C5SXW138</em></a>
+              <a href="Products/b0gwzcbmb7/" class="mega-card"><span class="mega-printer mega-printer-core"></span><strong>GrindPro Angle Grinder</strong><em>ASIN B0GWZCBMB7</em></a>
             </div>
             <div class="mega-footer-links"><a href="Products/">Shop all</a><a href="Products/">Product comparison</a></div>
           </div>
@@ -117,7 +117,7 @@ hide:
       <div class="tile-visual tile-visual-filaments"></div>
     </a>
 
-    <a class="storefront-tile tile-models" href="Products/px-120-power-station/">
+    <a class="storefront-tile tile-models" href="Products/b0c48z1hbr/">
       <div class="tile-copy">
         <span>Mobile Power</span>
         <h2>Portable energy for jobsite work</h2>
@@ -130,7 +130,7 @@ hide:
       </div>
     </a>
 
-    <a class="storefront-tile tile-accessories" href="Products/ws-40-storage-system/">
+    <a class="storefront-tile tile-accessories" href="Products/b0gwzcbmb7/">
       <div class="tile-copy">
         <span>Storage System</span>
         <h2>Organize every tool and accessory</h2>
@@ -162,6 +162,7 @@ hide:
     </div>
   </section>
 </div>
+
 
 
 
