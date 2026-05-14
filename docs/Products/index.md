@@ -20,62 +20,72 @@ From precision measurement to cutting, fastening, power delivery, and jobsite or
 
 ## Featured Tool Lineup
 
-<div class="tool-product-grid" markdown>
+<div class="tool-product-grid">
+  <a class="tool-product-card tool-card-drill" href="vx-18-smart-drill/">
+    <h3>Goldse VX-18 Smart Drill Driver</h3>
+    <p><strong>18V brushless drill for installation and assembly work</strong></p>
+    <ul>
+      <li>Brushless motor with 22 torque stages</li>
+      <li>Digital torque memory</li>
+      <li>Compact all-metal chuck</li>
+    </ul>
+    <span>View product →</span>
+  </a>
 
-[### Goldse VX-18 Smart Drill Driver
-**18V brushless drill for installation and assembly work**
+  <a class="tool-product-card tool-card-saw" href="cx-45-circular-saw/">
+    <h3>Goldse CX-45 Compact Circular Saw</h3>
+    <p><strong>Cordless precision cutting for panels, trim, and site work</strong></p>
+    <ul>
+      <li>45 mm max cut depth</li>
+      <li>Laser alignment guide</li>
+      <li>Dust extraction adapter</li>
+    </ul>
+    <span>View product →</span>
+  </a>
 
-- Brushless motor with 22 torque stages
-- Digital torque memory
-- Compact all-metal chuck
+  <a class="tool-product-card tool-card-laser" href="lx-360-laser-level/">
+    <h3>Goldse LX-360 Laser Level</h3>
+    <p><strong>360° layout and alignment tool for interior projects</strong></p>
+    <ul>
+      <li>Green beam 360° projection</li>
+      <li>Self-leveling base</li>
+      <li>Magnetic wall bracket</li>
+    </ul>
+    <span>View product →</span>
+  </a>
 
-View product →](vx-18-smart-drill.md){ .tool-product-card .tool-card-drill }
+  <a class="tool-product-card tool-card-power" href="px-120-power-station/">
+    <h3>Goldse PX-120 Portable Power Station</h3>
+    <p><strong>Mobile power for tools, lighting, and field repairs</strong></p>
+    <ul>
+      <li>1200W rated AC output</li>
+      <li>Tool battery charging ports</li>
+      <li>Smart thermal protection</li>
+    </ul>
+    <span>View product →</span>
+  </a>
 
-[### Goldse CX-45 Compact Circular Saw
-**Cordless precision cutting for panels, trim, and site work**
+  <a class="tool-product-card tool-card-multi" href="mt-9-multi-tool-kit/">
+    <h3>Goldse MT-9 Multi-Tool Kit</h3>
+    <p><strong>Nine-in-one oscillating toolkit for repair and finishing</strong></p>
+    <ul>
+      <li>Quick-change accessory head</li>
+      <li>Variable speed control</li>
+      <li>Wood, metal, and grout accessories</li>
+    </ul>
+    <span>View product →</span>
+  </a>
 
-- 45 mm max cut depth
-- Laser alignment guide
-- Dust extraction adapter
-
-View product →](cx-45-circular-saw.md){ .tool-product-card .tool-card-saw }
-
-[### Goldse LX-360 Laser Level
-**360° layout and alignment tool for interior projects**
-
-- Green beam 360° projection
-- Self-leveling base
-- Magnetic wall bracket
-
-View product →](lx-360-laser-level.md){ .tool-product-card .tool-card-laser }
-
-[### Goldse PX-120 Portable Power Station
-**Mobile power for tools, lighting, and field repairs**
-
-- 1200W rated AC output
-- Tool battery charging ports
-- Smart thermal protection
-
-View product →](px-120-power-station.md){ .tool-product-card .tool-card-power }
-
-[### Goldse MT-9 Multi-Tool Kit
-**Nine-in-one oscillating toolkit for repair and finishing**
-
-- Quick-change accessory head
-- Variable speed control
-- Wood, metal, and grout accessories
-
-View product →](mt-9-multi-tool-kit.md){ .tool-product-card .tool-card-multi }
-
-[### Goldse WS-40 Workshop Storage System
-**Modular rolling storage for a complete tool setup**
-
-- Stackable reinforced boxes
-- Rail-mounted organizers
-- Weather-resistant latches
-
-View product →](ws-40-storage-system.md){ .tool-product-card .tool-card-storage }
-
+  <a class="tool-product-card tool-card-storage" href="ws-40-storage-system/">
+    <h3>Goldse WS-40 Workshop Storage System</h3>
+    <p><strong>Modular rolling storage for a complete tool setup</strong></p>
+    <ul>
+      <li>Stackable reinforced boxes</li>
+      <li>Rail-mounted organizers</li>
+      <li>Weather-resistant latches</li>
+    </ul>
+    <span>View product →</span>
+  </a>
 </div>
 
 ## Tool Categories
