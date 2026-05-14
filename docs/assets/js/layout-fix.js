@@ -69,5 +69,63 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   `;
   document.head.appendChild(style);
-});
 
+  const hero = document.getElementById('hero-carousel');
+  if (!hero) return;
+
+  const track = hero.querySelector('[data-hero-track]');
+  const dots = Array.from(hero.querySelectorAll('[data-hero-dots] button'));
+  const slideCount = dots.length;
+  let activeSlide = 0;
+  let startX = 0;
+  let currentX = 0;
+  let dragging = false;
+
+  function setHeroSlide(index, animate = true) {
+    activeSlide = Math.max(0, Math.min(slideCount - 1, index));
+    if (!animate) hero.classList.add('is-dragging');
+    track.style.transform = `translate3d(${-activeSlide * 100}%, 0, 0)`;
+    dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === activeSlide));
+    if (!animate) requestAnimationFrame(() => hero.classList.remove('is-dragging'));
+  }
+
+  function pointerX(event) {
+    return event.touches ? event.touches[0].clientX : event.clientX;
+  }
+
+  function startDrag(event) {
+    dragging = true;
+    startX = pointerX(event);
+    currentX = startX;
+    hero.classList.add('is-dragging');
+  }
+
+  function moveDrag(event) {
+    if (!dragging) return;
+    currentX = pointerX(event);
+    const delta = currentX - startX;
+    const offsetPercent = (delta / Math.max(1, hero.clientWidth)) * 100;
+    track.style.transform = `translate3d(${(-activeSlide * 100) + offsetPercent}%, 0, 0)`;
+  }
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    hero.classList.remove('is-dragging');
+    const delta = currentX - startX;
+    const threshold = hero.clientWidth * 0.12;
+    if (delta < -threshold) setHeroSlide(activeSlide + 1);
+    else if (delta > threshold) setHeroSlide(activeSlide - 1);
+    else setHeroSlide(activeSlide);
+  }
+
+  hero.addEventListener('mousedown', startDrag);
+  window.addEventListener('mousemove', moveDrag);
+  window.addEventListener('mouseup', endDrag);
+  hero.addEventListener('touchstart', startDrag, { passive: true });
+  hero.addEventListener('touchmove', moveDrag, { passive: true });
+  hero.addEventListener('touchend', endDrag);
+
+  dots.forEach((dot, index) => dot.addEventListener('click', () => setHeroSlide(index)));
+  setHeroSlide(0);
+});
