@@ -45,69 +45,7 @@ hide:
     </div>
   </section>
 
-  <section class="brand-trust-section" id="brand-trust">
-    <div class="brand-trust-bg"></div>
-
-    <div class="trust-hero-panel">
-      <div class="trust-hero-device">
-        <span>Goldse</span>
-        <strong>Brand Trust</strong>
-      </div>
-    </div>
-
-    <div class="brand-trust-stage">
-      <div class="trust-horizontal-track" data-trust-track>
-        <a class="trust-slide trust-slide-media" href="about/">
-          <div class="trust-device-visual trust-device-one">
-            <span>Goldse</span>
-          </div>
-        </a>
-
-        <a class="trust-slide trust-slide-copy" href="about/">
-          <span>Brand Report</span>
-          <h2>Goldse quality program improves product consistency by 41%</h2>
-          <p>Inspection workflows, material checks, and documentation reviews help every product line feel more reliable.</p>
-          <strong>Learn more</strong>
-        </a>
-
-        <a class="trust-slide trust-slide-media" href="Products/">
-          <div class="trust-device-visual trust-device-two">
-            <span>Products</span>
-          </div>
-        </a>
-
-        <a class="trust-slide trust-slide-copy" href="manuals/">
-          <span>Documentation Trust</span>
-          <h2>Clear manuals help customers set up faster and buy with confidence</h2>
-          <p>Structured resources reduce confusion, support global visitors, and make product information easier to verify.</p>
-          <strong>Open manuals</strong>
-        </a>
-
-        <a class="trust-slide trust-slide-media trust-slide-person" href="contact/">
-          <div class="trust-person-scene">
-            <div class="trust-person-head"></div>
-            <div class="trust-person-shirt"></div>
-            <div class="trust-table"></div>
-          </div>
-        </a>
-
-        <a class="trust-slide trust-slide-copy" href="contact/">
-          <span>Support Promise</span>
-          <h2>Human support and organized content make the brand easier to trust</h2>
-          <p>Visitors can move from product stories to manuals and support without losing context.</p>
-          <strong>Contact support</strong>
-        </a>
-      </div>
-
-      <div class="trust-progress-dots" aria-label="Brand trust progress">
-        <span class="is-active">1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-      </div>
-    </div>
-  </section><section class="storefront-grid">
+  <section class="storefront-grid">
     <a class="storefront-tile tile-printer" href="Products/">
       <div class="tile-copy">
         <span>Product Center</span>
@@ -157,5 +95,6 @@ hide:
     </div>
   </section>
 </div>
+
 
 

@@ -69,39 +69,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   `;
   document.head.appendChild(style);
-  const trustSection = document.getElementById('brand-trust');
-  if (!trustSection) return;
-
-  const track = trustSection.querySelector('[data-trust-track]');
-  const dots = Array.from(trustSection.querySelectorAll('.trust-progress-dots span'));
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
-
-  function updateHorizontalTrust() {
-    const rect = trustSection.getBoundingClientRect();
-    const scrollable = Math.max(1, rect.height - window.innerHeight);
-    const progress = clamp(-rect.top / scrollable, 0, 1);
-    const maxTranslate = Math.max(0, track.scrollWidth - window.innerWidth);
-    const translateX = -maxTranslate * progress;
-    const dotIndex = Math.min(dots.length - 1, Math.floor(progress * dots.length));
-
-    track.style.transform = `translate3d(${translateX}px, 0, 0)`;
-    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === dotIndex));
-  }
-
-  let horizontalTicking = false;
-  function requestHorizontalTrustUpdate() {
-    if (horizontalTicking) return;
-    horizontalTicking = true;
-    requestAnimationFrame(() => {
-      updateHorizontalTrust();
-      horizontalTicking = false;
-    });
-  }
-
-  updateHorizontalTrust();
-  window.addEventListener('scroll', requestHorizontalTrustUpdate, { passive: true });
-  window.addEventListener('resize', requestHorizontalTrustUpdate);
 });
+

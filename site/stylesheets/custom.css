@@ -2181,3 +2181,9 @@ ul li::marker {
   bottom: 11vh;
   transform: translateX(-50%);
 }
+
+/* Removed experimental brand trust module */
+.brand-trust-section,
+.storefront-scroll-showcase {
+  display: none !important;
+}
