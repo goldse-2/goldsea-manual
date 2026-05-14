@@ -11,21 +11,21 @@ hide:
       <span>Goldse</span>
     </a>
     <nav class="storefront-nav">
-      <a href="Products/">产品</a>
-      <a href="manuals/">说明书</a>
-      <a href="about/">关于</a>
-      <a href="contact/">支持</a>
+      <a href="Products/">Products</a>
+      <a href="manuals/">Manuals</a>
+      <a href="about/">About</a>
+      <a href="contact/">Support</a>
     </nav>
-    <a class="storefront-top-action" href="Products/">查看产品</a>
+    <a class="storefront-top-action" href="Products/">View Products</a>
   </header>
 
   <section class="storefront-hero">
     <div class="storefront-hero-content">
       <span class="storefront-kicker">Goldse Tools</span>
-      <h1>面向创作者和卖家的工具中心</h1>
-      <p>整理产品资料、说明书、计算工具与运营模块，让每一个产品从设计、生产到销售都更清晰。</p>
+      <h1>Tools and guidance for modern product teams</h1>
+      <p>Organize product information, manuals, support resources, and operating modules in one clear destination.</p>
       <div class="storefront-actions">
-        <a href="Products/" class="storefront-btn storefront-btn-outline">查看产品模块</a>
+        <a href="Products/" class="storefront-btn storefront-btn-outline">Explore Products</a>
       </div>
     </div>
     <div class="storefront-hero-visual" aria-label="Goldse product display">
@@ -48,30 +48,30 @@ hide:
   <section class="storefront-grid">
     <a class="storefront-tile tile-printer" href="Products/">
       <div class="tile-copy">
-        <span>产品中心</span>
-        <h2>搭建你的产品展示模块</h2>
-        <p>集中展示产品系列、核心卖点、参数信息和购买入口。</p>
-        <strong>立即查看 &gt;</strong>
+        <span>Product Center</span>
+        <h2>Build a clear product showcase</h2>
+        <p>Present product lines, key benefits, specifications, and purchasing paths in a focused layout.</p>
+        <strong>Explore now &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-machine"></div>
     </a>
 
     <a class="storefront-tile tile-material" href="manuals/">
       <div class="tile-copy">
-        <span>资料文档</span>
-        <h2>说明书与使用资料</h2>
-        <p>把安装教程、使用指南、维护资料统一收纳。</p>
-        <strong>了解更多 &gt;</strong>
+        <span>Documentation</span>
+        <h2>Manuals and support resources</h2>
+        <p>Centralize installation guides, usage instructions, maintenance notes, and technical references.</p>
+        <strong>Learn more &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-rolls"></div>
-    </a>
+    </a>
 
     <a class="storefront-tile tile-parts" href="contact/">
       <div class="tile-copy">
-        <span>支持服务</span>
-        <h2>需求反馈与支持</h2>
-        <p>提交问题、整理需求，后续可扩展为工单和客户服务入口。</p>
-        <strong>联系支持 &gt;</strong>
+        <span>Support</span>
+        <h2>Contact and service requests</h2>
+        <p>Collect questions, product requests, and service needs through a simple support entry point.</p>
+        <strong>Contact support &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-parts"></div>
     </a>
@@ -80,19 +80,18 @@ hide:
   <section class="storefront-feature-strip">
     <div>
       <span>01</span>
-      <h3>产品模块</h3>
-      <p>适合放置产品线、产品图、价格和卖点。</p>
+      <h3>Product Modules</h3>
+      <p>Designed for product lines, visuals, pricing, and feature highlights.</p>
     </div>
     <div>
       <span>02</span>
-      <h3>工具模块</h3>
-      <p>把表格、流程和运营工具做成可复用入口。</p>
+      <h3>Operations Modules</h3>
+      <p>Prepare reusable workflows, tables, and management resources.</p>
     </div>
     <div>
       <span>03</span>
-      <h3>文档模块</h3>
-      <p>让客户和团队都能快速找到说明资料。</p>
+      <h3>Documentation Modules</h3>
+      <p>Help customers and teams find the right information faster.</p>
     </div>
   </section>
 </div>
-
