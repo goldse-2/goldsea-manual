@@ -1362,3 +1362,14 @@ ul li::marker {
     transform: scale(0.82);
   }
 }
+
+/* Hide MkDocs default top white header; storefront page provides its own header. */
+.md-header,
+.md-tabs {
+  display: none !important;
+}
+
+.md-main,
+.md-container {
+  margin-top: 0 !important;
+}
