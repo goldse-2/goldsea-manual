@@ -87,9 +87,15 @@ markdown_extensions:
 # 顶部与侧边导航结构
 nav:
   - Home: index.md
-  - Products: Products/index.md
+  - Products:
+      - Product Center: Products/index.md
+      - VX-18 Smart Drill Driver: Products/vx-18-smart-drill.md
+      - CX-45 Compact Circular Saw: Products/cx-45-circular-saw.md
+      - LX-360 Laser Level: Products/lx-360-laser-level.md
+      - PX-120 Portable Power Station: Products/px-120-power-station.md
+      - MT-9 Multi-Tool Kit: Products/mt-9-multi-tool-kit.md
+      - WS-40 Workshop Storage System: Products/ws-40-storage-system.md
   - Manuals: manuals/index.md
   - About Us: about.md
   - Contact Us: contact.md
 copyright: Copyright &copy; 2026 Goldse. All rights reserved.
-

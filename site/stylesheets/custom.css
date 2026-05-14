@@ -2776,3 +2776,107 @@ ul li::marker {
     padding-right: 28px !important;
   }
 }
+
+/* Tool product pages */
+.tool-product-hero,
+.tool-detail-hero {
+  padding: 46px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #0f172a, #111827 58%, #047857);
+  color: #fff;
+  margin: 20px 0 34px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tool-product-hero::after,
+.tool-detail-hero::after {
+  content: '';
+  position: absolute;
+  right: 44px;
+  bottom: -42px;
+  width: 260px;
+  height: 210px;
+  border-radius: 34px;
+  background: rgba(255,255,255,0.08);
+  transform: rotate(-10deg);
+}
+
+.tool-product-hero h2,
+.tool-detail-hero h2 {
+  color: #fff;
+  max-width: 720px;
+}
+
+.tool-product-hero p,
+.tool-detail-hero p {
+  max-width: 680px;
+  color: rgba(255,255,255,0.76);
+  font-size: 17px;
+}
+
+.tool-product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 26px 0 38px;
+}
+
+.tool-product-card {
+  display: block;
+  min-height: 250px;
+  padding: 28px;
+  border-radius: 22px;
+  background: #f7f7f7;
+  border: 1px solid #e5e7eb !important;
+  color: #111827 !important;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-product-card::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  width: 132px;
+  height: 108px;
+  opacity: 0.92;
+  background: linear-gradient(135deg, #1f2937, #030712 60%, #6b7280);
+  clip-path: polygon(12% 22%, 74% 8%, 100% 46%, 82% 100%, 6% 84%, 0 40%);
+}
+
+.tool-card-saw::after { clip-path: polygon(0 42%, 72% 8%, 100% 24%, 58% 92%, 18% 100%); background: linear-gradient(135deg, #111827, #6b7280); }
+.tool-card-laser::after { clip-path: polygon(42% 0, 72% 10%, 100% 100%, 0 100%, 28% 10%); background: linear-gradient(135deg, #047857, #111827); }
+.tool-card-power::after { border-radius: 18px; clip-path: none; background: linear-gradient(135deg, #111827, #065f46); }
+.tool-card-multi::after { clip-path: polygon(0 46%, 58% 0, 100% 20%, 74% 100%, 14% 80%); background: linear-gradient(135deg, #374151, #111827); }
+.tool-card-storage::after { border-radius: 12px; clip-path: none; background: repeating-linear-gradient(180deg, #111827 0 30px, #374151 30px 34px); }
+
+.tool-product-card h3 {
+  max-width: 70%;
+}
+
+.tool-product-card p,
+.tool-product-card li {
+  max-width: 72%;
+}
+
+.tool-detail-drill { background: linear-gradient(135deg, #0f172a, #111827 58%, #047857); }
+.tool-detail-saw { background: linear-gradient(135deg, #111827, #27272a 55%, #b45309); }
+.tool-detail-laser { background: linear-gradient(135deg, #052e16, #111827 58%, #22c55e); }
+.tool-detail-power { background: linear-gradient(135deg, #111827, #0f172a 58%, #2563eb); }
+.tool-detail-multi { background: linear-gradient(135deg, #18181b, #111827 58%, #7c2d12); }
+.tool-detail-storage { background: linear-gradient(135deg, #111827, #1f2937 58%, #64748b); }
+
+@media (max-width: 820px) {
+  .tool-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-product-card h3,
+  .tool-product-card p,
+  .tool-product-card li {
+    max-width: 100%;
+  }
+}

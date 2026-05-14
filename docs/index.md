@@ -15,14 +15,14 @@ hide:
         <a href="Products/">Products</a>
         <div class="mega-panel">
           <div class="mega-panel-inner">
-            <div class="mega-section-title">Featured 3D Printers</div>
+            <div class="mega-section-title">Featured Goldse Tools</div>
             <div class="mega-grid">
-              <a href="Products/" class="mega-card"><span class="mega-printer mega-printer-dark"></span><strong>Goldse X2 Series</strong><em>Personal flagship printer</em></a>
-              <a href="Products/" class="mega-card"><span class="mega-printer mega-printer-tall"></span><strong>Goldse X20</strong><em>Advanced large-format printer</em></a>
-              <a href="Products/" class="mega-card"><span class="mega-printer mega-printer-compact"></span><strong>Goldse P25</strong><em>All-round productivity</em></a>
-              <a href="Products/" class="mega-card"><span class="mega-printer mega-printer-open"></span><strong>Goldse A1</strong><em>Full-size desktop 3D printer</em></a>
-              <a href="Products/" class="mega-card"><span class="mega-printer mega-printer-mini"></span><strong>Goldse A1 mini</strong><em>Compact 3D printer</em></a>
-              <a href="Products/" class="mega-card"><span class="mega-printer mega-printer-core"></span><strong>Goldse X1 Series</strong><em>CoreXY desktop printer line</em></a>
+              <a href="Products/vx-18-smart-drill/" class="mega-card"><span class="mega-printer mega-printer-dark"></span><strong>Goldse VX-18 Drill</strong><em>Smart brushless drill driver</em></a>
+              <a href="Products/cx-45-circular-saw/" class="mega-card"><span class="mega-printer mega-printer-tall"></span><strong>Goldse CX-45 Saw</strong><em>Compact cordless circular saw</em></a>
+              <a href="Products/lx-360-laser-level/" class="mega-card"><span class="mega-printer mega-printer-compact"></span><strong>Goldse LX-360 Laser</strong><em>360° green beam laser level</em></a>
+              <a href="Products/px-120-power-station/" class="mega-card"><span class="mega-printer mega-printer-open"></span><strong>Goldse PX-120 Power</strong><em>Portable jobsite power station</em></a>
+              <a href="Products/mt-9-multi-tool-kit/" class="mega-card"><span class="mega-printer mega-printer-mini"></span><strong>Goldse MT-9 Multi-Tool</strong><em>Oscillating repair toolkit</em></a>
+              <a href="Products/ws-40-storage-system/" class="mega-card"><span class="mega-printer mega-printer-core"></span><strong>Goldse WS-40 Storage</strong><em>Rolling workshop storage system</em></a>
             </div>
             <div class="mega-footer-links"><a href="Products/">Shop all</a><a href="Products/">Product comparison</a></div>
           </div>
@@ -97,8 +97,8 @@ hide:
   <section class="storefront-grid">
     <a class="storefront-tile tile-printer" href="Products/">
       <div class="tile-copy">
-        <span>3D Printing</span>
-        <h2>Production tools for creators</h2>
+        <span>Power Tools</span>
+        <h2>Smart tools for serious makers</h2>
         <strong>Shop now &gt;&nbsp;&nbsp;&nbsp; Learn more &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-printer-set">
@@ -110,17 +110,17 @@ hide:
 
     <a class="storefront-tile tile-material" href="Products/">
       <div class="tile-copy">
-        <span>Materials</span>
-        <h2>High-quality 3D printing materials</h2>
+        <span>Measurement</span>
+        <h2>Precise layout and laser alignment</h2>
         <strong>Shop now &gt;&nbsp;&nbsp;&nbsp; Learn more &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-filaments"></div>
     </a>
 
-    <a class="storefront-tile tile-models" href="manuals/">
+    <a class="storefront-tile tile-models" href="Products/px-120-power-station/">
       <div class="tile-copy">
-        <span>MakerWorld</span>
-        <h2>Download premium model resources</h2>
+        <span>Mobile Power</span>
+        <h2>Portable energy for jobsite work</h2>
         <strong>Learn more &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-models">
@@ -130,10 +130,10 @@ hide:
       </div>
     </a>
 
-    <a class="storefront-tile tile-accessories" href="contact/">
+    <a class="storefront-tile tile-accessories" href="Products/ws-40-storage-system/">
       <div class="tile-copy">
-        <span>Accessories</span>
-        <h2>Enrich models with 3D printing accessories</h2>
+        <span>Storage System</span>
+        <h2>Organize every tool and accessory</h2>
         <strong>Shop now &gt;</strong>
       </div>
       <div class="tile-visual tile-visual-accessories">
@@ -162,6 +162,7 @@ hide:
     </div>
   </section>
 </div>
+
 
 
 
