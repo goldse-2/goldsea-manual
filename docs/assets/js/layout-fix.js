@@ -1,4 +1,4 @@
-// Fix layout issues with Material for MkDocs theme
+﻿// Fix layout issues with Material for MkDocs theme
 document.addEventListener('DOMContentLoaded', function() {
   const style = document.createElement('style');
   style.textContent = `
@@ -69,49 +69,155 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   `;
   document.head.appendChild(style);
+  const trustSection = document.getElementById('brand-trust');
+  if (!trustSection) return;
 
-  const showcase = document.getElementById('scroll-showcase');
-  if (!showcase) return;
+  const stories = [
+    {
+      leftLabel: 'Brand Report',
+      leftTitle: 'Goldse quality program improves product consistency by 41%',
+      leftText: 'Our internal inspection workflow combines material checks, assembly review, and documentation validation for every product line.',
+      leftCta: 'Learn more',
+      leftHref: 'about/',
+      rightLabel: 'Creator Story',
+      rightTitle: 'How makers use Goldse documentation to launch faster',
+      rightText: 'Clear manuals and modular product resources help teams reduce setup time and improve customer confidence.',
+      rightCta: 'View story',
+      rightHref: 'Products/',
+      mediaHref: 'about/',
+      gradient: 'linear-gradient(135deg, #4b5563, #111827 54%, #0f766e)'
+    },
+    {
+      leftLabel: 'Customer Trust',
+      leftTitle: 'Reliable support resources for every product stage',
+      leftText: 'From first setup to maintenance, Goldse keeps product guidance structured and easy to access.',
+      leftCta: 'Read support',
+      leftHref: 'manuals/',
+      rightLabel: 'Service Standard',
+      rightTitle: 'Documentation that reduces repeated questions',
+      rightText: 'Consistent product pages and manuals help customers solve common issues faster.',
+      rightCta: 'Open manuals',
+      rightHref: 'manuals/',
+      mediaHref: 'manuals/',
+      gradient: 'linear-gradient(135deg, #1e3a8a, #020617 56%, #0ea5e9)'
+    },
+    {
+      leftLabel: 'Product Confidence',
+      leftTitle: 'A cleaner path from product display to purchase decision',
+      leftText: 'Focused product modules help users compare product lines and understand features quickly.',
+      leftCta: 'See products',
+      leftHref: 'Products/',
+      rightLabel: 'Brand System',
+      rightTitle: 'Reusable modules keep the whole website consistent',
+      rightText: 'The same visual system can support product launches, manuals, and support pages.',
+      rightCta: 'Explore modules',
+      rightHref: 'Products/',
+      mediaHref: 'Products/',
+      gradient: 'linear-gradient(135deg, #064e3b, #111827 52%, #65a30d)'
+    },
+    {
+      leftLabel: 'Global Readiness',
+      leftTitle: 'English public pages for international customers',
+      leftText: 'Public-facing pages stay clean, consistent, and easy to understand for global visitors.',
+      leftCta: 'About Goldse',
+      leftHref: 'about/',
+      rightLabel: 'Clear Structure',
+      rightTitle: 'Private tools stay hidden from public navigation',
+      rightText: 'Operational tools can remain accessible by direct URL without appearing in public menus.',
+      rightCta: 'Contact us',
+      rightHref: 'contact/',
+      mediaHref: 'contact/',
+      gradient: 'linear-gradient(135deg, #581c87, #111827 50%, #2563eb)'
+    },
+    {
+      leftLabel: 'Long-term Value',
+      leftTitle: 'A website foundation ready for future content growth',
+      leftText: 'New product stories, trust badges, and support resources can be added without changing the whole structure.',
+      leftCta: 'Start here',
+      leftHref: 'Products/',
+      rightLabel: 'Support Promise',
+      rightTitle: 'Make product information easier to find and easier to trust',
+      rightText: 'Every module is designed to improve clarity, reduce confusion, and support stronger customer decisions.',
+      rightCta: 'Get support',
+      rightHref: 'contact/',
+      mediaHref: 'about/',
+      gradient: 'linear-gradient(135deg, #7c2d12, #111827 52%, #0891b2)'
+    }
+  ];
 
-  const device = showcase.querySelector('.scroll-device');
-  const copyBlocks = Array.from(showcase.querySelectorAll('.scroll-copy'));
-  const orbitCards = Array.from(showcase.querySelectorAll('.scroll-orbit-card'));
+  const left = trustSection.querySelector('[data-trust-link]');
+  const right = trustSection.querySelector('[data-trust-link-right]');
+  const media = trustSection.querySelector('[data-trust-media]');
+  const tabs = Array.from(trustSection.querySelectorAll('[data-trust-tab]'));
+  let activeTrustIndex = 0;
+  let trustTimer;
+
+  function fillTrustStory(element, story, side) {
+    const label = element.querySelector('span');
+    const title = element.querySelector('h2');
+    const text = element.querySelector('p');
+    const cta = element.querySelector('strong');
+    label.textContent = story[`${side}Label`];
+    title.textContent = story[`${side}Title`];
+    text.textContent = story[`${side}Text`];
+    cta.textContent = story[`${side}Cta`];
+    element.href = story[`${side}Href`];
+  }
+
+  function setTrustStory(index) {
+    activeTrustIndex = (index + stories.length) % stories.length;
+    const story = stories[activeTrustIndex];
+    trustSection.classList.add('is-switching');
+
+    window.setTimeout(() => {
+      fillTrustStory(left, story, 'left');
+      fillTrustStory(right, story, 'right');
+      media.href = story.mediaHref;
+      media.style.background = story.gradient;
+      tabs.forEach((tab, tabIndex) => tab.classList.toggle('is-active', tabIndex === activeTrustIndex));
+      trustSection.classList.remove('is-switching');
+    }, 180);
+  }
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
   }
 
-  function updateScrollShowcase() {
-    const rect = showcase.getBoundingClientRect();
+  function updateTrustByScroll() {
+    const rect = trustSection.getBoundingClientRect();
     const scrollable = Math.max(1, rect.height - window.innerHeight);
     const progress = clamp(-rect.top / scrollable, 0, 1);
-    const step = Math.min(copyBlocks.length - 1, Math.floor(progress * copyBlocks.length));
+    const index = Math.min(stories.length - 1, Math.floor(progress * stories.length));
 
-    showcase.dataset.step = String(step);
-    if (device) device.style.setProperty('--scroll-progress', progress.toFixed(4));
+    if (index !== activeTrustIndex) {
+      setTrustStory(index);
+    }
 
-    copyBlocks.forEach((block, index) => {
-      block.classList.toggle('is-active', index === step);
-    });
-
-    orbitCards.forEach((card, index) => {
-      const offset = (index + 1) * 24;
-      const direction = index % 2 === 0 ? 1 : -1;
-      card.style.transform = `translate3d(${direction * progress * offset}px, ${Math.sin(progress * Math.PI + index) * 22}px, 0)`;
-    });
+    if (media) {
+      media.style.setProperty('--trust-progress', progress.toFixed(4));
+    }
   }
 
-  let ticking = false;
-  function requestUpdate() {
-    if (ticking) return;
-    ticking = true;
+  let trustTicking = false;
+  function requestTrustUpdate() {
+    if (trustTicking) return;
+    trustTicking = true;
     requestAnimationFrame(() => {
-      updateScrollShowcase();
-      ticking = false;
+      updateTrustByScroll();
+      trustTicking = false;
     });
   }
 
-  updateScrollShowcase();
-  window.addEventListener('scroll', requestUpdate, { passive: true });
-  window.addEventListener('resize', requestUpdate);
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      setTrustStory(Number(tab.dataset.trustTab));
+      const targetTop = trustSection.offsetTop + (trustSection.offsetHeight - window.innerHeight) * (Number(tab.dataset.trustTab) / stories.length);
+      window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    });
+  });
+
+  setTrustStory(0);
+  updateTrustByScroll();
+  window.addEventListener('scroll', requestTrustUpdate, { passive: true });
+  window.addEventListener('resize', requestTrustUpdate);
 });
