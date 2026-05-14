@@ -2880,3 +2880,19 @@ ul li::marker {
     max-width: 100%;
   }
 }
+
+.tool-product-card > span {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  margin-top: 10px;
+  color: #0f8f61;
+  font-weight: 850;
+}
+
+.tool-product-card h3,
+.tool-product-card p,
+.tool-product-card ul {
+  position: relative;
+  z-index: 2;
+}
