@@ -143,6 +143,50 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   applyLanguage(currentLanguage);
 
+  document.querySelectorAll('.product-thumb img').forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      const mainImage = document.querySelector('[data-main-product-image]');
+      if (mainImage) mainImage.src = thumb.src;
+    });
+  });
+
+
+  const productTranslationScript = document.querySelector('[data-product-translations]');
+  let productTranslations = null;
+  try {
+    productTranslations = productTranslationScript ? JSON.parse(productTranslationScript.textContent || '{}') : null;
+  } catch (error) {
+    productTranslations = null;
+  }
+
+  function renderProductCopy(language) {
+    if (!productTranslations || !productTranslations[language]) return;
+    const data = productTranslations[language];
+    const setText = (selector, value) => {
+      const element = document.querySelector(selector);
+      if (element && value) element.textContent = value;
+    };
+    setText('[data-product-title]', data.title);
+    setText('[data-product-desc]', data.desc);
+    setText('[data-product-features-title]', data.featuresTitle);
+    setText('[data-product-specs-title]', data.specsTitle);
+    setText('[data-product-analysis-title]', data.analysisTitle);
+    setText('[data-product-qa-title]', data.qaTitle);
+    const features = document.querySelector('[data-product-features]');
+    if (features && Array.isArray(data.features)) features.innerHTML = data.features.map((item) => `<li>${item}</li>`).join('');
+    const specs = document.querySelector('[data-product-specs]');
+    if (specs && Array.isArray(data.specs)) specs.innerHTML = data.specs.map((row) => `<tr><th>${row[0]}</th><td>${row[1]}</td></tr>`).join('');
+    const analysis = document.querySelector('[data-product-analysis]');
+    if (analysis && Array.isArray(data.analysis)) analysis.innerHTML = data.analysis.map((item) => `<li>${item}</li>`).join('');
+    const qa = document.querySelector('[data-product-qa]');
+    if (qa && Array.isArray(data.qa)) qa.innerHTML = data.qa.map((row) => `<details><summary>${row[0]}</summary><p>${row[1]}</p></details>`).join('');
+  }
+
+  renderProductCopy(currentLanguage);
+  if (languageSelect) {
+    languageSelect.addEventListener('change', () => renderProductCopy(languageSelect.value));
+  }
+
   const hero = document.getElementById('hero-carousel');
   if (!hero) return;
 
