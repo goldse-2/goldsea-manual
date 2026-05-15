@@ -128,7 +128,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (dictionary[key]) element.textContent = dictionary[key];
     });
     document.querySelectorAll('[data-lang-content]').forEach((element) => {
-      element.hidden = element.getAttribute('data-lang-content') !== language;
+      const isActive = element.getAttribute('data-lang-content') === language;
+      element.hidden = !isActive;
+      element.style.display = isActive ? 'block' : 'none';
     });
     if (languageSelect) languageSelect.value = language;
   }
@@ -200,4 +202,5 @@ document.addEventListener('DOMContentLoaded', function() {
   dots.forEach((dot, index) => dot.addEventListener('click', () => setHeroSlide(index)));
   setHeroSlide(0);
 });
+
 
