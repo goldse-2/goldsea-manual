@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function applyLanguage(language) {
     const dictionary = translations[language] || translations.en;
     document.documentElement.lang = language;
+    document.documentElement.setAttribute('data-goldse-lang', language);
     document.querySelectorAll('[data-i18n]').forEach((element) => {
       const key = element.getAttribute('data-i18n');
       if (dictionary[key]) element.textContent = dictionary[key];

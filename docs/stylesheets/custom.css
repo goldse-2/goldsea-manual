@@ -3201,3 +3201,14 @@ ul li::marker {
   border-radius: 8px;
   background: #fff;
 }
+
+html[data-goldse-lang="en"] [data-lang-content]:not([data-lang-content="en"]),
+html[data-goldse-lang="ja"] [data-lang-content]:not([data-lang-content="ja"]),
+html[data-goldse-lang="de"] [data-lang-content]:not([data-lang-content="de"]),
+html[data-goldse-lang="it"] [data-lang-content]:not([data-lang-content="it"]) {
+  display: none !important;
+}
+
+html:not([data-goldse-lang]) [data-lang-content]:not([data-lang-content="en"]) {
+  display: none !important;
+}
