@@ -1,41 +1,62 @@
-﻿---
+---
 hide:
   - toc
 ---
 
-# Goldse SmoothPro Detail Sander
-
 <div class="language-bar"><label for="site-language">Language</label><select id="site-language" data-language-select><option value="en">English</option><option value="ja">日本語</option><option value="de">Deutsch</option><option value="it">Italiano</option></select></div>
 
-<div class="amazon-detail-page">
-  <div class="amazon-gallery"><div class="amazon-detail-image"><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_1.jpg" alt="Goldse SmoothPro Detail Sander"></div><div class="amazon-thumbs"><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_1.jpg" alt="Goldse SmoothPro Detail Sander thumbnail"></span><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_2.jpg" alt="Goldse SmoothPro Detail Sander thumbnail"></span><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_3.jpg" alt="Goldse SmoothPro Detail Sander thumbnail"></span><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_4.jpg" alt="Goldse SmoothPro Detail Sander thumbnail"></span></div></div>
-  <div class="amazon-detail-info"><p class="amazon-breadcrumb">Home / Tools / B0BCWDF3KB</p><h2>Goldse SmoothPro Detail Sander</h2><div class="amazon-price" data-i18n="priceAmazon">Price shown on Amazon</div><p class="amazon-asin">ASIN: B0BCWDF3KB</p><p>A detail sander for corners, trim, furniture repair and surface finishing.</p><ul><li>Category: Workshop</li><li>Prepared from your uploaded ASIN image folder.</li><li>Japanese or other marketplace screenshots are summarized into English product copy.</li></ul><a class="amazon-buy" href="https://www.amazon.com/dp/B0BCWDF3KB" target="_blank" rel="nofollow noopener" data-i18n="viewAmazon">View on Amazon</a><a class="amazon-secondary" href="../" data-i18n="backCatalog">Back to catalog</a></div>
+<div class="amazon-detail-page product-real-detail">
+  <div class="amazon-gallery"><h2 data-i18n="productGallery">Product Gallery</h2><div class="amazon-detail-image"><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_1.jpg" alt="Goldsea Chainsaw Guide Plate and Saw Chain Set"></div><div class="amazon-thumbs product-thumbs"><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_1.jpg" alt="Goldsea Chainsaw Guide Plate and Saw Chain Set product image"></span><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_2.jpg" alt="Goldsea Chainsaw Guide Plate and Saw Chain Set product image"></span><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_3.jpg" alt="Goldsea Chainsaw Guide Plate and Saw Chain Set product image"></span><span><img src="../assets/images/B0BCWDF3KB/B0BCWDF3KB-product-images/image_4.jpg" alt="Goldsea Chainsaw Guide Plate and Saw Chain Set product image"></span></div></div>
+  <div class="amazon-detail-info"><p class="amazon-breadcrumb">Home / Chainsaw Parts / B0BCWDF3KB</p><div class="amazon-price" data-i18n="priceAmazon">Price shown on Amazon</div><p class="amazon-asin">ASIN: B0BCWDF3KB</p><a class="amazon-buy" href="https://www.amazon.com/dp/B0BCWDF3KB" target="_blank" rel="nofollow noopener" data-i18n="viewAmazon">View on Amazon</a><a class="amazon-secondary" href="../" data-i18n="backCatalog">Back to catalog</a></div>
 </div>
 
-## Selling Point Analysis
+<section data-lang-content="en">
+  <h1>Goldsea Chainsaw Guide Plate and Saw Chain Set</h1>
+  <p class="amazon-detail-desc">Replacement guide plate and saw chain set for Goldsea 6 inch chainsaws, designed for stable cutting performance and routine maintenance.</p>
+  <h2>Product Features</h2>
+  <ul><li>Replacement guide plate and saw chain for Goldsea 6 inch chainsaw models.</li><li>36-link 1/4 pitch chain format supports compact cutting systems.</li><li>Suitable for maintenance, repair and restoring cutting performance.</li><li>Lightweight 0.05 kg part is easy to store and carry with the tool kit.</li><li>Designed for DIY, garden and cordless chainsaw users who need spare chains.</li></ul>
+  <h2>Specifications</h2>
+  <table><tr><th>Brand</th><td>Goldsea</td></tr><tr><th>Power source</th><td>Battery powered</td></tr><tr><th>Power</th><td>600W</td></tr><tr><th>Weight</th><td>0.05 kg</td></tr><tr><th>Dimensions</th><td>22 × 15 × 2 cm</td></tr><tr><th>Part number</th><td>Part2603</td></tr><tr><th>ASIN</th><td>B0BCWDF3KB</td></tr></table>
+  <h2>Selling Point Analysis</h2>
+  <ul><li>Goldsea Chainsaw Guide Plate and Saw Chain Set has a clear use case in Chainsaw Parts, making it easy for buyers to understand the practical value.</li><li>The uploaded screenshots provide strong feature evidence that can be converted into readable product copy.</li><li>The page separates purchase-focused product images from A+ detail visuals, matching an Amazon-style buying flow.</li><li>The feature list emphasizes runtime, accessory bundle, safety, usability and maintenance benefits where applicable.</li><li>The Amazon CTA keeps checkout simple while the landing page improves SEO and product explanation.</li></ul>
+  <h2>Q&A</h2>
+  <div class="qa-list"><details><summary>What is this product best used for?</summary><p>Goldsea Chainsaw Guide Plate and Saw Chain Set is best used for chainsaw parts tasks and everyday project workflows.</p></details><details><summary>Where can I buy it?</summary><p>Use the Amazon button on this page to open ASIN B0BCWDF3KB.</p></details><details><summary>Does the page use uploaded images?</summary><p>Yes. The main gallery uses product-images, while A+ detail visuals are shown below the product content.</p></details><details><summary>Is live pricing shown here?</summary><p>No. Prices change often, so live price and availability should be checked on Amazon.</p></details><details><summary>What are the main selling points?</summary><p>The main selling points are practical use, clear accessory/value bundle, easier operation, and a direct Amazon purchase path.</p></details><details><summary>Can more details be added later?</summary><p>Yes. Add more screenshots or text files to the ASIN folder and the page can be regenerated.</p></details></div>
+</section>
+<section data-lang-content="ja">
+  <h1>日本語訳: Goldsea Chainsaw Guide Plate and Saw Chain Set</h1>
+  <p class="amazon-detail-desc">日本語訳: Replacement guide plate and saw chain set for Goldsea 6 inch chainsaws, designed for stable cutting performance and routine maintenance.</p>
+  <h2>商品特徴</h2>
+  <ul><li>日本語訳: Replacement guide plate and saw chain for Goldsea 6 inch chainsaw models.</li><li>日本語訳: 36-link 1/4 pitch chain format supports compact cutting systems.</li><li>日本語訳: Suitable for maintenance, repair and restoring cutting performance.</li><li>日本語訳: Lightweight 0.05 kg part is easy to store and carry with the tool kit.</li><li>日本語訳: Designed for DIY, garden and cordless chainsaw users who need spare chains.</li></ul>
+  <h2>仕様</h2>
+  <table><tr><th>日本語訳: Brand</th><td>日本語訳: Goldsea</td></tr><tr><th>日本語訳: Power source</th><td>日本語訳: Battery powered</td></tr><tr><th>日本語訳: Power</th><td>日本語訳: 600W</td></tr><tr><th>日本語訳: Weight</th><td>日本語訳: 0.05 kg</td></tr><tr><th>日本語訳: Dimensions</th><td>日本語訳: 22 × 15 × 2 cm</td></tr><tr><th>日本語訳: Part number</th><td>日本語訳: Part2603</td></tr><tr><th>日本語訳: ASIN</th><td>日本語訳: B0BCWDF3KB</td></tr></table>
+  <h2>セールスポイント分析</h2>
+  <ul><li>日本語訳: Goldsea Chainsaw Guide Plate and Saw Chain Set has a clear use case in Chainsaw Parts, making it easy for buyers to understand the practical value.</li><li>日本語訳: The uploaded screenshots provide strong feature evidence that can be converted into readable product copy.</li><li>日本語訳: The page separates purchase-focused product images from A+ detail visuals, matching an Amazon-style buying flow.</li><li>日本語訳: The feature list emphasizes runtime, accessory bundle, safety, usability and maintenance benefits where applicable.</li><li>日本語訳: The Amazon CTA keeps checkout simple while the landing page improves SEO and product explanation.</li></ul>
+  <h2>よくある質問</h2>
+  <div class="qa-list"><details><summary>日本語訳: What is this product best used for?</summary><p>日本語訳: Goldsea Chainsaw Guide Plate and Saw Chain Set is best used for chainsaw parts tasks and everyday project workflows.</p></details><details><summary>日本語訳: Where can I buy it?</summary><p>日本語訳: Use the Amazon button on this page to open ASIN B0BCWDF3KB.</p></details><details><summary>日本語訳: Does the page use uploaded images?</summary><p>日本語訳: Yes. The main gallery uses product-images, while A+ detail visuals are shown below the product content.</p></details><details><summary>日本語訳: Is live pricing shown here?</summary><p>日本語訳: No. Prices change often, so live price and availability should be checked on Amazon.</p></details><details><summary>日本語訳: What are the main selling points?</summary><p>日本語訳: The main selling points are practical use, clear accessory/value bundle, easier operation, and a direct Amazon purchase path.</p></details><details><summary>日本語訳: Can more details be added later?</summary><p>日本語訳: Yes. Add more screenshots or text files to the ASIN folder and the page can be regenerated.</p></details></div>
+</section>
+<section data-lang-content="de">
+  <h1>Deutsch: Goldsea Chainsaw Guide Plate and Saw Chain Set</h1>
+  <p class="amazon-detail-desc">Deutsch: Replacement guide plate and saw chain set for Goldsea 6 inch chainsaws, designed for stable cutting performance and routine maintenance.</p>
+  <h2>Produktmerkmale</h2>
+  <ul><li>Deutsch: Replacement guide plate and saw chain for Goldsea 6 inch chainsaw models.</li><li>Deutsch: 36-link 1/4 pitch chain format supports compact cutting systems.</li><li>Deutsch: Suitable for maintenance, repair and restoring cutting performance.</li><li>Deutsch: Lightweight 0.05 kg part is easy to store and carry with the tool kit.</li><li>Deutsch: Designed for DIY, garden and cordless chainsaw users who need spare chains.</li></ul>
+  <h2>Spezifikationen</h2>
+  <table><tr><th>Deutsch: Brand</th><td>Deutsch: Goldsea</td></tr><tr><th>Deutsch: Power source</th><td>Deutsch: Battery powered</td></tr><tr><th>Deutsch: Power</th><td>Deutsch: 600W</td></tr><tr><th>Deutsch: Weight</th><td>Deutsch: 0.05 kg</td></tr><tr><th>Deutsch: Dimensions</th><td>Deutsch: 22 × 15 × 2 cm</td></tr><tr><th>Deutsch: Part number</th><td>Deutsch: Part2603</td></tr><tr><th>Deutsch: ASIN</th><td>Deutsch: B0BCWDF3KB</td></tr></table>
+  <h2>Verkaufsargumente</h2>
+  <ul><li>Deutsch: Goldsea Chainsaw Guide Plate and Saw Chain Set has a clear use case in Chainsaw Parts, making it easy for buyers to understand the practical value.</li><li>Deutsch: The uploaded screenshots provide strong feature evidence that can be converted into readable product copy.</li><li>Deutsch: The page separates purchase-focused product images from A+ detail visuals, matching an Amazon-style buying flow.</li><li>Deutsch: The feature list emphasizes runtime, accessory bundle, safety, usability and maintenance benefits where applicable.</li><li>Deutsch: The Amazon CTA keeps checkout simple while the landing page improves SEO and product explanation.</li></ul>
+  <h2>Fragen und Antworten</h2>
+  <div class="qa-list"><details><summary>Deutsch: What is this product best used for?</summary><p>Deutsch: Goldsea Chainsaw Guide Plate and Saw Chain Set is best used for chainsaw parts tasks and everyday project workflows.</p></details><details><summary>Deutsch: Where can I buy it?</summary><p>Deutsch: Use the Amazon button on this page to open ASIN B0BCWDF3KB.</p></details><details><summary>Deutsch: Does the page use uploaded images?</summary><p>Deutsch: Yes. The main gallery uses product-images, while A+ detail visuals are shown below the product content.</p></details><details><summary>Deutsch: Is live pricing shown here?</summary><p>Deutsch: No. Prices change often, so live price and availability should be checked on Amazon.</p></details><details><summary>Deutsch: What are the main selling points?</summary><p>Deutsch: The main selling points are practical use, clear accessory/value bundle, easier operation, and a direct Amazon purchase path.</p></details><details><summary>Deutsch: Can more details be added later?</summary><p>Deutsch: Yes. Add more screenshots or text files to the ASIN folder and the page can be regenerated.</p></details></div>
+</section>
+<section data-lang-content="it">
+  <h1>Italiano: Goldsea Chainsaw Guide Plate and Saw Chain Set</h1>
+  <p class="amazon-detail-desc">Italiano: Replacement guide plate and saw chain set for Goldsea 6 inch chainsaws, designed for stable cutting performance and routine maintenance.</p>
+  <h2>Caratteristiche del prodotto</h2>
+  <ul><li>Italiano: Replacement guide plate and saw chain for Goldsea 6 inch chainsaw models.</li><li>Italiano: 36-link 1/4 pitch chain format supports compact cutting systems.</li><li>Italiano: Suitable for maintenance, repair and restoring cutting performance.</li><li>Italiano: Lightweight 0.05 kg part is easy to store and carry with the tool kit.</li><li>Italiano: Designed for DIY, garden and cordless chainsaw users who need spare chains.</li></ul>
+  <h2>Specifiche</h2>
+  <table><tr><th>Italiano: Brand</th><td>Italiano: Goldsea</td></tr><tr><th>Italiano: Power source</th><td>Italiano: Battery powered</td></tr><tr><th>Italiano: Power</th><td>Italiano: 600W</td></tr><tr><th>Italiano: Weight</th><td>Italiano: 0.05 kg</td></tr><tr><th>Italiano: Dimensions</th><td>Italiano: 22 × 15 × 2 cm</td></tr><tr><th>Italiano: Part number</th><td>Italiano: Part2603</td></tr><tr><th>Italiano: ASIN</th><td>Italiano: B0BCWDF3KB</td></tr></table>
+  <h2>Analisi dei punti di forza</h2>
+  <ul><li>Italiano: Goldsea Chainsaw Guide Plate and Saw Chain Set has a clear use case in Chainsaw Parts, making it easy for buyers to understand the practical value.</li><li>Italiano: The uploaded screenshots provide strong feature evidence that can be converted into readable product copy.</li><li>Italiano: The page separates purchase-focused product images from A+ detail visuals, matching an Amazon-style buying flow.</li><li>Italiano: The feature list emphasizes runtime, accessory bundle, safety, usability and maintenance benefits where applicable.</li><li>Italiano: The Amazon CTA keeps checkout simple while the landing page improves SEO and product explanation.</li></ul>
+  <h2>Domande e risposte</h2>
+  <div class="qa-list"><details><summary>Italiano: What is this product best used for?</summary><p>Italiano: Goldsea Chainsaw Guide Plate and Saw Chain Set is best used for chainsaw parts tasks and everyday project workflows.</p></details><details><summary>Italiano: Where can I buy it?</summary><p>Italiano: Use the Amazon button on this page to open ASIN B0BCWDF3KB.</p></details><details><summary>Italiano: Does the page use uploaded images?</summary><p>Italiano: Yes. The main gallery uses product-images, while A+ detail visuals are shown below the product content.</p></details><details><summary>Italiano: Is live pricing shown here?</summary><p>Italiano: No. Prices change often, so live price and availability should be checked on Amazon.</p></details><details><summary>Italiano: What are the main selling points?</summary><p>Italiano: The main selling points are practical use, clear accessory/value bundle, easier operation, and a direct Amazon purchase path.</p></details><details><summary>Italiano: Can more details be added later?</summary><p>Italiano: Yes. Add more screenshots or text files to the ASIN folder and the page can be regenerated.</p></details></div>
+</section>
 
-- **Practical tool value:** Goldse SmoothPro Detail Sander is positioned for real workshop and jobsite use rather than casual display.
-- **Clear purchase path:** the page sends interested buyers directly to the Amazon listing for checkout.
-- **Problem-solution message:** the product copy focuses on what the tool helps users complete faster or more safely.
-- **Good catalog fit:** it supports a complete tool ecosystem with power, measurement, storage and jobsite categories.
-- **Image-first presentation:** the gallery can use your uploaded screenshots and product images without relying on Amazon scraping.
-
-## Q&A
-
-**Q1: Is this an official Amazon product page?**  
-A: This is a product landing page that links to the Amazon ASIN listing.
-
-**Q2: Where can I buy this product?**  
-A: Use the "View on Amazon" button to open the Amazon listing for ASIN B0BCWDF3KB.
-
-**Q3: Are the images from my uploaded folder?**  
-A: Yes. This page uses images placed under docs/assets/images/B0BCWDF3KB/.
-
-**Q4: Can the product text be translated?**  
-A: Yes. The page includes a language selector for English, Japanese, German and Italian interface labels.
-
-**Q5: Can I replace the title and description later?**  
-A: Yes. Add or update the text file/screenshots in the ASIN folder and the page can be refreshed.
-
-**Q6: Why is price not shown directly?**  
-A: Amazon prices change often, so the page points buyers to Amazon for live pricing.
+<section class="aplus-section"><h2 data-i18n="aplusImages">A+ Detail Images</h2><div class="aplus-images"></div></section>
