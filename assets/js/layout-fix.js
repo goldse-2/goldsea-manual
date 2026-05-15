@@ -76,28 +76,40 @@ document.addEventListener('DOMContentLoaded', function() {
       catalogTitle: 'Amazon ASIN collection',
       priceAmazon: 'Price shown on Amazon',
       viewAmazon: 'View on Amazon',
-      backCatalog: 'Back to catalog'
+      backCatalog: 'Back to catalog',
+      productGallery: 'Product Gallery',
+      aplusImages: 'A+ Detail Images',
+      viewProduct: 'View product →'
     },
     ja: {
       byCategory: 'カテゴリー',
       catalogTitle: 'Amazon ASIN コレクション',
       priceAmazon: '価格はAmazonでご確認ください',
       viewAmazon: 'Amazonで見る',
-      backCatalog: 'カタログに戻る'
+      backCatalog: 'カタログに戻る',
+      productGallery: '商品ギャラリー',
+      aplusImages: 'A+ 詳細画像',
+      viewProduct: '商品を見る →'
     },
     de: {
       byCategory: 'Kategorie',
       catalogTitle: 'Amazon-ASIN-Kollektion',
       priceAmazon: 'Preis auf Amazon anzeigen',
       viewAmazon: 'Auf Amazon ansehen',
-      backCatalog: 'Zurück zum Katalog'
+      backCatalog: 'Zurück zum Katalog',
+      productGallery: 'Produktgalerie',
+      aplusImages: 'A+ Detailbilder',
+      viewProduct: 'Produkt ansehen →'
     },
     it: {
       byCategory: 'Categoria',
       catalogTitle: 'Collezione ASIN Amazon',
       priceAmazon: 'Prezzo disponibile su Amazon',
       viewAmazon: 'Vedi su Amazon',
-      backCatalog: 'Torna al catalogo'
+      backCatalog: 'Torna al catalogo',
+      productGallery: 'Galleria prodotto',
+      aplusImages: 'Immagini dettagliate A+',
+      viewProduct: 'Vedi prodotto →'
     }
   };
 
@@ -113,6 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[data-i18n]').forEach((element) => {
       const key = element.getAttribute('data-i18n');
       if (dictionary[key]) element.textContent = dictionary[key];
+    });
+    document.querySelectorAll('[data-lang-content]').forEach((element) => {
+      element.hidden = element.getAttribute('data-lang-content') !== language;
     });
     if (languageSelect) languageSelect.value = language;
   }
@@ -184,3 +199,4 @@ document.addEventListener('DOMContentLoaded', function() {
   dots.forEach((dot, index) => dot.addEventListener('click', () => setHeroSlide(index)));
   setHeroSlide(0);
 });
+
