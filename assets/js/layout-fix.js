@@ -1,4 +1,4 @@
-﻿// Fix layout issues with Material for MkDocs theme
+// Fix layout issues with Material for MkDocs theme
 document.addEventListener('DOMContentLoaded', function() {
   const style = document.createElement('style');
   style.textContent = `
@@ -85,8 +85,49 @@ document.addEventListener('DOMContentLoaded', function() {
   const pathName = window.location.pathname.toLowerCase();
   const excludedHeaderPages = pathName.includes('/1131503090') || pathName.includes('/3d') || pathName.includes('/3d.md');
   const hasHomeHeader = Boolean(document.querySelector('.storefront-page .storefront-topbar'));
-  if (!excludedHeaderPages && hasHomeHeader) {
+  const hasInjectedHeader = Boolean(document.querySelector('.storefront-global-topbar'));
+  if (!excludedHeaderPages) {
     document.body.classList.add('goldse-storefront-header');
+  }
+  if (!excludedHeaderPages && !hasHomeHeader && !hasInjectedHeader) {
+    const header = document.createElement('header');
+    header.className = 'storefront-topbar storefront-global-topbar';
+    header.innerHTML = `
+      <a class="storefront-logo" href="/">
+        <span class="storefront-logo-mark">G</span>
+        <span>Goldse</span>
+      </a>
+      <nav class="storefront-nav mega-nav">
+        <div class="mega-item">
+          <a href="/Products/">Products</a>
+          <div class="mega-panel">
+            <div class="mega-panel-inner">
+              <div class="mega-section-title">Amazon Tool Collection</div>
+              <div class="mega-grid">
+                <a href="/Products/b09yrdy3ys/" class="mega-card"><img src="/assets/images/B09YRDY3YS/B09YRDY3YS-product-images/image_1.jpg" alt="Goldsea 4.2V Mini Electric Screwdriver"><strong>Goldsea 4.2V Mini Electric Screwdriver</strong><em>ASIN B09YRDY3YS</em></a>
+                <a href="/Products/b0bblmbyp8/" class="mega-card"><img src="/assets/images/B0BBLMBYP8/B0BBLMBYP8-product-images--1-/image_1.jpg" alt="Goldsea 6 Inch Mini Chainsaw"><strong>Goldsea 6 Inch Mini Chainsaw</strong><em>ASIN B0BBLMBYP8</em></a>
+                <a href="/Products/b0bbvg9zln/" class="mega-card"><img src="/assets/images/B0BBVG9ZLN/B0BBVG9ZLN-product-images/image_1.jpg" alt="Goldsea Adjustable Electric Screwdriver"><strong>Goldsea Adjustable Electric Screwdriver</strong><em>ASIN B0BBVG9ZLN</em></a>
+                <a href="/Products/b0c48z1hbr/" class="mega-card"><img src="/assets/images/B0C48Z1HBR/B0C48Z1HBR-product-images/image_1.jpg" alt="Goldsea Mini Chainsaw Kit"><strong>Goldsea Mini Chainsaw Kit</strong><em>ASIN B0C48Z1HBR</em></a>
+                <a href="/Products/b0cffk4v9k/" class="mega-card"><img src="/assets/images/B0CFFK4V9K/B0CFFK4V9K-product-images/image_1.jpg" alt="Goldsea White Screwdriver"><strong>Goldsea White Screwdriver</strong><em>ASIN B0CFFK4V9K</em></a>
+                <a href="/Products/b0gc6chlqt/" class="mega-card"><img src="/assets/images/B0GC6CHLQT/B0GC6CHLQT-product-images/image_1.jpg" alt="Goldsea AI Translation Earbuds"><strong>Goldsea AI Translation Earbuds</strong><em>ASIN B0GC6CHLQT</em></a>
+              </div>
+              <div class="mega-footer-links"><a href="/Products/">Shop all</a><a href="/Products/">Product comparison</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="mega-item">
+          <a href="/manuals/">Manuals</a>
+          <div class="mega-panel mega-panel-small">
+            <div class="mega-panel-inner"><div class="mega-grid mega-grid-small"><a href="/manuals/" class="mega-link-card">User Manuals</a><a href="/manuals/" class="mega-link-card">Setup Guides</a><a href="/manuals/" class="mega-link-card">Troubleshooting</a></div></div>
+          </div>
+        </div>
+        <div class="mega-item"><a href="/about/">About</a></div>
+        <div class="mega-item"><a href="/contact/">Support</a></div>
+      </nav>
+      <a class="storefront-top-action" href="/Products/">View Products</a>
+    `;
+    const content = document.querySelector('.md-content article') || document.body;
+    content.prepend(header);
   }
 
   const translations = {
@@ -154,20 +195,59 @@ document.addEventListener('DOMContentLoaded', function() {
     if (languageSelect) languageSelect.value = language;
   }
 
+  function renderFullLanguage(language) {
+    applyLanguage(language);
+    renderProductCopy(language);
+  }
+
   if (languageSelect) {
     languageSelect.addEventListener('change', () => {
       localStorage.setItem('goldse-language', languageSelect.value);
-      applyLanguage(languageSelect.value);
+      renderFullLanguage(languageSelect.value);
     });
   }
   applyLanguage(currentLanguage);
 
-  document.querySelectorAll('.product-thumb img').forEach((thumb) => {
-    thumb.addEventListener('click', () => {
-      const mainImage = document.querySelector('[data-main-product-image]');
-      if (mainImage) mainImage.src = thumb.src;
+  const productThumbs = Array.from(document.querySelectorAll('.product-thumb img'));
+  const mainProductImage = document.querySelector('[data-main-product-image]');
+  let activeProductImage = 0;
+
+  function setProductImage(index) {
+    if (!mainProductImage || !productThumbs.length) return;
+    activeProductImage = (index + productThumbs.length) % productThumbs.length;
+    mainProductImage.src = productThumbs[activeProductImage].src;
+    productThumbs.forEach((thumb, thumbIndex) => {
+      thumb.closest('.product-thumb')?.classList.toggle('active', thumbIndex === activeProductImage);
     });
+  }
+
+  productThumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => setProductImage(index));
   });
+
+  const gallerySurface = document.querySelector('.amazon-detail-image');
+  if (gallerySurface && productThumbs.length > 1) {
+    let galleryStartX = 0;
+    let galleryDragging = false;
+    const galleryX = (event) => event.touches ? event.touches[0].clientX : event.clientX;
+    gallerySurface.addEventListener('mousedown', (event) => { galleryDragging = true; galleryStartX = galleryX(event); });
+    gallerySurface.addEventListener('touchstart', (event) => { galleryDragging = true; galleryStartX = galleryX(event); }, { passive: true });
+    window.addEventListener('mouseup', (event) => {
+      if (!galleryDragging) return;
+      const delta = galleryX(event) - galleryStartX;
+      galleryDragging = false;
+      if (Math.abs(delta) > 50) setProductImage(activeProductImage + (delta < 0 ? 1 : -1));
+    });
+    gallerySurface.addEventListener('touchend', (event) => {
+      if (!galleryDragging) return;
+      const touch = event.changedTouches && event.changedTouches[0];
+      if (!touch) return;
+      const delta = touch.clientX - galleryStartX;
+      galleryDragging = false;
+      if (Math.abs(delta) > 50) setProductImage(activeProductImage + (delta < 0 ? 1 : -1));
+    });
+    setProductImage(0);
+  }
 
 
   const productTranslationScript = document.querySelector('[data-product-translations]');
@@ -187,13 +267,15 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     setText('[data-product-title]', data.title);
     setText('[data-product-desc]', data.desc);
+    setText('[data-buy-title]', data.buyTitle || data.title);
+    setText('[data-buy-price]', data.buyPrice);
     setText('[data-product-about-title]', data.aboutTitle);
     setText('[data-product-features-title]', data.featuresTitle);
     setText('[data-product-specs-title]', data.specsTitle);
     setText('[data-product-analysis-title]', data.analysisTitle);
     setText('[data-product-qa-title]', data.qaTitle);
     const about = document.querySelector('[data-product-about]');
-    if (about && Array.isArray(data.about)) about.innerHTML = data.about.map((item) => <li></li>).join('');
+    if (about && Array.isArray(data.about)) about.innerHTML = data.about.map((item) => `<li>${item}</li>`).join('');
     const features = document.querySelector('[data-product-features]');
     if (features && Array.isArray(data.features)) features.innerHTML = data.features.map((item) => `<li>${item}</li>`).join('');
     const specs = document.querySelector('[data-product-specs]');
@@ -204,10 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (qa && Array.isArray(data.qa)) qa.innerHTML = data.qa.map((row) => `<details><summary>${row[0]}</summary><p>${row[1]}</p></details>`).join('');
   }
 
-  renderProductCopy(currentLanguage);
-  if (languageSelect) {
-    languageSelect.addEventListener('change', () => renderProductCopy(languageSelect.value));
-  }
+  renderFullLanguage(currentLanguage);
 
   const hero = document.getElementById('hero-carousel');
   if (!hero) return;
