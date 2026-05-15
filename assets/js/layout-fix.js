@@ -168,10 +168,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     setText('[data-product-title]', data.title);
     setText('[data-product-desc]', data.desc);
+    setText('[data-product-about-title]', data.aboutTitle);
     setText('[data-product-features-title]', data.featuresTitle);
     setText('[data-product-specs-title]', data.specsTitle);
     setText('[data-product-analysis-title]', data.analysisTitle);
     setText('[data-product-qa-title]', data.qaTitle);
+    const about = document.querySelector('[data-product-about]');
+    if (about && Array.isArray(data.about)) about.innerHTML = data.about.map((item) => <li></li>).join('');
     const features = document.querySelector('[data-product-features]');
     if (features && Array.isArray(data.features)) features.innerHTML = data.features.map((item) => `<li>${item}</li>`).join('');
     const specs = document.querySelector('[data-product-specs]');
@@ -246,5 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
   dots.forEach((dot, index) => dot.addEventListener('click', () => setHeroSlide(index)));
   setHeroSlide(0);
 });
+
 
 
