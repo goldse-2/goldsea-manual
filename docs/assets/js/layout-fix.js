@@ -1,4 +1,4 @@
-﻿// Fix layout issues with Material for MkDocs theme
+// Fix layout issues with Material for MkDocs theme
 document.addEventListener('DOMContentLoaded', function() {
   const style = document.createElement('style');
   style.textContent = `
@@ -162,12 +162,46 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   applyLanguage(currentLanguage);
 
-  document.querySelectorAll('.product-thumb img').forEach((thumb) => {
-    thumb.addEventListener('click', () => {
-      const mainImage = document.querySelector('[data-main-product-image]');
-      if (mainImage) mainImage.src = thumb.src;
+  const productThumbs = Array.from(document.querySelectorAll('.product-thumb img'));
+  const mainProductImage = document.querySelector('[data-main-product-image]');
+  let activeProductImage = 0;
+
+  function setProductImage(index) {
+    if (!mainProductImage || !productThumbs.length) return;
+    activeProductImage = (index + productThumbs.length) % productThumbs.length;
+    mainProductImage.src = productThumbs[activeProductImage].src;
+    productThumbs.forEach((thumb, thumbIndex) => {
+      thumb.closest('.product-thumb')?.classList.toggle('active', thumbIndex === activeProductImage);
     });
+  }
+
+  productThumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => setProductImage(index));
   });
+
+  const gallerySurface = document.querySelector('.amazon-detail-image');
+  if (gallerySurface && productThumbs.length > 1) {
+    let galleryStartX = 0;
+    let galleryDragging = false;
+    const galleryX = (event) => event.touches ? event.touches[0].clientX : event.clientX;
+    gallerySurface.addEventListener('mousedown', (event) => { galleryDragging = true; galleryStartX = galleryX(event); });
+    gallerySurface.addEventListener('touchstart', (event) => { galleryDragging = true; galleryStartX = galleryX(event); }, { passive: true });
+    window.addEventListener('mouseup', (event) => {
+      if (!galleryDragging) return;
+      const delta = galleryX(event) - galleryStartX;
+      galleryDragging = false;
+      if (Math.abs(delta) > 50) setProductImage(activeProductImage + (delta < 0 ? 1 : -1));
+    });
+    gallerySurface.addEventListener('touchend', (event) => {
+      if (!galleryDragging) return;
+      const touch = event.changedTouches && event.changedTouches[0];
+      if (!touch) return;
+      const delta = touch.clientX - galleryStartX;
+      galleryDragging = false;
+      if (Math.abs(delta) > 50) setProductImage(activeProductImage + (delta < 0 ? 1 : -1));
+    });
+    setProductImage(0);
+  }
 
 
   const productTranslationScript = document.querySelector('[data-product-translations]');
@@ -187,13 +221,15 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     setText('[data-product-title]', data.title);
     setText('[data-product-desc]', data.desc);
+    setText('[data-buy-title]', data.buyTitle || data.title);
+    setText('[data-buy-price]', data.buyPrice);
     setText('[data-product-about-title]', data.aboutTitle);
     setText('[data-product-features-title]', data.featuresTitle);
     setText('[data-product-specs-title]', data.specsTitle);
     setText('[data-product-analysis-title]', data.analysisTitle);
     setText('[data-product-qa-title]', data.qaTitle);
     const about = document.querySelector('[data-product-about]');
-    if (about && Array.isArray(data.about)) about.innerHTML = data.about.map((item) => <li></li>).join('');
+    if (about && Array.isArray(data.about)) about.innerHTML = data.about.map((item) => `<li>${item}</li>`).join('');
     const features = document.querySelector('[data-product-features]');
     if (features && Array.isArray(data.features)) features.innerHTML = data.features.map((item) => `<li>${item}</li>`).join('');
     const specs = document.querySelector('[data-product-specs]');

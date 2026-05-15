@@ -3235,3 +3235,38 @@ html:not([data-goldse-lang]) [data-lang-content]:not([data-lang-content="en"]) {
   background: #fff;
   margin-bottom: 8px;
 }
+
+body.goldse-storefront-header .md-content {
+  padding: 0 !important;
+}
+
+body.goldse-storefront-header article > :not(.storefront-global-topbar):not(.storefront-page):not(.storefront-topbar) {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+body.goldse-storefront-header article > .storefront-global-topbar {
+  margin: 0 0 32px 0 !important;
+  width: 100%;
+}
+
+.amazon-product-title {
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 850;
+  color: #0f172a;
+  margin: 8px 0 18px;
+}
+
+.amazon-rrp {
+  color: #6b7280;
+  font-size: 16px;
+  margin-top: -10px;
+  margin-bottom: 18px;
+  text-decoration: line-through;
+}
+
+.amazon-detail-image {
+  touch-action: pan-y;
+  user-select: none;
+}
