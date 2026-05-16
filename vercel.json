@@ -1,4 +1,4 @@
 {
-  "buildCommand": "python -m pip install -r requirements.txt && python -m mkdocs build",
+  "buildCommand": "python -m pip install -r requirements.txt && python -m mkdocs build && python strip_material_header.py",
   "outputDirectory": "site"
 }
