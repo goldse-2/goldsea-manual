@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const hasStorefrontHeader = Boolean(document.querySelector('.storefront-page .storefront-topbar, .storefront-page-header'));
   if (!excludedHeaderPages && hasStorefrontHeader) {
     document.body.classList.add('goldse-storefront-header');
+    document.querySelectorAll('.md-header, .md-tabs').forEach((element) => element.remove());
   }
 
   const translations = {
