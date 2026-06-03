@@ -134,10 +134,17 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const languageSelect = document.querySelector('[data-language-select]');
-  const browserLanguage = (navigator.language || 'en').toLowerCase();
+  const supportedLanguages = ['en', 'ja', 'de', 'it'];
+  const browserLanguages = [navigator.language, ...(navigator.languages || [])]
+    .filter(Boolean)
+    .map((language) => language.toLowerCase());
   const storedLanguage = localStorage.getItem('goldse-language');
-  const detectedLanguage = browserLanguage.startsWith('ja') ? 'ja' : browserLanguage.startsWith('de') ? 'de' : browserLanguage.startsWith('it') ? 'it' : 'en';
-  const currentLanguage = storedLanguage || detectedLanguage;
+  const detectedLanguage = browserLanguages.reduce((match, language) => {
+    if (match) return match;
+    const baseLanguage = language.split('-')[0];
+    return supportedLanguages.includes(baseLanguage) ? baseLanguage : '';
+  }, '') || 'en';
+  const currentLanguage = supportedLanguages.includes(storedLanguage) ? storedLanguage : detectedLanguage;
 
   function applyLanguage(language) {
     const dictionary = translations[language] || translations.en;
