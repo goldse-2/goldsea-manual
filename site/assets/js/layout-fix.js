@@ -93,43 +93,67 @@ document.addEventListener('DOMContentLoaded', function() {
   const translations = {
     en: {
       byCategory: 'By Category',
-      catalogTitle: 'Amazon ASIN collection',
+      catalogTitle: 'Product collection',
       priceAmazon: 'Price shown on Amazon',
       viewAmazon: 'View on Amazon',
       backCatalog: 'Back to catalog',
       productGallery: 'Product Gallery',
       aplusImages: 'A+ Detail Images',
-      viewProduct: 'View product →'
+      viewProduct: 'View product →',
+      catScrewdrivers: 'Electric Screwdrivers',
+      catChainsaws: 'Mini Chainsaws',
+      catParts: 'Chainsaw Accessories',
+      catEarbuds: 'Translation Earbuds',
+      visibleProducts: '9 visible products',
+      sortButton: 'Sort ▾'
     },
     ja: {
       byCategory: 'カテゴリー',
-      catalogTitle: 'Amazon ASIN コレクション',
+      catalogTitle: '商品コレクション',
       priceAmazon: '価格はAmazonでご確認ください',
       viewAmazon: 'Amazonで見る',
       backCatalog: 'カタログに戻る',
       productGallery: '商品ギャラリー',
       aplusImages: 'A+ 詳細画像',
-      viewProduct: '商品を見る →'
+      viewProduct: '商品を見る →',
+      catScrewdrivers: '電動ドライバー',
+      catChainsaws: 'ミニチェーンソー',
+      catParts: 'チェーンソーアクセサリー',
+      catEarbuds: '翻訳イヤホン',
+      visibleProducts: '9件の商品を表示',
+      sortButton: '並び替え ▾'
     },
     de: {
       byCategory: 'Kategorie',
-      catalogTitle: 'Amazon-ASIN-Kollektion',
+      catalogTitle: 'Produktkollektion',
       priceAmazon: 'Preis auf Amazon anzeigen',
       viewAmazon: 'Auf Amazon ansehen',
       backCatalog: 'Zurück zum Katalog',
       productGallery: 'Produktgalerie',
       aplusImages: 'A+ Detailbilder',
-      viewProduct: 'Produkt ansehen →'
+      viewProduct: 'Produkt ansehen →',
+      catScrewdrivers: 'Elektroschrauber',
+      catChainsaws: 'Mini-Kettensägen',
+      catParts: 'Kettensägen-Zubehör',
+      catEarbuds: 'Übersetzungs-Ohrhörer',
+      visibleProducts: '9 Produkte sichtbar',
+      sortButton: 'Sortieren ▾'
     },
     it: {
       byCategory: 'Categoria',
-      catalogTitle: 'Collezione ASIN Amazon',
+      catalogTitle: 'Collezione prodotti',
       priceAmazon: 'Prezzo disponibile su Amazon',
       viewAmazon: 'Vedi su Amazon',
       backCatalog: 'Torna al catalogo',
       productGallery: 'Galleria prodotto',
       aplusImages: 'Immagini dettagliate A+',
-      viewProduct: 'Vedi prodotto →'
+      viewProduct: 'Vedi prodotto →',
+      catScrewdrivers: 'Cacciaviti elettrici',
+      catChainsaws: 'Mini motoseghe',
+      catParts: 'Accessori per motoseghe',
+      catEarbuds: 'Auricolari traduttori',
+      visibleProducts: '9 prodotti visibili',
+      sortButton: 'Ordina ▾'
     }
   };
 
@@ -162,8 +186,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (languageSelect) languageSelect.value = language;
   }
 
+
+  const catalogTranslations = {"b09yrdy3ys": {"en": {"title": "Goldsea 4.2V Mini Electric Screwdriver", "category": "Electric Screwdrivers", "code": "B09YRDY3YS"}, "ja": {"title": "Goldsea 4.2V 小型コードレス電動ドライバー", "category": "電動ドライバー", "code": "B09YRDY3YS"}, "de": {"title": "Goldsea 4,2V Mini-Akkuschrauber", "category": "Elektroschrauber", "code": "B09YRDY3YS"}, "it": {"title": "Goldsea mini cacciavite elettrico cordless 4,2V", "category": "Cacciaviti elettrici", "code": "B09YRDY3YS"}}, "b0bblmbyp8": {"en": {"title": "Goldsea 6 Inch Mini Chainsaw with 4000 mAh Battery", "category": "Mini Chainsaws", "code": "B0BBLMBYP8"}, "ja": {"title": "Goldsea 6インチ バッテリー式ミニチェーンソー", "category": "ミニチェーンソー", "code": "B0BBLMBYP8"}, "de": {"title": "Goldsea 6-Zoll Akku-Mini-Kettensäge", "category": "Mini-Kettensägen", "code": "B0BBLMBYP8"}, "it": {"title": "Goldsea mini motosega a batteria da 6 pollici", "category": "Mini motoseghe", "code": "B0BBLMBYP8"}}, "b0bbvg9zln": {"en": {"title": "Goldsea 4.2V Adjustable Electric Screwdriver", "category": "Electric Screwdrivers", "code": "B0BBVG9ZLN"}, "ja": {"title": "Goldsea 4.2V 小型コードレス電動ドライバー", "category": "電動ドライバー", "code": "B0BBVG9ZLN"}, "de": {"title": "Goldsea 4,2V Mini-Akkuschrauber", "category": "Elektroschrauber", "code": "B0BBVG9ZLN"}, "it": {"title": "Goldsea mini cacciavite elettrico cordless 4,2V", "category": "Cacciaviti elettrici", "code": "B0BBVG9ZLN"}}, "b0bcwdf3kb": {"en": {"title": "Goldsea Chainsaw Guide Plate and Saw Chain Set", "category": "Chainsaw Accessories", "code": "B0BCWDF3KB"}, "ja": {"title": "Goldsea ミニチェーンソー交換用ガイドバー・チェーンセット", "category": "チェーンソーアクセサリー", "code": "B0BCWDF3KB"}, "de": {"title": "Goldsea Ersatzschwert- und Sägeketten-Set für Mini-Kettensäge", "category": "Kettensägen-Zubehör", "code": "B0BCWDF3KB"}, "it": {"title": "Goldsea set barra guida e catena di ricambio per mini motosega", "category": "Accessori per motoseghe", "code": "B0BCWDF3KB"}}, "b0bqw4mbn4": {"en": {"title": "Goldsea 4.2V Cordless Electric Screwdriver", "category": "Electric Screwdrivers", "code": "B0BQW4MBN4"}, "ja": {"title": "Goldsea 4.2V 小型コードレス電動ドライバー", "category": "電動ドライバー", "code": "B0BQW4MBN4"}, "de": {"title": "Goldsea 4,2V Mini-Akkuschrauber", "category": "Elektroschrauber", "code": "B0BQW4MBN4"}, "it": {"title": "Goldsea mini cacciavite elettrico cordless 4,2V", "category": "Cacciaviti elettrici", "code": "B0BQW4MBN4"}}, "b0c48z1hbr": {"en": {"title": "Goldsea 6 Inch Mini Chainsaw with Battery and Charger", "category": "Mini Chainsaws", "code": "B0C48Z1HBR"}, "ja": {"title": "Goldsea 6インチ バッテリー式ミニチェーンソー", "category": "ミニチェーンソー", "code": "B0C48Z1HBR"}, "de": {"title": "Goldsea 6-Zoll Akku-Mini-Kettensäge", "category": "Mini-Kettensägen", "code": "B0C48Z1HBR"}, "it": {"title": "Goldsea mini motosega a batteria da 6 pollici", "category": "Mini motoseghe", "code": "B0C48Z1HBR"}}, "b0cffk4v9k": {"en": {"title": "Goldsea White 4.2V Mini Electric Screwdriver", "category": "Electric Screwdrivers", "code": "B0CFFK4V9K"}, "ja": {"title": "Goldsea 4.2V 小型コードレス電動ドライバー", "category": "電動ドライバー", "code": "B0CFFK4V9K"}, "de": {"title": "Goldsea 4,2V Mini-Akkuschrauber", "category": "Elektroschrauber", "code": "B0CFFK4V9K"}, "it": {"title": "Goldsea mini cacciavite elettrico cordless 4,2V", "category": "Cacciaviti elettrici", "code": "B0CFFK4V9K"}}, "b0gc6chlqt": {"en": {"title": "Goldsea AI Translation Earbuds", "category": "Translation Earbuds", "code": "B0GC6CHLQT"}, "ja": {"title": "Goldsea AIリアルタイム翻訳イヤホン", "category": "翻訳イヤホン", "code": "B0GC6CHLQT"}, "de": {"title": "Goldsea KI-Echtzeit-Übersetzungs-Ohrhörer", "category": "Übersetzungs-Ohrhörer", "code": "B0GC6CHLQT"}, "it": {"title": "Goldsea auricolari AI per traduzione in tempo reale", "category": "Auricolari traduttori", "code": "B0GC6CHLQT"}}, "b0gwzcbmb7": {"en": {"title": "Goldsea Portable Battery Hand Chainsaw", "category": "Mini Chainsaws", "code": "B0GWZCBMB7"}, "ja": {"title": "Goldsea 6インチ バッテリー式ミニチェーンソー", "category": "ミニチェーンソー", "code": "B0GWZCBMB7"}, "de": {"title": "Goldsea 6-Zoll Akku-Mini-Kettensäge", "category": "Mini-Kettensägen", "code": "B0GWZCBMB7"}, "it": {"title": "Goldsea mini motosega a batteria da 6 pollici", "category": "Mini motoseghe", "code": "B0GWZCBMB7"}}};
+
+  function renderCatalogCopy(language) {
+    document.querySelectorAll('[data-catalog-product]').forEach((card) => {
+      const key = card.getAttribute('data-catalog-product');
+      const data = catalogTranslations[key] && (catalogTranslations[key][language] || catalogTranslations[key].en);
+      if (!data) return;
+      const title = card.querySelector('h3');
+      const meta = card.querySelector('p');
+      if (title) title.textContent = data.title;
+      if (meta) meta.textContent = `${data.category} · ${data.code}`;
+    });
+  }
+
   function renderFullLanguage(language) {
     applyLanguage(language);
+    renderCatalogCopy(language);
     renderProductCopy(language);
   }
 
